@@ -1,0 +1,20 @@
+{
+  "name": "digitalit",
+  "version": "1.0.0",
+  "description": "DigitalIT full stack",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/florentianayuwono/DigitalIT.git"
+  },
+  "author": "Arsyad Kamili",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/florentianayuwono/DigitalIT/issues"
+  },
+  "homepage": "https://github.com/florentianayuwono/DigitalIT#readme"
+}
