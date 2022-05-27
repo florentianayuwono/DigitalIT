@@ -54,7 +54,13 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route   Get /api/users/me
 // @access  Private
 const getUser = asyncHandler(async (req, res) => {
-  console.log("Hemlo");
+  const { _id, firstName, email } = await pool.query("SELECT (user_id, firstName, email) WHERE user_id = $1", [req.user.id]);
+
+  res.status(200).json({
+    id: _id,
+    firstName,
+    email
+  });
 });
 
 module.exports = { registerUser, loginUser, getUser };
