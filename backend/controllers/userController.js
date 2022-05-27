@@ -26,7 +26,28 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const loginUser = asyncHandler(async (req, res) => {
-  console.log("Hemlo");
+  const { email, password } = req.body;
+
+  // idk if this is the right way of doing this but meh let's just see where this goes.
+  const user = await pool.query("SELECT * FROM user_account WHERE email = $1", [
+    email,
+  ]);
+  const pass = user
+    ? await pool.query("SELECT password FROM user_account WHERE user = $1", [
+        user.rows[0].user_id,
+      ])
+    : null;
+
+  if (user && pass && pass.rows[0].password === password) {
+    res.json({
+      _id: user.rows[0].user_id,
+      firstName: user.rows[0].firstName,
+      email: user.rows[0].email,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid credentials");
+  }
 });
 
 // @desc    Get user data
