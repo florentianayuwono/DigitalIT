@@ -4,6 +4,7 @@ CREATE EXTENSION CITEXT;
 CREATE TABLE user_account(
   user_id SERIAL PRIMARY KEY,
   email CITEXT UNIQUE NOT NULL,
+  password VARCHAR NOT NULL,
   first_name VARCHAR(255),
   last_name VARCHAR(255),
   birth_date DATE NOT NULL,
