@@ -7,3 +7,5 @@ const {
 
 router.post("/digitalize", digitalizeForm);
 router.post("/control", controlForm);
+
+module.exports = router;
