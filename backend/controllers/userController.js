@@ -3,7 +3,7 @@ const pool = require("../config/db");
 const { getDate } = require("../auxiliaries/helperFunctions");
 
 // @desc    Register new user
-// @route   POST /api/users
+// @route   POST /api/users/
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
   const { email, password, firstName, lastName, birthDate } = req.body;
@@ -15,7 +15,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   // check this returning * thing later because this might get very slow if we have to return everything
   const newUser = await pool.query(
-    "INSERT INTO user_account (email, password, first_name, last_name, birth_date, creation_date) VALUES($1) RETURNING *",
+    "INSERT INTO user_account(email, password, first_name, last_name, birth_date, creation_date) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
     [email, password, firstName, lastName, birthDate, getDate()]
   );
 
@@ -23,22 +23,24 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 // @desc    Log user in
-// @route   POST /api/users
+// @route   POST /api/users/login
 // @access  Public
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
+  
   // idk if this is the right way of doing this but meh let's just see where this goes.
   const user = await pool.query("SELECT * FROM user_account WHERE email = $1", [
     email,
   ]);
-  const pass = user
-    ? await pool.query("SELECT password FROM user_account WHERE user = $1", [
-        user.rows[0].user_id,
-      ])
-    : null;
+  
+  const pass = user.rows[0]
+  ? await pool.query("SELECT password FROM user_account WHERE email = $1", [
+    email,
+  ])
+  : undefined;
 
-  if (user && pass && pass.rows[0].password === password) {
+  if (user && pass && (pass.rows[0].password === password)) {
     res.json({
       _id: user.rows[0].user_id,
       firstName: user.rows[0].firstName,

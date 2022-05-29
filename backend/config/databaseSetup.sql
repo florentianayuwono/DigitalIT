@@ -1,4 +1,4 @@
-CREATE DATABASE digitalit;
+-- CREATE DATABASE digitalit;
 
 CREATE EXTENSION CITEXT;
 CREATE TABLE user_account(
