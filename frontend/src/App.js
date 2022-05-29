@@ -1,9 +1,15 @@
+import React, { Fragment } from "react";
+
+// Components
+import LoginForm from "./components/LoginForm";
+
 function App() {
-  return (
-    <div>
-      <h1>Hemlo meow</h1>
+  return <Fragment>
+    <div className="container">
+      <LoginForm>
+      </LoginForm>
     </div>
-  );
+  </Fragment>;
 }
 
 export default App;
