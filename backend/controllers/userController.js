@@ -28,8 +28,6 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  
-  // idk if this is the right way of doing this but meh let's just see where this goes.
   const user = await pool.query("SELECT * FROM user_account WHERE email = $1", [
     email,
   ]);
