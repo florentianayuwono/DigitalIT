@@ -1,0 +1,33 @@
+<%- include('partials/header'); -%>
+<main class="form-signin w-100 m-auto">
+    <form action = "/dashboard">
+      <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+
+      <div class="form-floating">
+        <input type="name" class="form-control" id="floatingInput" placeholder="Full Name" name="name">
+        <label for="floatingInput">Name</label>
+      </div>
+      <div class="form-floating">
+        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
+        <label for="floatingInput">Email address</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+        <label for="floatingPassword">Password</label>
+      </div>
+      <div class="form-floating">
+        <input type="phone number" class="form-control" id="floatingInput" placeholder="Number" name="phone">
+        <label for="floatingInput">Phone Number</label>
+      </div>
+  
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">SIGN UP</button>
+      <p class="mt-5 mb-3 text-muted">By signing up, I acknowledge and agree to Terms and Conditions as well as Privacy Policy of DigitalIT.</p>
+      <a class="mt-5 mb-3 text-muted" href="login" role="button" type="button">Already have an account? Sign in here.</a>
+    </form>
+  </main>
+<%- include('partials/footer'); -%>
