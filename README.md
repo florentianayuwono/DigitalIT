@@ -140,3 +140,24 @@ The generated result will be in a easy-to-understand charts and tables, as we wa
 2. Ideation section for users who have yet to build their business. This section will help users in decision making process from scratch.
 
 ## Timeline and Development Plan
+| MS |	Task	| Description	| Person In-Charge |	Date |
+| --- | --- | --- | --- | --- |
+||	Preliminary research on business digitalization needs and tools |	Familiarize with available e-commerce platforms and digital banking or financial tools available in Indonesia |	Arsyad & Floren |	10 – 15 May |
+||	Grand design of the web application |	Map the overall system, such as integration between user, frontend, backend and database |	Arsyad	| 16 – 22 May |
+||| Design the user flow and Figma prototype |	Floren	|
+| 1 | Basic realization of web application that works on localhost	| Build the frontend display to enable basic features such as Sign In and Log In and navigation between pages |	Floren |	23 – 25 May |
+|||	Build the backend framework, such as controllers, middleware, routes and server	| Arsyad	|
+|||	Build the Dashboard for users to key in the business information and simple recommendation generation	| Floren	| 26 – 29 May |
+|||	Set up the database of DigitalIT and testing of sending and posting user data	| Arsyad	|
+
+### Evaluation Milestone 1 (30 May)
+**Ideation**
+- [Poster](https://drive.google.com/file/d/1rX7za62RaUTeCFa2GgRoqO3HT0qqB9Qb/view?usp=sharing)
+- [Video](https://drive.google.com/file/d/1g17o1f-4Qixqsoz_eJqggDwQwcF2iJJA/view?usp=sharing)
+- [Figma prototype](https://www.figma.com/proto/VXxKDwZek0VMqg2x39RwPr/DigitalIT-Orbital?node-id=46%3A40&scaling=scale-down&page-id=46%3A38&starting-point-node-id=46%3A40)
+
+**Proof of concept**
+- Web application that can run on localhost for users to test out.
+
+**Work log**
+- Refer to this spreadsheet.
