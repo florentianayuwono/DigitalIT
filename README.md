@@ -64,11 +64,79 @@ DigitalIT features are outlined in the following sections, organised by the foll
 
 ## Features
 
+### Sign up and log in
+
+**Proposed** - users can access their account by several procedures:
+1. Sign up
+2. Log in
+3. Forgot password
+
+**Current Progress** - we have finished the design of Sign up, Log in and Forgot password pages using Figma. Currently we have the working form of Sign up and Log in with basic styling.
+
+**Additional Features** - users can read and agree on these pages before signing up:
+1. Terms and conditions
+2. Privacy policy
+
 ### Entering business particulars and data
 
 **Proposed** - a form that enable users to key in business information such as:
 1. Business name
 2. Focus area or categories
-3. Products and services information such as prices, COGS and markup
-4. Financial report (users can input their sales performance)
-5. Inventory (goods condition, expiry date, cost)
+3. Current progress of digitalization
+4. Products and services information such as types, prices, COGS and markup
+5. Financial report (users can input their sales performance)
+6. Inventory (goods condition, expiry date, cost)
+
+This is the very first task that the users need to complete in order to be able to use our service. This data will then be stored in DigitalIT database and will be used to generate insights and recommended strategies.
+
+**Current Progress** - a form that enable users to key in business information such as:
+1. Business name
+2. Focus area or categories
+
+**Additional Feature** - improve the user experience and accuracy of the data by adding functionality to accomodate for:
+1. Automatic integration of data, if the users have previously stored their business financial data in other applications such as Microsoft Excel, Buku Kas and other bookkeeping applications
+2. Automatic integration of products, services and inventory available, if the users have already keyed in similar information in e-commerce platforms
+3. Traffic data from platforms such as social media and e-commerce
+
+### Personalized business recommendation
+
+**Proposed** - based on the provided information, we can generate recommendations for:
+1. E-commerce platform
+3. Financial tools, such as digital banking and bookkeeping application
+4. Social media
+5. Strategies and next steps to be taken
+
+The recommendations will be updated indefinitely to suit the business condition that changes from time to time, which in turn will be reflected once the users update their data. The recommendations will also require users to update their progress, such as telling DigitalIT which platforms they decide to use and the sales generated from each platform. Ultimately, the concept will follow a mission-based game system, in which users are required to continue on hitting each milestones before moving on to the next part.
+
+**Current Progress** - we are providing basic recommendation on e-commerce platform based on the business type using dropdowns menu and simple if-else algorithm.
+
+**Additional Feature** - we are hoping to integrate machine learning into our algorithm to allow for more precised recommendations to enchance business in aspects such as digital marketing and pricing strategies. For example, DigitalIT will be able to retrieve information on prices of similar products offered by our users and recommend on suitable pricing tiers to optimize profit.
+
+### Tracking business performance
+
+**Proposed** - based on the provided financial data, we can automatically generate insights such as:
+1. Current revenue, cost and profit
+2. Comparison of growth progress (weekly, monthly or yearly)
+3. FInancial ratio analysis that determine the liquidity, solvency and profitability of a business
+
+The generated result will be in a easy-to-understand charts and tables, as we want to cater for business owners who might not understand these definitions. In addition, we will also provide a simple interpretation such as, "Your business is doing great!" or "Your growth is declining."
+
+**Current Progress** - we have yet to bring this feature into realization. However, we have obtained the knowledge to perform this financial calculations.
+
+**Additional Feature** - we are hoping to increase functionality by bringing these features:
+1. Ready to download PDF or Excel file of the financial report and analysis
+2. Tax report based on the financial data
+3. Financial ratio analysis that determine the efficiency and market prospects of a business
+
+### Other features
+
+**Proposed**
+1. Need Help section for users to key in their difficulties regarding the web application itself or other aspects of their business that is not yet covered by DigitalIT functionality. The response generated will be based on manual observation.
+
+**Current Progress** - we have completed the design for Need Help section on Figma, but have yet to build the working technical proof.
+
+**Additional Feature**
+1. Review and Discussion section for users to key in their concerns and issues with the recommended platforms or other general topics. Users can communicate with other users in this section, creating an "asking for an advice" environment.
+2. Ideation section for users who have yet to build their business. This section will help users in decision making process from scratch.
+
+## Timeline and Development Plan
