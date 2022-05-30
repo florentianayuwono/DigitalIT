@@ -139,6 +139,16 @@ The generated result will be in a easy-to-understand charts and tables, as we wa
 1. Review and Discussion section for users to key in their concerns and issues with the recommended platforms or other general topics. Users can communicate with other users in this section, creating an "asking for an advice" environment.
 2. Ideation section for users who have yet to build their business. This section will help users in decision making process from scratch.
 
+## Diagram
+### Project and Database Design Map
+![image](https://user-images.githubusercontent.com/76247368/170954200-661d741f-6d82-4db0-a415-c396a49f899f.png)
+
+### Backend Sturcture
+![image](https://user-images.githubusercontent.com/76247368/170954238-049688a1-ce00-4980-b634-9415d3136fe3.png)
+
+### React, API and Database Mapping
+![image](https://user-images.githubusercontent.com/76247368/170954268-2b79e51e-b41e-467b-ae88-b3f74430d083.png)
+
 ## Timeline and Development Plan
 | MS |	Task	| Description	| Person In-Charge |	Date |
 | --- | --- | --- | --- | --- |
