@@ -170,4 +170,4 @@ The generated result will be in a easy-to-understand charts and tables, as we wa
 - Web application that can run on localhost for users to test out.
 
 **Work log**
-- Refer to this spreadsheet.
+- Refer to this [spreadsheet](https://docs.google.com/spreadsheets/d/1jsP8Ze1n_VNq5SzKchqSWBlT14Fb4PC3CkECqB2x5DQ/edit?usp=sharing).
