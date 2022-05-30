@@ -57,7 +57,7 @@ We have identified two layers of motivation in our users, translating to two lon
 ## Scope of Project
 DigitalIT is a web application that acts as personal business consultant for business owners. Users can enter their business particulars and there will be generated recommendation that they can choose to implement. As their business gradually grow, users can update their business data and DigitalIT will continue to generate strategies that they could follow.
 
-DigitalIT features are outlined in the following sections, organised by the following tags:
+DigitalIT features are outlined in the following sections, organized by the following tags:
 - **Proposed** - features for Minimum Viable Product (MVP) by Splashdown
 - **Current Progress** - elaboration on current progress of specific features
 - **Additional Features** - Add-on features to improve after MVP is completed
@@ -79,7 +79,7 @@ DigitalIT features are outlined in the following sections, organised by the foll
 
 ### Entering business particulars and data
 
-**Proposed** - a form that enable users to key in business information such as:
+**Proposed** - a form that enables users to key in business information such as:
 1. Business name
 2. Focus area or categories
 3. Current progress of digitalization
@@ -89,7 +89,7 @@ DigitalIT features are outlined in the following sections, organised by the foll
 
 This is the very first task that the users need to complete in order to be able to use our service. This data will then be stored in DigitalIT database and will be used to generate insights and recommended strategies.
 
-**Current Progress** - a form that enable users to key in business information such as:
+**Current Progress** - a form that enables users to key in business information such as:
 1. Business name
 2. Focus area or categories
 
@@ -106,27 +106,27 @@ This is the very first task that the users need to complete in order to be able 
 4. Social media
 5. Strategies and next steps to be taken
 
-The recommendations will be updated indefinitely to suit the business condition that changes from time to time, which in turn will be reflected once the users update their data. The recommendations will also require users to update their progress, such as telling DigitalIT which platforms they decide to use and the sales generated from each platform. Ultimately, the concept will follow a mission-based game system, in which users are required to continue on hitting each milestones before moving on to the next part.
+The recommendations will be updated indefinitely to suit the business condition that changes from time to time, which in turn will be reflected once the users update their data. The recommendations will also require users to update their progress, such as telling DigitalIT which platforms they decide to use and the sales generated from each platform. Ultimately, the concept will follow a mission-based game system, in which users are required to continue on hitting each milestone before moving on to the next part.
 
 **Current Progress** - we are providing basic recommendation on e-commerce platform based on the business type using dropdowns menu and simple if-else algorithm.
 
-**Additional Feature** - we are hoping to integrate machine learning into our algorithm to allow for more precised recommendations to enchance business in aspects such as digital marketing and pricing strategies. For example, DigitalIT will be able to retrieve information on prices of similar products offered by our users and recommend on suitable pricing tiers to optimize profit.
+**Additional Feature** - we are hoping to integrate machine learning into our algorithm to allow for more precise recommendations to enhance business in aspects such as digital marketing and pricing strategies. For example, DigitalIT will be able to retrieve information on prices of similar products offered by our users and recommend on suitable pricing tiers to optimize profit.
 
 ### Tracking business performance
 
 **Proposed** - based on the provided financial data, we can automatically generate insights such as:
 1. Current revenue, cost and profit
 2. Comparison of growth progress (weekly, monthly or yearly)
-3. FInancial ratio analysis that determine the liquidity, solvency and profitability of a business
+3. Financial ratio analysis that determines the liquidity, solvency and profitability of a business
 
 The generated result will be in a easy-to-understand charts and tables, as we want to cater for business owners who might not understand these definitions. In addition, we will also provide a simple interpretation such as, "Your business is doing great!" or "Your growth is declining."
 
-**Current Progress** - we have yet to bring this feature into realization. However, we have obtained the knowledge to perform this financial calculations.
+**Current Progress** - we have yet to bring this feature into realization. However, we have obtained the knowledge to perform these financial calculations.
 
 **Additional Feature** - we are hoping to increase functionality by bringing these features:
 1. Ready to download PDF or Excel file of the financial report and analysis
 2. Tax report based on the financial data
-3. Financial ratio analysis that determine the efficiency and market prospects of a business
+3. Financial ratio analysis that determines the efficiency and market prospects of a business
 
 ### Other features
 
