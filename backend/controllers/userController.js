@@ -49,7 +49,7 @@ const loginUser = asyncHandler(async (req, res) => {
     email,
   ]);
 
-  if (user && (bcrypt.compare(password, user.rows[0].password))) {
+  if (user.rows[0] && (bcrypt.compare(password, user.rows[0].password))) {
     const userRow = user.rows[0];
 
     res.json({
