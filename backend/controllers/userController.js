@@ -4,7 +4,7 @@ const { getDate, generateToken } = require("../auxiliaries/helperFunctions");
 const bcrypt = require("bcryptjs/dist/bcrypt");
 
 // @desc    Register new user
-// @route   POST /api/users/
+// @route   POST /api/users/register
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
   const { fullName, email, password, phoneNumber } = req.body;
@@ -16,13 +16,14 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   // User already exists
-  const userExists = await pool.query("SELECT * FROM user_account WHERE email = $1", [
-    email
-  ]);
+  const userExists = await pool.query(
+    "SELECT * FROM user_account WHERE email = $1",
+    [email]
+  );
 
   if (userExists.rows.length > 0) {
-    res.status(400)
-    throw new Error('User already exists.')
+    res.status(400);
+    throw new Error("User already exists.");
   }
 
   // Hash Password
@@ -56,6 +57,12 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
+  // User does not properly fill in all fields
+  if (!(email && password)) {
+    res.status(400);
+    throw new Error("Please complete all required fields.");
+  }
+
   const user = await pool.query("SELECT * FROM user_account WHERE email = $1", [
     email,
   ]);
@@ -83,7 +90,7 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 // @desc    Get user data
-// @route   Get /api/users/me
+// @route   Get /api/users/dashboard
 // @access  Private
 const getUser = asyncHandler(async (req, res) => {
   const request = await pool.query(
