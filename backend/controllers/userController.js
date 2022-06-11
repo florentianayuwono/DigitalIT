@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const pool = require("../config/db");
-const { getDate } = require("../auxiliaries/helperFunctions");
+const { getDate, generateToken } = require("../auxiliaries/helperFunctions");
+const bcrypt = require("bcryptjs/dist/bcrypt");
 
 // @desc    Register new user
 // @route   POST /api/users/
@@ -13,13 +14,29 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("Please add all fields");
   }
 
+  // Hash Password
+  const salt = await bcrypt.genSalt(10);
+  const hashedPass = await bcrypt.hash(password, salt);
+
   // check this returning * thing later because this might get very slow if we have to return everything
   const newUser = await pool.query(
     "INSERT INTO user_account(email, password, first_name, last_name, birth_date, creation_date) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-    [email, password, firstName, lastName, birthDate, getDate()]
+    [email, hashedPass, firstName, lastName, birthDate, getDate()]
   );
+  
+  if (newUser) {
+    const user = newUser.rows[0];
 
-  res.json(newUser.rows[0]);
+    res.status(201).json({
+      _id: user.user_id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user.user_id)
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid user data");
+  }
 });
 
 // @desc    Log user in
@@ -31,18 +48,15 @@ const loginUser = asyncHandler(async (req, res) => {
   const user = await pool.query("SELECT * FROM user_account WHERE email = $1", [
     email,
   ]);
-  
-  const pass = user.rows[0]
-  ? await pool.query("SELECT password FROM user_account WHERE email = $1", [
-    email,
-  ])
-  : undefined;
 
-  if (user && pass && (pass.rows[0].password === password)) {
+  if (user.rows[0] && (bcrypt.compare(password, user.rows[0].password))) {
+    const userRow = user.rows[0];
+
     res.json({
-      _id: user.rows[0].user_id,
-      firstName: user.rows[0].firstName,
-      email: user.rows[0].email,
+      _id: userRow.user_id,
+      firstName: userRow.first_name,
+      email: userRow.email,
+      token: generateToken(userRow.user_id)
     });
   } else {
     res.status(400);
@@ -54,13 +68,26 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route   Get /api/users/me
 // @access  Private
 const getUser = asyncHandler(async (req, res) => {
-  const { _id, firstName, email } = await pool.query("SELECT (user_id, firstName, email) WHERE user_id = $1", [req.user.id]);
-
+  const request = await pool.query("SELECT * FROM user_account WHERE user_id = $1", [req.user.user_id]);
+  const { user_id, first_name, email } = request.rows[0];
+  
   res.status(200).json({
-    id: _id,
-    firstName,
+    user_id,
+    first_name,
     email
   });
 });
 
-module.exports = { registerUser, loginUser, getUser };
+//** FOR ADMIN PURPOSES ONLY. DELETE WHEN DEPLOYING */
+const deleteUser = asyncHandler(async (req, res) => {
+  const process = await pool.query("DELETE FROM user_account WHERE user_id = $1", [req.body.user_id]);
+
+  if (process) {
+    res.status(200).json("success");
+  } else {
+    res.status(400);
+    throw new Error("Fail to delete; bad request");
+  }
+});
+
+module.exports = { registerUser, loginUser, getUser, deleteUser };
