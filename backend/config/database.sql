@@ -9,8 +9,13 @@ CREATE TABLE user_account(
   email CITEXT UNIQUE NOT NULL,
   password VARCHAR NOT NULL,
   phone_number VARCHAR(15) UNIQUE NOT NULL,
-  creation_date DATE NOT NULL
+  creation_date DATE NOT NULL,
+  PRIMARY KEY(user_id)
 );
+
+-- Inserting a user --
+INSERT INTO user_account (full_name, email, password, phone_number, creation_date) 
+VALUES ('Full Name', 'fullname@gmail.com', 'fullname123', '8123456', '2022-06-11');
 
 CREATE TABLE project(
   project_id SERIAL PRIMARY KEY,
