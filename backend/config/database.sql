@@ -1,8 +1,8 @@
--- CREATE DATABASE digitalit;
+-- CREATE DATABASE DigitalIT;
 
 CREATE EXTENSION CITEXT;
 CREATE TABLE user_account(
-  user_id SERIAL PRIMARY KEY,
+  user_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   email CITEXT UNIQUE NOT NULL,
   password VARCHAR NOT NULL,
   first_name VARCHAR(255),
