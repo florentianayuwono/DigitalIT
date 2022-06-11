@@ -1,13 +1,14 @@
--- CREATE DATABASE DigitalIT;
+CREATE DATABASE DigitalIT;
 
 CREATE EXTENSION CITEXT;
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE user_account(
   user_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+  full_name VARCHAR(255),
   email CITEXT UNIQUE NOT NULL,
   password VARCHAR NOT NULL,
-  first_name VARCHAR(255),
-  last_name VARCHAR(255),
-  birth_date DATE NOT NULL,
+  phone_number VARCHAR(15) UNIQUE NOT NULL,
   creation_date DATE NOT NULL
 );
 
