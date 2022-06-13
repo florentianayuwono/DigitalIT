@@ -18,27 +18,30 @@ INSERT INTO user_account (full_name, email, password, phone_number, creation_dat
 VALUES ('Full Name', 'fullname@gmail.com', 'fullname123', '8123456', '2022-06-11');
 
 CREATE TABLE business (
-  business_id SERIAL PRIMARY KEY,
-  manager_id INT,
+  business_id SERIAL,
+  user_id uuid,
   business_name VARCHAR(255),
   categories VARCHAR(255),
   has_digitalized VARCHAR(255),
-  FOREIGN KEY (manager_id) REFERENCES user_account (user_id)
+  PRIMARY KEY (business_id),
+  FOREIGN KEY (user_id) REFERENCES user_account (user_id)
 );
 
 CREATE TABLE product (
-  product_id SERIAL PRIMARY KEY,
-  manager_id INT,
+  product_id SERIAL,
+  business_id INT,
   product_name VARCHAR(255),
   product_description TEXT,
   price NUMERIC,
   cost NUMERIC,
-  FOREIGN KEY (manager_id) REFERENCES business (business_id)
+  PRIMARY KEY (product_id),
+  FOREIGN KEY (business_id) REFERENCES business (business_id)
 )
 
 CREATE TABLE store (
-  store_id SERIAL PRIMARY KEY,
-  manager_id INT,
+  store_id SERIAL,
+  business_id INT,
   platform VARCHAR(255),
-  FOREIGN KEY (manager_id) REFERENCES business (business_id)
+  PRIMARY KEY (store_id),
+  FOREIGN KEY (business_id) REFERENCES business (business_id)
 )
