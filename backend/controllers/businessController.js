@@ -4,7 +4,7 @@ const pool = require("../config/db");
 const getBusinessData = asyncHandler(async (req, res) => {
   try {
     const user = await pool.query(
-      "SELECT * FROM user_account AS u LEFT JOIN business AS b ON u.user_id = b.user_id WHERE u.user_id = $1",
+      "SELECT b.business_name, b.categories, b.has_digitalized FROM user_account AS u LEFT JOIN business AS b ON u.user_id = b.user_id WHERE u.user_id = $1",
       [req.user.user_id]
     );
 

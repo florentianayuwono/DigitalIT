@@ -93,17 +93,17 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route   Get /api/users/dashboard
 // @access  Private
 const getUser = asyncHandler(async (req, res) => {
-  const request = await pool.query(
-    "SELECT * FROM user_account WHERE user_id = $1",
-    [req.user.user_id]
-  );
-  const { user_id, full_name, email } = request.rows[0];
+  try {
+    const user = await pool.query(
+      "SELECT user_account.full_name FROM user_account WHERE user_id = $1",
+      [req.user.user_id]
+    );
 
-  res.status(200).json({
-    user_id,
-    full_name,
-    email,
-  });
+    res.json(user.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
 });
 
 //** FOR ADMIN PURPOSES ONLY. DELETE WHEN DEPLOYING */
