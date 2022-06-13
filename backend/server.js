@@ -11,10 +11,10 @@ app.use(express.json());
 
 // routes //
 // register and login
-app.use("/api/users", require("./routes/userRoutes"));
+app.use("/authentication", require("./routes/userRoutes"));
 
 // business particulars and data
-app.use("/api/business", require("./routes/businessRoutes"));
+app.use("/business", require("./routes/businessRoutes"));
 
 app.use(errorHandler);
 

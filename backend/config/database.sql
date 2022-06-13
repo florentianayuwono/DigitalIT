@@ -27,6 +27,10 @@ CREATE TABLE business (
   FOREIGN KEY (user_id) REFERENCES user_account (user_id)
 );
 
+-- Inserting a business --
+INSERT INTO business (user_id, business_name, categories, has_digitalized)
+VALUES ('60dc16dd-c7f1-4fde-827a-90c0e101555c', 'my business', 'electronics', 'yes');
+
 CREATE TABLE product (
   product_id SERIAL,
   business_id INT,

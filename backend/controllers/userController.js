@@ -40,8 +40,8 @@ const registerUser = asyncHandler(async (req, res) => {
     const user = newUser.rows[0];
 
     res.status(201).json({
-      _id: user.user_id,
-      name: user.full_name,
+      user_id: user.user_id,
+      fullName: user.full_name,
       email: user.email,
       token: generateToken(user.user_id),
     });
@@ -78,7 +78,7 @@ const loginUser = asyncHandler(async (req, res) => {
     const userRow = user.rows[0];
 
     res.json({
-      _id: userRow.user_id,
+      user_id: userRow.user_id,
       fullName: userRow.full_name,
       email: userRow.email,
       token: generateToken(userRow.user_id),

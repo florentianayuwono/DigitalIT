@@ -1,41 +1,108 @@
 const asyncHandler = require("express-async-handler");
 const pool = require("../config/db");
 
-// @desc    Get business data
-// @route   GET /api/
-// @access  Private
-const getGoals = asyncHandler(async (req, res) => {
-  const goals = await Goal.find({ user: req.user.id });
+const getBusinessData = asyncHandler(async (req, res) => {
+  try {
+    const user = await pool.query(
+      "SELECT * FROM user_account AS u LEFT JOIN business AS b ON u.user_id = b.user_id WHERE u.user_id = $1",
+      [req.user.user_id]
+    );
 
-  res.status(200).json(goals);
+    res.json(user.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
 });
 
-// @desc    Update goal
-// @route   PUT /api/goals/:id
-// @access  Private
-const updateGoal = asyncHandler(async (req, res) => {
-  const goal = await Goal.findById(req.params.id);
+const addBusinessData = asyncHandler(async (req, res) => {
+  try {
+    console.log(req.body);
+    const { businessName, categories, hasDigitalized } = req.body;
+    const newBusiness = await pool.query(
+      "INSERT INTO business (user_id, business_name, categories, has_digitalized) VALUES ($1, $2, $3, $4) RETURNING *",
+      [req.user.user_id, businessName, categories, hasDigitalized]
+    );
 
-  if (!goal) {
-    res.status(400);
-    throw new Error("Goal not found");
+    res.json(newBusiness.rows[0]);
+  } catch (err) {
+    console.error(err.message);
   }
-
-  // Check for user
-  if (!req.user) {
-    res.status(401);
-    throw new Error("User not found");
-  }
-
-  // Make sure the logged in user matches the goal user
-  if (goal.user.toString() !== req.user.id) {
-    res.status(401);
-    throw new Error("User not authorized");
-  }
-
-  const updatedGoal = await Goal.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
-
-  res.status(200).json(updatedGoal);
 });
+
+const updateBusinessName = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { businessName } = req.body;
+    const updateBusinessName = await pool.query(
+      "UPDATE business SET business_name = $1 WHERE business_id = $2 AND user_id = $3 RETURNING *",
+      [businessName, id, req.user.user_id]
+    );
+
+    if (updateBusinessName.rows.length === 0) {
+      return res.json("You have not declared a business yet.");
+    }
+
+    res.json("Business name was updated.");
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+const updateCategories = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { categories } = req.body;
+    const updateCategories = await pool.query(
+      "UPDATE business SET categories = $1 WHERE business_id = $2 AND user_id = $3 RETURNING *",
+      [categories, id, req.user.user_id]
+    );
+
+    if (updateCategories.rows.length === 0) {
+      return res.json("You have not declared a category yet.");
+    }
+
+    res.json("Category was updated.");
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+const updateProgress = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    const updateProgress = await pool.query(
+      "UPDATE business SET has_digitalized = $1 WHERE business_id = $2 AND user_id = $3 RETURNING *",
+      [status, id, req.user.user_id]
+    );
+
+    if (updateProgress.rows.length === 0) {
+      return res.json("You have not declared a progress yet.");
+    }
+
+    res.json("Progress was updated.");
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+const deleteBusinessData = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleteBusiness = await pool.query(
+      "DELETE FROM business WHERE business_id = $1 AND user_id = $2 RETURNING *",
+      [id, req.user.user_id]
+    );
+
+    if (deleteBusiness.rows.length === 0) {
+      return res.json("You do not have this business.");
+    }
+
+    res.json("Business data was deleted.");
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+module.exports = router;
