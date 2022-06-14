@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs/dist/bcrypt");
 const getBusinessData = asyncHandler(async (req, res) => {
   try {
     const user = await pool.query(
-      "SELECT b.business_name, b.categories, b.has_digitalized FROM user_account AS u LEFT JOIN business AS b ON u.user_id = b.user_id WHERE u.user_id = $1",
+      "SELECT b.business_name, b.categories, b.has_digitalized FROM business AS b LEFT JOIN user_account AS u ON u.user_id = b.user_id WHERE u.user_id = $1",
       [req.user.user_id]
     );
 
@@ -14,21 +14,6 @@ const getBusinessData = asyncHandler(async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
-  }
-});
-
-const addBusinessData = asyncHandler(async (req, res) => {
-  try {
-    console.log(req.body);
-    const { businessName, categories, hasDigitalized } = req.body;
-    const newBusiness = await pool.query(
-      "INSERT INTO business (user_id, business_name, categories, has_digitalized) VALUES ($1, $2, $3, $4) RETURNING *",
-      [req.user.user_id, businessName, categories, hasDigitalized]
-    );
-
-    res.json(newBusiness.rows[0]);
-  } catch (err) {
-    console.error(err.message);
   }
 });
 
