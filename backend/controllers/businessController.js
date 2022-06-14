@@ -1,5 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const pool = require("../config/db");
+const { getDate, generateToken } = require("../auxiliaries/helperFunctions");
+const bcrypt = require("bcryptjs/dist/bcrypt");
 
 const getBusinessData = asyncHandler(async (req, res) => {
   try {
@@ -105,4 +107,10 @@ const deleteBusinessData = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = {
+  getBusinessData,
+  updateBusinessName,
+  updateCategories,
+  updateProgress,
+  deleteBusinessData,
+};
