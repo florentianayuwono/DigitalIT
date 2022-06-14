@@ -8,9 +8,9 @@ const {
 } = require("../controllers/userController");
 const { protect } = require("../middlewares/authMiddleware");
 
-router.post("/", registerUser);
+router.post("/register", registerUser);
 router.post("/login", loginUser);
-router.get("/me", protect, getUser);
+router.get("/dashboard", protect, getUser);
 
 // admin purposes. delete when deploying
 router.delete("/", deleteUser);
