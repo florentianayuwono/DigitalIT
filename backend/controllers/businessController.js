@@ -1,12 +1,25 @@
 const asyncHandler = require("express-async-handler");
 const pool = require("../config/db");
-const { getDate, generateToken } = require("../auxiliaries/helperFunctions");
-const bcrypt = require("bcryptjs/dist/bcrypt");
+
+const addBusinessData = asyncHandler(async (req, res) => {
+  try {
+    console.log(req.body);
+    const { businessName, categories, hasDigitalized } = req.body;
+    const newBusiness = await pool.query(
+      "INSERT INTO business (manager_id, business_name, categories, has_digitalized) VALUES ($1, $2, $3, $4) RETURNING *",
+      [req.user.user_id, businessName, categories, hasDigitalized]
+    );
+
+    res.json(newBusiness.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
 
 const getBusinessData = asyncHandler(async (req, res) => {
   try {
     const user = await pool.query(
-      "SELECT b.business_name, b.categories, b.has_digitalized FROM business AS b LEFT JOIN user_account AS u ON u.user_id = b.user_id WHERE u.user_id = $1",
+      "SELECT b.business_name, b.categories, b.has_digitalized FROM business AS b LEFT JOIN user_account AS u ON u.user_id = b.manager_id WHERE u.user_id = $1",
       [req.user.user_id]
     );
 
@@ -22,7 +35,7 @@ const updateBusinessName = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const { businessName } = req.body;
     const updateBusinessName = await pool.query(
-      "UPDATE business SET business_name = $1 WHERE business_id = $2 AND user_id = $3 RETURNING *",
+      "UPDATE business SET business_name = $1 WHERE business_id = $2 AND manager_id = $3 RETURNING *",
       [businessName, id, req.user.user_id]
     );
 
@@ -93,6 +106,7 @@ const deleteBusinessData = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
+  addBusinessData,
   getBusinessData,
   updateBusinessName,
   updateCategories,
