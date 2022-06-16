@@ -26,7 +26,6 @@ const updateBusinessData = asyncHandler(async (req, res) => {
 
   // name
   if (businessName) {
-    console.log(businessName);
     await pool.query(
       "UPDATE business SET business_name = $1 WHERE business_id = $2 AND manager_id = $3 RETURNING *",
       [businessName, id, req.user.user_id]
@@ -35,7 +34,6 @@ const updateBusinessData = asyncHandler(async (req, res) => {
 
   // category
   if (category) {
-    console.log(category);
     await pool.query(
       "UPDATE business SET categories = $1 WHERE business_id = $2 AND manager_id = $3 RETURNING *",
       [category, id, req.user.user_id]
@@ -44,7 +42,6 @@ const updateBusinessData = asyncHandler(async (req, res) => {
 
   // progress
   if (progress) {
-    console.log(progress);
     await pool.query(
       "UPDATE business SET has_digitalized = $1 WHERE business_id = $2 AND manager_id = $3 RETURNING *",
       [progress, id, req.user.user_id]
