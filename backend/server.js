@@ -19,7 +19,7 @@ app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/business", require("./routes/businessRoutes"));
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-if (process.env.NODE_DEV == "production") {
+if (process.env.NODE_ENV == "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
 
   // For all routes that are not the api routes specified above, direct to frontend's index.html
