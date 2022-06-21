@@ -8,9 +8,10 @@ const {
 } = require("../controllers/businessController");
 const { protect } = require("../middlewares/authMiddleware");
 
-router.route("/").get(protect, getBusinessData).post(protect, addBusinessData);
+router.route("/").get(protect, getBusinessData);
+router.route("/add").post(protect, addBusinessData);
 router
-  .route("/:id")
+  .route("/edit/:id")
   .put(protect, updateBusinessData)
   .delete(protect, deleteBusinessData);
 
