@@ -1,5 +1,10 @@
+import LoginForm from "../components/LoginForm";
+
 export default function Login() {
   return (
-    <h1>Hemlo</h1>
+    <main>
+      <h1>Hemlo, I am inside the login page</h1>
+      <LoginForm />
+    </main>
   );
 }

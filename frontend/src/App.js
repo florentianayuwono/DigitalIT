@@ -1,15 +1,22 @@
 import React, { Fragment } from "react";
-
-// Components
-import LoginForm from "./components/LoginForm";
+import { Outlet, Link } from "react-router-dom";
 
 function App() {
-  return <Fragment>
-    <div className="container">
-      <LoginForm>
-      </LoginForm>
+  return (
+    <div>
+      <h1>Main Page</h1>
+      <nav 
+        style={{
+        borderBottom: "solid 1px",
+        paddingBottom: "1rem"
+        }}
+      >
+        <Link to="/login">Login</Link> | {" "}
+        <Link to="/register">Register</Link>
+      </nav> 
+      <Outlet />
     </div>
-  </Fragment>;
+  );
 }
 
 export default App;

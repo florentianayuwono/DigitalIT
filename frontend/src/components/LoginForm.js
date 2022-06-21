@@ -3,7 +3,7 @@ import React, { Fragment, useState } from "react";
 const LoginForm = () => {
   const [email, setEmail] = useState("input your email");
   const [password, setPassword] = useState("");
-  const [status, setStatus] = useState("empty status"); 
+  const [status, setStatus] = useState("not logged in"); 
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
