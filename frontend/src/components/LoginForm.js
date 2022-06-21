@@ -28,7 +28,6 @@ const LoginForm = () => {
 
   return (
     <Fragment>
-      <h1 className="text-center mt-5">(!!˃ᆺ˂) This is a funny login page (˃ᆺ˂)</h1>
       <form className="d-flex mt-5" onSubmit={onSubmitForm}>
         <input
           type="text"

@@ -3,7 +3,7 @@ import { Outlet, Link } from "react-router-dom";
 
 function App() {
   return (
-    <div>
+    <div className="container">
       <h1>Main Page</h1>
       <nav 
         style={{
@@ -12,7 +12,8 @@ function App() {
         }}
       >
         <Link to="/login">Login</Link> | {" "}
-        <Link to="/register">Register</Link>
+        <Link to="/register">Register</Link> | {" "}
+        <Link to="/dashboard">Dashboard</Link>
       </nav> 
       <Outlet />
     </div>
