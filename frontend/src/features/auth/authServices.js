@@ -2,7 +2,7 @@ const axios = require("axios").default;
 
 // !! Add http://localhost:5000 before /api for local testing.
 const API_LINK = process.env.NODE_ENV === "production" 
-  ? "/api/users"
+  ? "/api/users/"
   : "http://localhost:5000/api/users/";
 
 export const loginUser = async (dispatch, loginPayload) => {
