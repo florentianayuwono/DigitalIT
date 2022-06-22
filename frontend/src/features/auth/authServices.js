@@ -1,7 +1,7 @@
 const axios = require("axios").default;
 
 // !! Add http://localhost:5000 before /api for local testing.
-const API_LINK = "/api/users/"
+const API_LINK = "http://localhost:5000/api/users/";
 
 export const loginUser = async (dispatch, loginPayload) => {
   /* 
@@ -43,7 +43,7 @@ export const registerUser = async (dispatch, registerPayload) => {
     const data = await response.data;
     const status = await response.status;
 
-    if (status === 200) {
+    if (status === 201) {
       dispatch({ type: "REGISTRATION_SUCCESS", payload: data });
       localStorage.setItem("user", data);
 
@@ -54,7 +54,7 @@ export const registerUser = async (dispatch, registerPayload) => {
       return;
     }
   } catch (e) {
-    dispatch({ type: "REGISTRATION_ERROR", error: e });
-    console.log(e);
+    dispatch({ type: "REGISTRATION_ERROR", error: e.response.data.message });
+    console.log(e.response.data.message);
   }
 };

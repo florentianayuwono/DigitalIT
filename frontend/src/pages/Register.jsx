@@ -1,5 +1,8 @@
-import { useState, useEffect } from "react";
+import { AuthContext } from "../features/auth/authContext";
+import { registerUser } from "../features/auth/authServices";
 import { FaUser } from "react-icons/fa";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -7,6 +10,17 @@ export default function Register() {
     email: "",
     password: "",
     phoneNumber: "",
+  });
+  const { user, dispatch } = useContext(AuthContext);
+  // Message to be shown (if there's error or something)
+  const [message, setMessage] = useState("");
+  const nav = useNavigate();
+
+  // If already logged in, then go straight to dashboard
+  useEffect(() => {
+    if (user.user) {
+      nav("/dashboard");
+    }
   });
 
   const { name, email, password, phoneNumber } = formData;
@@ -18,9 +32,27 @@ export default function Register() {
     }));
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+
+    const registrationData = {
+      fullName: name,
+      email,
+      password,
+      phoneNumber,
+    };
+
+    try {
+      const response = await registerUser(dispatch, registrationData);
+      if (!response || !response.user_id) return;
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    setMessage(user.message);
+  }, [user.message]);
 
   return (
     <>
@@ -28,8 +60,8 @@ export default function Register() {
         <h1>
           <FaUser /> Register
         </h1>
-
-        <p>Create an account</p>
+        
+        {message === "" ? <p>Create an account</p> : message}
       </section>
 
       <section className="form">
