@@ -19,6 +19,7 @@ export const authReducer = (state, action) => {
       return {
         ...state,
         isLoading: true,
+        message: "loading ..."
       };
     case "REGISTRATION_SUCCESS":
     case "LOGIN_SUCCESS":
@@ -28,6 +29,7 @@ export const authReducer = (state, action) => {
         token: action.payload.token,
         isLoading: false,
         isSuccess: true,
+        message: ""
       };
 
       return newState;

@@ -5,7 +5,7 @@ import { logoutUser } from "../features/auth/authServices";
 import { Link } from "react-router-dom";
 
 function HeaderLoggedIn() {
-  const { user, dispatch } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
 
   const handleLogout = async () => {
     await logoutUser(dispatch);
@@ -55,7 +55,7 @@ function HeaderLoggedOut() {
 }
 
 function Header() {
-  const { user, dispatch } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   return user.user ? <HeaderLoggedIn /> : <HeaderLoggedOut />;
 }

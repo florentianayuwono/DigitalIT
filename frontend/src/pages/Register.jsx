@@ -52,6 +52,8 @@ export default function Register() {
 
   useEffect(() => {
     setMessage(user.message);
+
+    return setMessage("");
   }, [user.message]);
 
   return (
