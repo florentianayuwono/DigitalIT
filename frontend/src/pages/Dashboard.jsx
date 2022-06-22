@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 
 export default function Dashboard() {
-  const { user, dispatch } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const nav = useNavigate();
   const userValue = useMemo(() => ({user}), [user]);
 
