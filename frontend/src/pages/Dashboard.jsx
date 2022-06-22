@@ -16,13 +16,8 @@ export default function Dashboard() {
     }
   }, [userValue]);
 
-  const handleLogout = async () => {
-    await logoutUser(dispatch);
-  };
-
   return (
     <>
-      <button onClick={handleLogout}>logout</button>
       <div>Dashboard</div>
     </>
   );
