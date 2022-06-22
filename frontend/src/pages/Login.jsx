@@ -1,10 +1,23 @@
-import { useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaSignInAlt } from "react-icons/fa";
+import { AuthContext } from "../features/auth/authContext";
+import { loginUser } from "../features/auth/authServices";
 
-export default function Login() {
+export default function Login(props) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+  });
+  const { user, dispatch } = useContext(AuthContext);
+  const [message, setMessage] = useState("");
+
+  const nav = useNavigate();
+
+  useEffect(() => {
+    if (user.user) {
+      nav("/dashboard");
+    }
   });
 
   const { email, password } = formData;
@@ -16,9 +29,26 @@ export default function Login() {
     }));
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+
+    const loginData = {
+      email,
+      password,
+    };
+
+    try {
+      const response = await loginUser(dispatch, loginData);
+      if (!response || !response.user_id) return;
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    setMessage(user.message);
+  }, [user.message]);
+
 
   return (
     <>
@@ -27,7 +57,7 @@ export default function Login() {
           <FaSignInAlt /> Login
         </h1>
 
-        <p>Login</p>
+        {message === "" ? <p>Login</p> : message}
       </section>
 
       <section className="form">

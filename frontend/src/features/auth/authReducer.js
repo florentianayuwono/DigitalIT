@@ -1,5 +1,6 @@
-const user = JSON.parse(localStorage("user"));
-const token = user.token;
+const temp = localStorage.getItem("user");
+const user = temp ? temp.user : null;
+const token = user ? user.token : null;
 
 export const initialAuthState = {
   user: user ? user : null,
@@ -10,29 +11,37 @@ export const initialAuthState = {
   message: "",
 };
 
-const loginReducer = (state, action) => {
+export const authReducer = (state, action) => {
+  let newState = state;
   switch (action.type) {
+    case "REQUEST_REGISTER":
     case "REQUEST_LOGIN":
       return {
         ...state,
         isLoading: true,
       };
+    case "REGISTRATION_SUCCESS":
     case "LOGIN_SUCCESS":
-      return {
+      newState = {
         ...state,
-        user: action.payload.user,
+        user: action.payload.user_id,
         token: action.payload.token,
         isLoading: false,
         isSuccess: true,
       };
+
+      return newState;
+    case "REGISTRATION_ERROR":
     case "LOGIN_ERROR":
-      return {
+      newState = {
         ...state,
         isLoading: false,
         isError: true,
         isSuccess: false,
         message: action.error,
       };
+
+      return newState;
     case "LOGOUT":
       return {
         ...state,
@@ -43,35 +52,3 @@ const loginReducer = (state, action) => {
       throw new Error(`No matching action for ${action.type}`);
   }
 };
-
-const registerReducer = (state, action) => {
-  switch (action.type) {
-    case "REQUEST_REGISTER":
-      return {
-        ...state,
-        isLoading: true,
-      };
-    case "REGISTRATION_SUCCESS":
-      return {
-        ...state,
-        user: action.payload.user,
-        token: action.payload.token,
-        isLoading: false,
-        isSuccess: true,
-      };
-    case "REGISTER_ERROR":
-      return {
-        ...state,
-        isLoading: false,
-        isError: true,
-        isSuccess: false,
-        message: action.error,
-      };
-    default:
-      throw new Error(`No matching action for ${action.type}`);
-  }
-};
-
-const authReducer = { loginReducer, registerReducer };
-
-export default authReducer;

@@ -1,10 +1,17 @@
 const axios = require("axios").default;
 
-const loginUser = async (dispatch, loginPayload) => {
+const API_LINK = "http://localhost:5000/api/users/"
+
+export const loginUser = async (dispatch, loginPayload) => {
+  /* 
+    The types are probably messed up here. When this code was written, I assume that axios.---() is returning
+    a javascript object that we can straightly use without parsing any json stuff.
+    But if that is not the case, this code needs to be modified (add some parser here and there).
+  */
   try {
     dispatch({ type: "REQUEST_LOGIN" });
 
-    const response = await axios.post("/api/users/login", loginPayload);
+    const response = await axios.post(API_LINK + "login", loginPayload);
     const data = await response.data;
     const status = await response.status;
 
@@ -13,27 +20,25 @@ const loginUser = async (dispatch, loginPayload) => {
       localStorage.setItem("user", data);
 
       return data;
-    } else {
-      dispatch({ type: "LOGIN_ERROR", error: data.message });
-
-      return;
     }
+
+    dispatch({ type: "LOGIN_ERROR", error: data.message });
   } catch (e) {
-    dispatch({ type: "LOGIN_ERROR", error: e });
-    console.log(e);
+    dispatch({ type: "LOGIN_ERROR", error: e.response.data.message });
+    console.log(e.response.data.message);
   }
 };
 
-const logoutUser = async (dispatch) => {
+export const logoutUser = async (dispatch) => {
   dispatch({ type: "LOGOUT" });
   localStorage.removeItem("user");
 };
 
-const registerUser = async (dispatch, registerPayload) => {
+export const registerUser = async (dispatch, registerPayload) => {
   try {
     dispatch({ type: "REQUEST_REGISTER" });
 
-    const response = await axios.post("/api/users/register", registerPayload);
+    const response = await axios.post(API_LINK + "register", registerPayload);
     const data = await response.data;
     const status = await response.status;
 
@@ -52,7 +57,3 @@ const registerUser = async (dispatch, registerPayload) => {
     console.log(e);
   }
 };
-
-const authServices = { loginUser, logoutUser, registerUser };
-
-export default authServices;
