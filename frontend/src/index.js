@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import { ContextProvider } from "./features/auth/store";
+import { ContextProvider } from "./features/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
