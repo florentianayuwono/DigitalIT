@@ -48,7 +48,7 @@ export default function Login(props) {
   useEffect(() => {
     setMessage(user.message);
 
-    return setMessage("");
+    return () => setMessage("");
   }, [user.message]);
 
 
