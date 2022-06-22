@@ -6,12 +6,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import { AuthContextProvider } from "./features/auth/authData";
+import { ContextProvider } from "./features/auth/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <AuthContextProvider>
+    <ContextProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
@@ -31,6 +31,6 @@ root.render(
           </Route>
         </Routes>
       </BrowserRouter>
-    </AuthContextProvider>
+    </ContextProvider>
   </React.StrictMode>
 );
