@@ -1,6 +1,7 @@
 const axios = require("axios").default;
 
-const API_LINK = "http://localhost:5000/api/users/"
+// !! Add http://localhost:5000 before /api for local testing.
+const API_LINK = "/api/users/"
 
 export const loginUser = async (dispatch, loginPayload) => {
   /* 
