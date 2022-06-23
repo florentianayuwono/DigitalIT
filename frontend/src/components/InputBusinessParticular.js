@@ -52,7 +52,7 @@ const InputBusinessParticular = () => {
           <div class="row g-5">
             <div>
               <h4 class="mb-3">General Information</h4>
-              <form class="needs-validation" novalidate>
+              <form class="needs-validation" novalidate onSubmit={onSubmitForm}>
                 <div class="row g-3">
                   <div class="col-12">
                     <label for="businessName" class="form-label">
@@ -63,6 +63,7 @@ const InputBusinessParticular = () => {
                       class="form-control"
                       id="businessName"
                       placeholder="My Batik Shop"
+                      value={description}
                     />
                     <div class="invalid-feedback">
                       Please enter a valid business name for future reference.
@@ -201,7 +202,7 @@ const InputBusinessParticular = () => {
         </main>
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
-          <p class="mb-1">&copy; 2017–2022 Company Name</p>
+          <p class="mb-1">&copy; 2022 DigitalIT</p>
           <ul class="list-inline">
             <li class="list-inline-item">
               <a href="#">Privacy</a>
