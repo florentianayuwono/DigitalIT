@@ -1,4 +1,4 @@
-const temp = localStorage.getItem("user");
+const temp = JSON.parse(localStorage.getItem("user"));
 const user = temp ? temp.user : null;
 const token = user ? user.token : null;
 
