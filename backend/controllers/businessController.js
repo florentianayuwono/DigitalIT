@@ -13,10 +13,10 @@ const addBusinessData = asyncHandler(async (req, res) => {
 
 const getBusinessData = asyncHandler(async (req, res) => {
   const user = await pool.query(
-    "SELECT b.business_name, b.categories, b.has_digitalized FROM business AS b LEFT JOIN user_account AS u ON u.user_id = b.manager_id WHERE u.user_id = $1",
+    "SELECT b.business_id, b.business_name, b.categories, b.has_digitalized FROM business AS b LEFT JOIN user_account AS u ON u.user_id = b.manager_id WHERE u.user_id = $1",
     [req.user.user_id]
   );
-  
+
   res.json(user.rows);
 });
 
@@ -30,7 +30,7 @@ const updateBusinessData = asyncHandler(async (req, res) => {
     await pool.query(
       "UPDATE business SET business_name = $1 WHERE business_id = $2 AND manager_id = $3 RETURNING *",
       [businessName, id, req.user.user_id]
-    ); 
+    );
   }
 
   // category
@@ -52,7 +52,7 @@ const updateBusinessData = asyncHandler(async (req, res) => {
   }
 
   res.json("Updated");
-})
+});
 
 const deleteBusinessData = asyncHandler(async (req, res) => {
   const { id } = req.params;
@@ -66,7 +66,7 @@ const deleteBusinessData = asyncHandler(async (req, res) => {
   }
 
   res.json("Business data was deleted.");
- });
+});
 
 module.exports = {
   addBusinessData,
