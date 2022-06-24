@@ -7,13 +7,13 @@ import { useMemo } from "react";
 export default function Dashboard() {
   const { user } = useContext(AuthContext);
   const nav = useNavigate();
-  const userValue = useMemo(() => ({user}), [user]);
+  const userValue = useMemo(() => ({ user }), [user]);
 
-  useEffect(() => {
-    if (!user.user) {
-      nav("/login");
-    }
-  }, [userValue]);
+  // useEffect(() => {
+  //   if (!user.user) {
+  //     nav("/login");
+  //   }
+  // }, [userValue]);
 
   return (
     <>

@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import { AuthProvider } from "./features/auth/authContext";
+import AddBusiness from "./pages/AddBusiness";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -17,7 +18,9 @@ root.render(
           <Route path="/" element={<App />}>
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            
             <Route path="dashboard" element={<Dashboard />} />
+            <Route path="add_business" element={<AddBusiness />} />
 
             {/* For routes that doesn't exist*/}
             <Route
