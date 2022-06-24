@@ -1,8 +1,6 @@
 import { AuthContext } from "../../features/auth/authContext";
-import { registerUser } from "../../features/auth/authServices";
 import { FaUser } from "react-icons/fa";
 import { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 
 export default function InputBusinessParticular() {
   const [formData, setFormData] = useState({
@@ -15,18 +13,10 @@ export default function InputBusinessParticular() {
     cost: "",
     platform: "",
   });
-  const { user, dispatch } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   // Message to be shown (if there's error or something)
   const [message, setMessage] = useState("");
-  const nav = useNavigate();
-  /*
-  // If already logged in, then go straight to dashboard
-  useEffect(() => {
-    if (user.user) {
-      nav("/dashboard");
-    }
-  });
-*/
+
   const {
     businessName,
     category,
@@ -58,8 +48,6 @@ export default function InputBusinessParticular() {
       cost,
       platform,
     };
-    
-    console.log(businessData);
 
     // try {
     //   const response = await InputBusinessParticular(dispatch, businessData);

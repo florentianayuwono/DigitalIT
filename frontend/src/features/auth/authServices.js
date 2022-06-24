@@ -22,7 +22,7 @@ export const loginUser = async (dispatch, loginPayload) => {
 
     if (status === 200) {
       dispatch({ type: "LOGIN_SUCCESS", payload: data });
-      localStorage.setItem("user", data);
+      localStorage.setItem("user", JSON.stringify(data));
 
       return data;
     }
@@ -49,7 +49,7 @@ export const registerUser = async (dispatch, registerPayload) => {
 
     if (status === 201) {
       dispatch({ type: "REGISTRATION_SUCCESS", payload: data });
-      localStorage.setItem("user", data);
+      localStorage.setItem("user", JSON.stringify(data));
 
       return data;
     } else {
