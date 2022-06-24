@@ -17,14 +17,12 @@ export default function Dashboard() {
 
   return (
     <>
-      <div>Dashboard</div>
-
-      {/* Dashboard Display */}
+      {/* CHANGE: Dashboard Display */}
       <main>
         <div class="container py-4">
           <header class="pb-3 mb-4 border-bottom">
             <a
-              href="/"
+              href="/dashboard"
               class="d-flex align-items-center text-dark text-decoration-none"
             >
               <svg
@@ -43,7 +41,7 @@ export default function Dashboard() {
                   fill="currentColor"
                 ></path>
               </svg>
-              <span class="fs-4">Hi, The Coolest Company Ever!</span>
+              <span class="fs-4">Hi, {user.username}!</span>
             </a>
           </header>
 
@@ -54,34 +52,14 @@ export default function Dashboard() {
                 Tell us your current business field and we will tell you the
                 best e-commerce platform for your business!
               </p>
-              <div class="dropdown">
-                <button
-                  class="btn btn-primary dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton1"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+              <button class="btn btn-outline-secondary" type="button">
+                <a
+                  href="/business"
+                  class="d-flex align-items-center text-light text-decoration-none"
                 >
-                  Choose here
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li>
-                    <a class="dropdown-item" href="/tokopedia">
-                      Electronics
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      Fashion
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      Food & Groceries
-                    </a>
-                  </li>
-                </ul>
-              </div>
+                  View business data
+                </a>
+              </button>
             </div>
           </div>
 
