@@ -4,6 +4,7 @@ const token = user ? user.token : null;
 
 export const initialAuthState = {
   user: user ? user : null,
+  username: "",
   token: token ? token : null,
   isLoading: false,
   isError: false,
@@ -26,6 +27,7 @@ export const authReducer = (state, action) => {
       newState = {
         ...state,
         user: action.payload.user_id,
+        username: action.payload.fullName,
         token: action.payload.token,
         isLoading: false,
         isSuccess: true,
