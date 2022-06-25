@@ -8,8 +8,8 @@ const {
 } = require("../controllers/productController");
 const { protect } = require("../middlewares/authMiddleware");
 
-router.route("/").get(protect, getProductData).
-router.route("/add").post(protect, addProductData);
+router.route("/").get(protect, getProductData);
+router.post("/", protect, addProductData);
 router
   .route("/:id")
   .get(protect, getProductData)

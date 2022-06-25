@@ -7,8 +7,8 @@ const {
 } = require("../controllers/storeController");
 const { protect } = require("../middlewares/authMiddleware");
 
-router.route("/").get(protect, getStoreData).
-router.route("/add").post(protect, addStoreData);
+router.route("/").get(protect, getStoreData);
+router.post("/add", protect, addStoreData);
 router
   .route("/:id")
   .get(protect, getStoreData)

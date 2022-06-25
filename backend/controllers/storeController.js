@@ -42,7 +42,7 @@ const getStoreData = asyncHandler(async (req, res) => {
       [business_id, id]
     );
 
-    res.status(200).json(specificStore.rows);
+    res.status(200).json(specificStore.rows[0]);
   } else {
     const store = await pool.query(
       "SELECT s.platform FROM store AS s LEFT JOIN business AS b ON b.business_id = s.business_id WHERE b.business_id = $1",

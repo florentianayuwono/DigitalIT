@@ -41,7 +41,7 @@ const getProductData = asyncHandler(async (req, res) => {
       [business_id, id]
     );
 
-    res.status(200).json(specificProduct.rows);
+    res.status(200).json(specificProduct.rows[0]);
   } else {
     const product = await pool.query(
       "SELECT p.product_name, p.product_description, p.price, p.cost FROM product AS p LEFT JOIN business AS b ON b.business_id = p.business_id WHERE b.business_id = $1",
