@@ -1,6 +1,8 @@
 import { AuthContext } from "../../features/auth/authContext";
 import { FaUser } from "react-icons/fa";
 import { useState, useEffect, useContext } from "react";
+import { BusinessContext } from "../../features/business/businessContext";
+import { addBusiness } from "../../features/business/businessServices";
 
 export default function InputBusinessParticular() {
   const [formData, setFormData] = useState({
@@ -14,6 +16,8 @@ export default function InputBusinessParticular() {
     platform: "",
   });
   const { user } = useContext(AuthContext);
+  const { businesses, dispatch } = useContext(BusinessContext);
+
   // Message to be shown (if there's error or something)
   const [message, setMessage] = useState("");
 
@@ -42,26 +46,22 @@ export default function InputBusinessParticular() {
       businessName,
       category,
       hasDigitalized,
-      productName,
-      productDescription,
-      price,
-      cost,
-      platform,
     };
 
-    // try {
-    //   const response = await InputBusinessParticular(dispatch, businessData);
-    //   if (!response || !response.user_id) return;
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const response = await addBusiness(dispatch, businessData);
+      if (!response || !response.user_id) return;
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    setMessage(user.message);
+    setMessage(businesses.message);
 
     return () => setMessage("");
-  }, [user.message]);
+  }, [businesses.message]);
 
   return (
     <>
@@ -80,8 +80,8 @@ export default function InputBusinessParticular() {
                 class="d-block mx-auto mb-4"
                 src="/images/DigitalIT Logo.png"
                 alt=""
-                width="72"
-                height="57"
+                width="152"
+                height="38"
               ></img>
               <h2>Business Particulars</h2>
               <p class="lead">

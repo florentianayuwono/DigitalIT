@@ -6,9 +6,11 @@ const API_LINK =
     : "http://localhost:5000/api/business/";
 
 export const getBusinesses = async (dispatch) => {
+  const token = JSON.parse(localStorage.getItem("user")).token;
+
   const config = {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${token}`,
     },
   };
 
@@ -35,9 +37,11 @@ export const getBusinesses = async (dispatch) => {
 };
 
 export const addBusiness = async (dispatch, businessPayload) => {
+  const token = JSON.parse(localStorage.getItem("user")).token;
+
   const config = {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${token}`,
     },
   };
 

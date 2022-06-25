@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { AuthContext } from "../features/auth/authContext";
 import { logoutUser } from "../features/auth/authServices";
 import { Link } from "react-router-dom";
+import GetBusinessesButton from "./GetBusinessesButton";
 
 function HeaderLoggedIn() {
   const { dispatch } = useContext(AuthContext);
@@ -26,6 +27,11 @@ function HeaderLoggedIn() {
           <button className="btn" onClick={handleLogout}>
             <FaSignOutAlt /> Logout
           </button>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <GetBusinessesButton />
         </li>
       </ul>
     </header>
