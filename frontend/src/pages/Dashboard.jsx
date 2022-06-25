@@ -9,11 +9,11 @@ export default function Dashboard() {
   const nav = useNavigate();
   const userValue = useMemo(() => ({ user }), [user]);
 
-  useEffect(() => {
-    if (!user.user) {
-      nav("/login");
-    }
-  }, [userValue]);
+  // useEffect(() => {
+  //   if (!user.user) {
+  //     nav("/login");
+  //   }
+  // }, [userValue]);
 
   return (
     <>

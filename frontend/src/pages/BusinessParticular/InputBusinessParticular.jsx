@@ -1,13 +1,11 @@
 import { AuthContext } from "../../features/auth/authContext";
-import { registerUser } from "../../features/auth/authServices";
 import { FaUser } from "react-icons/fa";
 import { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 
 export default function InputBusinessParticular() {
   const [formData, setFormData] = useState({
     businessName: "",
-    categories: "",
+    category: "",
     hasDigitalized: "",
     productName: "",
     productDescription: "",
@@ -15,21 +13,13 @@ export default function InputBusinessParticular() {
     cost: "",
     platform: "",
   });
-  const { user, dispatch } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   // Message to be shown (if there's error or something)
   const [message, setMessage] = useState("");
-  const nav = useNavigate();
-  /*
-  // If already logged in, then go straight to dashboard
-  useEffect(() => {
-    if (user.user) {
-      nav("/dashboard");
-    }
-  });
-*/
+
   const {
     businessName,
-    categories,
+    category,
     hasDigitalized,
     productName,
     productDescription,
@@ -50,7 +40,7 @@ export default function InputBusinessParticular() {
 
     const businessData = {
       businessName,
-      categories,
+      category,
       hasDigitalized,
       productName,
       productDescription,
@@ -59,12 +49,12 @@ export default function InputBusinessParticular() {
       platform,
     };
 
-    try {
-      const response = await InputBusinessParticular(dispatch, businessData);
-      if (!response || !response.user_id) return;
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   const response = await InputBusinessParticular(dispatch, businessData);
+    //   if (!response || !response.user_id) return;
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   useEffect(() => {
@@ -125,38 +115,23 @@ export default function InputBusinessParticular() {
                     </div>
 
                     <div class="col-12">
-                      <label for="categories" class="form-label">
-                        Categories
+                      <label for="category" class="form-label">
+                        Category
                       </label>
-                      <select class="form-select" id="categories" required>
+                      <select class="form-select" value={formData.category} id="category" name="category" onChange={onChange} required>
                         <option value="">Select below</option>
                         <option
-                          type="text"
-                          class="form-control"
-                          id="categories"
-                          name="categories"
-                          value={categories}
-                          onChange={onChange}
+                          value="Fashion and Clothings"
                         >
                           Fashion and Clothings
                         </option>
                         <option
-                          type="text"
-                          class="form-control"
-                          id="categories"
-                          name="categories"
-                          value={categories}
-                          onChange={onChange}
+                          value="Electronics and Hardwares"
                         >
                           Electronics and Hardwares
                         </option>
                         <option
-                          type="text"
-                          class="form-control"
-                          id="categories"
-                          name="categories"
-                          value={categories}
-                          onChange={onChange}
+                          value="Food and Groceries"
                         >
                           Food and Groceries
                         </option>
@@ -170,28 +145,14 @@ export default function InputBusinessParticular() {
                       <label for="hasDigitalized" class="form-label">
                         Digitalization Progress
                       </label>
-                      <select class="form-select" id="hasDigitalized" required>
-                        <option value="">
+                      <select class="form-select" id="hasDigitalized" name="hasDigitalized" onChange={onChange} required>
+                        <option value={null}>
                           Have you digitalized your business?
                         </option>
-                        <option
-                          type="text"
-                          class="form-control"
-                          id="hasDigitalized"
-                          name="hasDigitalized"
-                          value={hasDigitalized}
-                          onChange={onChange}
-                        >
+                        <option value={true}>
                           Yes
                         </option>
-                        <option
-                          type="text"
-                          class="form-control"
-                          id="hasDigitalized"
-                          name="hasDigitalized"
-                          value={hasDigitalized}
-                          onChange={onChange}
-                        >
+                        <option value={false}>
                           No
                         </option>
                       </select>
@@ -288,6 +249,8 @@ export default function InputBusinessParticular() {
                       <select
                         class="form-select"
                         id="storeLocation"
+                        name="storeLocation"
+                        onChange={onChange}
                         multiple
                         required
                       >
@@ -295,42 +258,22 @@ export default function InputBusinessParticular() {
                           Where do you sell your product?
                         </option>
                         <option
-                          type="text"
-                          class="form-control"
-                          id="platform"
-                          name="platform"
-                          value={platform}
-                          onChange={onChange}
+                          value="Offline Store"
                         >
                           Offline store
                         </option>
                         <option
-                          type="text"
-                          class="form-control"
-                          id="platform"
-                          name="platform"
-                          value={platform}
-                          onChange={onChange}
+                          value="Bukalapak"
                         >
                           Bukalapak
                         </option>
                         <option
-                          type="text"
-                          class="form-control"
-                          id="platform"
-                          name="platform"
-                          value={platform}
-                          onChange={onChange}
+                          value="Tokopedia"
                         >
                           Tokopedia
                         </option>
                         <option
-                          type="text"
-                          class="form-control"
-                          id="platform"
-                          name="platform"
-                          value={platform}
-                          onChange={onChange}
+                          value="Shopee"
                         >
                           Shopee
                         </option>

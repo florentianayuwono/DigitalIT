@@ -30,7 +30,7 @@ const updateBusinessData = asyncHandler(async (req, res) => {
     await pool.query(
       "UPDATE business SET business_name = $1 WHERE business_id = $2 AND manager_id = $3 RETURNING *",
       [businessName, id, req.user.user_id]
-    ); 
+    );
   }
 
   // category
@@ -52,7 +52,7 @@ const updateBusinessData = asyncHandler(async (req, res) => {
   }
 
   res.json("Updated");
-})
+});
 
 const deleteBusinessData = asyncHandler(async (req, res) => {
   const { id } = req.params;
@@ -66,7 +66,7 @@ const deleteBusinessData = asyncHandler(async (req, res) => {
   }
 
   res.json("Business data was deleted.");
- });
+});
 
 module.exports = {
   addBusinessData,
