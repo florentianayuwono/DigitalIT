@@ -19,6 +19,12 @@ app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/business", require("./routes/businessRoutes"));
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
+/* CHANGE: for product and store related backend API */
+// product particulars and data
+app.use("/api/product", require("./routes/productRoutes"));
+// store particulars and data
+app.use("/api/store", require("./routes/storeRoutes"));
+
 if (process.env.NODE_ENV == "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
 

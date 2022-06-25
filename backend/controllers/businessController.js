@@ -12,12 +12,12 @@ const addBusinessData = asyncHandler(async (req, res) => {
 });
 
 const getBusinessData = asyncHandler(async (req, res) => {
-  const user = await pool.query(
-    "SELECT b.business_id, b.business_name, b.categories, b.has_digitalized FROM business AS b LEFT JOIN user_account AS u ON u.user_id = b.manager_id WHERE u.user_id = $1",
+  const business = await pool.query(
+    "SELECT b.business_name, b.categories, b.has_digitalized FROM business AS b LEFT JOIN user_account AS u ON u.user_id = b.manager_id WHERE u.user_id = $1",
     [req.user.user_id]
   );
-
-  res.json(user.rows);
+  
+  res.json(business.rows);
 });
 
 const updateBusinessData = asyncHandler(async (req, res) => {
