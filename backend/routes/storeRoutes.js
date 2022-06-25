@@ -8,7 +8,7 @@ const {
 const { protect } = require("../middlewares/authMiddleware");
 
 router.route("/").get(protect, getStoreData);
-router.post("/add", protect, addStoreData);
+router.post("/", protect, addStoreData);
 router
   .route("/:id")
   .get(protect, getStoreData)
