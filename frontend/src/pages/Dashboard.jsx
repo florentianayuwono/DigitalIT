@@ -9,11 +9,11 @@ export default function Dashboard() {
   const nav = useNavigate();
   const [isSubmitted, refresh] = useState(false);
 
-  // useEffect(() => {
-  //   if (!user.user) {
-  //     nav("/login");
-  //   }
-  // }, [userValue]);
+  useEffect(() => {
+    if (!user.user) {
+      nav("/login");
+    }
+  });
 
   const onClick = () => {
     refresh((prev) => !prev);
@@ -26,6 +26,7 @@ export default function Dashboard() {
 
     return () => refresh(false);
   }, [isSubmitted]);
+
 
   return (
     <>
