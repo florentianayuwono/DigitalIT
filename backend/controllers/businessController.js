@@ -17,7 +17,7 @@ const getBusinessData = asyncHandler(async (req, res) => {
     [req.user.user_id]
   );
 
-  res.status(200).json(user.rows);
+  res.status(200).json(business.rows);
 });
 
 const updateBusinessData = asyncHandler(async (req, res) => {
