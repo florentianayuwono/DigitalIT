@@ -29,6 +29,7 @@ export default function InputBusinessParticular() {
 
   // Message to be shown (if there's error or something)
   const [message, setMessage] = useState("");
+  const [status, setStatus] = useState("");
 
   const {
     businessName,
@@ -59,7 +60,8 @@ export default function InputBusinessParticular() {
 
     try {
       const response = await addBusiness(dispatch, businessData);
-      if (!response || !response.user_id) return;
+      if (!response || !response.business_id) return;
+      setStatus((prev) => "Successfully added business!");
     } catch (error) {
       console.log(error);
     }
@@ -69,7 +71,7 @@ export default function InputBusinessParticular() {
   useEffect(() => {
     setMessage(businesses.message);
 
-    return () => setMessage("");
+    // return () => setMessage("");
   }, [businesses.message]);
 
   useEffect(() => {
@@ -87,7 +89,7 @@ export default function InputBusinessParticular() {
           <FaUser /> Business Particulars
         </h1>
 
-        {message === "" ? <p>Input Your Business Details</p> : message}
+        <p>Input Your Business Details</p>
       </section>
       <section className="businessForm">
         <div className="container">
@@ -305,6 +307,7 @@ export default function InputBusinessParticular() {
                   <button className="w-100 btn btn-primary btn-lg" type="submit">
                     Save Information
                   </button>
+                  {status === "" ? message : status}
                 </form>
               </div>
             </div>
