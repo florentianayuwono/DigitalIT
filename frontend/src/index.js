@@ -22,11 +22,11 @@ root.render(
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<App />}>
+              <Route index element={<Landing />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
 
               <Route path="dashboard" element={<Dashboard />} />
-              <Route path="landing" element={<Landing />} />
               <Route
                 path="business"
                 element={<DisplayBusinessParticular />}
