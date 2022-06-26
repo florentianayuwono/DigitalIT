@@ -13,7 +13,7 @@ const addBusinessData = asyncHandler(async (req, res) => {
 
 const getBusinessData = asyncHandler(async (req, res) => {
   const business = await pool.query(
-    "SELECT b.business_name, b.categories, b.has_digitalized FROM business AS b LEFT JOIN user_account AS u ON u.user_id = b.manager_id WHERE u.user_id = $1",
+    "SELECT b.business_id, b.business_name, b.categories, b.has_digitalized FROM business AS b LEFT JOIN user_account AS u ON u.user_id = b.manager_id WHERE u.user_id = $1",
     [req.user.user_id]
   );
 
