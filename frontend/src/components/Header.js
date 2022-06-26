@@ -36,7 +36,7 @@ function HeaderLoggedOut() {
   return (
     <header className="header">
       <div className="logo">
-        <Link to="/landing">Home</Link>
+        <Link to="/">Home</Link>
       </div>
       <ul>
         <li>
