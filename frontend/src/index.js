@@ -8,12 +8,11 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Landing from "./pages/Landing";
 import { AuthProvider } from "./features/auth/authContext";
-import AddBusiness from "./pages/AddBusiness";
+import AddBusiness from "./pages/BusinessParticular/AddBusiness";
 import DisplayBusinessParticular from "./pages/BusinessParticular/DisplayBusinessParticular";
 import { BusinessProvider } from "./features/business/businessContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
 
 // Fix this mess in next stage.
 root.render(
@@ -25,10 +24,14 @@ root.render(
             <Route path="/" element={<App />}>
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
-              
+
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="landing" element={<Landing />} />
-              <Route path="business" element={<DisplayBusinessParticular />} />
+              <Route
+                path="business"
+                element={<DisplayBusinessParticular />}
+              ></Route>
+              <Route path="business/add" element={<AddBusiness />} />
 
               {/* For routes that doesn't exist*/}
               <Route

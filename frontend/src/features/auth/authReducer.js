@@ -1,10 +1,10 @@
 const temp = JSON.parse(localStorage.getItem("user"));
-const user = temp ? temp.user : null;
+const user = temp ? temp.user_id : null;
 const token = user ? user.token : null;
 
 export const initialAuthState = {
   user: user ? user : null,
-  username: "",
+  username: user ? temp.fullName : "",
   token: token ? token : null,
   isLoading: false,
   isError: false,
