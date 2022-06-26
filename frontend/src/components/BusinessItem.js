@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 export const BusinessItem = (props) => {
   return (
     <>
-      <Button variant="primary" size="lg" active>
+      <Button variant="outline-info" size="lg" active>
         {props.business.business_name}
       </Button>
     </>

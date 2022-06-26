@@ -41,12 +41,13 @@ export default function DisplayBusinessParticular() {
     <>
       <div className="d-grid gap-5">
         {businessesState.map((business) => (
-          <BusinessItem business={business} />
+          <BusinessItem business={business} key={business.business_id} />
         ))}
         <Button variant="secondary" size="lg" onClick={onClick}>
           Add New
         </Button>
       </div>
+      <footer className="pt-3 mt-4 text-muted border-top">&copy; 2022</footer>
     </>
   );
 }
