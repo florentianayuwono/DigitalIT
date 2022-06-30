@@ -55,7 +55,7 @@ export default function Dashboard() {
           <div className="row align-items-md-stretch">
             <div className="col-md-6">
               <div className="h-100 p-5 text-white bg-dark rounded-3">
-                <h2>Level up your game</h2>
+                <h2 className="text-white">Level up your game</h2>
                 <p>
                   At DigitalIT, we are committed to be your personal business
                   consultant and accompany your rocky journey. Find out the next

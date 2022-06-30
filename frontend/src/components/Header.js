@@ -13,7 +13,13 @@ function HeaderLoggedIn() {
   return (
     <header className="header">
       <div className="logo">
-        <Link to="/">Home</Link>
+        <Link to="/">
+          <img
+            className="d-block mx-auto mb-4"
+            src="/images/DigitalIT Logo.png"
+            alt=""
+          />
+        </Link>
       </div>
       <ul>
         <li>
@@ -35,7 +41,13 @@ function HeaderLoggedOut() {
   return (
     <header className="header">
       <div className="logo">
-        <Link to="/">Home</Link>
+        <Link to="/">
+          <img
+            className="d-block mx-auto mb-4"
+            src="/images/DigitalIT Logo.png"
+            alt=""
+          />
+        </Link>
       </div>
       <ul>
         <li>
