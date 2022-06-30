@@ -130,6 +130,8 @@ export const businessReducer = (state, action) => {
       };
 
       return newState;
+    case "RESET":
+      return initialBusinessState;
     default:
       throw new Error(`No matching action for ${action.type}`);
   }

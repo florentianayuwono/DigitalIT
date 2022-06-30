@@ -1,7 +1,7 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaSignInAlt } from "react-icons/fa";
-import { AuthContext } from "../features/auth/authContext";
+import { useAuthContext } from "../features/auth/authContext";
 import { loginUser } from "../features/auth/authServices";
 
 export default function Login(props) {
@@ -9,7 +9,7 @@ export default function Login(props) {
     name: "",
     email: "",
   });
-  const { user, dispatch } = useContext(AuthContext);
+  const { user, dispatch } = useAuthContext();
   const [message, setMessage] = useState("");
 
   const nav = useNavigate();

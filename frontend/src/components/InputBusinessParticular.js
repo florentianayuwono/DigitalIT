@@ -1,7 +1,7 @@
-import { AuthContext } from "../features/auth/authContext";
+import { useAuthContext } from "../features/auth/authContext";
 import { FaUser } from "react-icons/fa";
-import { useState, useEffect, useContext } from "react";
-import { BusinessContext } from "../features/business/businessContext";
+import { useState, useEffect } from "react";
+import { useBusinessContext } from "../features/business/businessContext";
 import { addBusiness } from "../features/business/businessServices";
 import { useNavigate } from "react-router-dom";
 
@@ -16,8 +16,8 @@ export default function InputBusinessParticular() {
     cost: "",
     platform: "",
   });
-  const { businesses, dispatch } = useContext(BusinessContext);
-  const { user } = useContext(AuthContext);
+  const { businesses, dispatch } = useBusinessContext();
+  const { user } = useAuthContext();
   const [ isSubmitted, refresh ] = useState(false);
   const nav = useNavigate();
 

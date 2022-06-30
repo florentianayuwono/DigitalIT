@@ -1,15 +1,15 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getBusinesses } from "../../features/business/businessServices";
-import { BusinessContext } from "../../features/business/businessContext";
+import { useBusinessContext } from "../../features/business/businessContext";
 import { BusinessItem } from "../../components/BusinessItem";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../features/auth/authContext";
+import { useAuthContext } from "../../features/auth/authContext";
 import Button from "react-bootstrap/esm/Button";
 
 export default function DisplayBusinessParticular() {
-  const { businesses, dispatch } = useContext(BusinessContext);
+  const { businesses, dispatch } = useBusinessContext();
   const [businessesState, setBusinesses] = useState(businesses.businesses);
-  const { user } = useContext(AuthContext);
+  const { user } = useAuthContext();
 
   const nav = useNavigate();
 

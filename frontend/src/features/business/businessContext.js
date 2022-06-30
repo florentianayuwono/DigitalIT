@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useContext } from "react";
 import { initialBusinessState, businessReducer } from "./businessReducer";
 
 export const BusinessContext = createContext();
@@ -11,6 +11,9 @@ const combineDispatch = (...dispatches) => {
   };
 };
 */
+export const useBusinessContext = () => {
+  return useContext(BusinessContext);
+};
 
 export const BusinessProvider = ({ children }) => {
   const [businesses, dispatch] = useReducer(

@@ -3,7 +3,7 @@ import axios from "axios";
 const API_LINK =
   process.env.NODE_ENV === "production"
     ? "/api/business/"
-    : "http://localhost:5000/api/business/";
+    : "https://orbital-digital-it.herokuapp.com/api/business/";
 
 export const getBusinesses = async (dispatch) => {
   const token = JSON.parse(localStorage.getItem("user")).token;
@@ -15,6 +15,7 @@ export const getBusinesses = async (dispatch) => {
   };
 
   try {
+    dispatch({ type: "RESET"});
     dispatch({ type: "REQUEST_BUSINESSES" });
 
     const response = await axios.get(API_LINK, config);

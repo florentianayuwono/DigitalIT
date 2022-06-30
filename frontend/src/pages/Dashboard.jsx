@@ -1,11 +1,9 @@
-import { AuthContext } from "../features/auth/authContext";
-import { useContext } from "react";
+import { useAuthContext} from "../features/auth/authContext";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMemo } from "react";
 
 export default function Dashboard() {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuthContext(); 
   const nav = useNavigate();
   const [isSubmitted, refresh] = useState(false);
 
