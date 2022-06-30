@@ -1,5 +1,4 @@
 import { FaSignInAlt, FaSignOutAlt, FaUser, FaDashcube } from "react-icons/fa";
-import { useContext } from "react";
 import { useAuthContext } from "../features/auth/authContext";
 import { logoutUser } from "../features/auth/authServices";
 import { Link } from "react-router-dom";

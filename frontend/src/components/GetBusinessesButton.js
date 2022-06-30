@@ -1,11 +1,10 @@
 // This also is just a sketch to test the getBusinesses function in the businessServices.js file
-import { useContext } from "react";
 import { getBusinesses } from "../features/business/businessServices";
-import { BusinessContext } from "../features/business/businessContext";
+import { useBusinessContext } from "../features/business/businessContext";
 
 // Use the business context to get the businesses
 function GetBusinessesButton() {
-  const {dispatch} = useContext(BusinessContext);
+  const {dispatch} = useBusinessContext();
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
