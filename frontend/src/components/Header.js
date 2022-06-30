@@ -1,11 +1,11 @@
 import { FaSignInAlt, FaSignOutAlt, FaUser, FaDashcube } from "react-icons/fa";
 import { useContext } from "react";
-import { AuthContext } from "../features/auth/authContext";
+import { useAuthContext } from "../features/auth/authContext";
 import { logoutUser } from "../features/auth/authServices";
 import { Link } from "react-router-dom";
 
 function HeaderLoggedIn() {
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch } = useAuthContext();
 
   const handleLogout = async () => {
     await logoutUser(dispatch);
@@ -55,7 +55,7 @@ function HeaderLoggedOut() {
 }
 
 function Header() {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuthContext();
 
   return user.user ? <HeaderLoggedIn /> : <HeaderLoggedOut />;
 }

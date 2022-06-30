@@ -1,7 +1,7 @@
-import { AuthContext } from "../features/auth/authContext";
+import { useAuthContext } from "../features/auth/authContext";
 import { registerUser } from "../features/auth/authServices";
 import { FaUser } from "react-icons/fa";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
@@ -11,7 +11,7 @@ export default function Register() {
     password: "",
     phoneNumber: "",
   });
-  const { user, dispatch } = useContext(AuthContext);
+  const { user, dispatch } = useAuthContext();
   // Message to be shown (if there's error or something)
   const [message, setMessage] = useState("");
   const nav = useNavigate();
