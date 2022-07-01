@@ -80,7 +80,7 @@ const updateBusinessData = asyncHandler(async (req, res) => {
   res.status(200).json("Updated");
 });
 
-// @desc    Update business data
+// @desc    Delete business data
 // @route   DELETE /api/business/:id
 // @access  Private
 const deleteBusinessData = asyncHandler(async (req, res) => {
