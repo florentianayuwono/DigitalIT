@@ -1,6 +1,9 @@
 const asyncHandler = require("express-async-handler");
 const pool = require("../config/db");
 
+// @desc    Register new business
+// @route   POST /api/business/
+// @access  Private
 const addBusinessData = asyncHandler(async (req, res) => {
   const { businessName, category, hasDigitalized } = req.body;
   const newBusiness = await pool.query(
@@ -11,9 +14,13 @@ const addBusinessData = asyncHandler(async (req, res) => {
   res.status(201).json(newBusiness.rows[0]);
 });
 
+// @desc    Get business data
+// @route   GET /api/business/:id
+// @access  Private
 const getBusinessData = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
+  // If there is id, then return specific business with that id
   if (id) {
     const specificBusiness = await pool.query(
       "SELECT b.business_id, b.business_name, b.categories, b.has_digitalized FROM business AS b LEFT JOIN user_account AS u ON u.user_id = b.manager_id WHERE u.user_id = $1 AND b.business_id = $2",
@@ -31,6 +38,8 @@ const getBusinessData = asyncHandler(async (req, res) => {
                 "This user doesn't have this business or this business doesn't exist",
             }
       );
+  
+  // There is no id, therefore return all businesses that this user has
   } else {
     const business = await pool.query(
       "SELECT b.business_id, b.business_name, b.categories, b.has_digitalized FROM business AS b LEFT JOIN user_account AS u ON u.user_id = b.manager_id WHERE u.user_id = $1",
@@ -41,10 +50,14 @@ const getBusinessData = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Update business data
+// @route   PUT /api/business/:id
+// @access  Private
 const updateBusinessData = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { businessName, category, progress } = req.body;
 
+  // Update information based on the changes that the user made
   if (businessName) {
     await pool.query(
       "UPDATE business SET business_name = $1 WHERE business_id = $2 AND manager_id = $3 RETURNING *",
@@ -69,6 +82,9 @@ const updateBusinessData = asyncHandler(async (req, res) => {
   res.status(200).json("Updated");
 });
 
+// @desc    Update business data
+// @route   DELETE /api/business/:id
+// @access  Private
 const deleteBusinessData = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const deleteBusiness = await pool.query(
