@@ -63,11 +63,12 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new Error("Please complete all required fields.");
   }
 
+  // Retrieve user
   const user = await pool.query("SELECT * FROM user_account WHERE email = $1", [
     email,
   ]);
 
-  if (user.rows[0] && await bcrypt.compare(password, user.rows[0].password)) {
+  if (user.rows[0] && (await bcrypt.compare(password, user.rows[0].password))) {
     const userRow = user.rows[0];
 
     res.json({
@@ -90,7 +91,7 @@ const getUser = asyncHandler(async (req, res) => {
     "SELECT * FROM user_account WHERE user_id = $1",
     [req.user.user_id]
   );
-  const { user_id, fullName , email } = request.rows[0];
+  const { user_id, fullName, email } = request.rows[0];
 
   res.status(200).json({
     user_id,

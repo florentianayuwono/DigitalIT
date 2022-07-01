@@ -7,10 +7,8 @@ const PORT = process.env.PORT || 5000;
 
 const app = express();
 
-
 app.use(cors());
 app.use(express.json());
-
 
 /* ROUTES for user and business related backend API */
 // user particulars and data
@@ -19,7 +17,7 @@ app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/business", require("./routes/businessRoutes"));
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-/* CHANGE: for product and store related backend API */
+/* ROUTES for product and store related backend API */
 // product particulars and data
 app.use("/api/product", require("./routes/productRoutes"));
 // store particulars and data
@@ -29,13 +27,13 @@ if (process.env.NODE_ENV == "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
 
   // For all routes that are not the api routes specified above, direct to frontend's index.html
-  app.get('*', (req, res) => {
+  app.get("*", (req, res) => {
     res.sendFile(
-      path.resolve(__dirname, "../", "frontend", "build", "index.html"),
+      path.resolve(__dirname, "../", "frontend", "build", "index.html")
     );
-  })
+  });
 } else {
-  app.get('/', (req, res) => res.send("Please set to production"));
+  app.get("/", (req, res) => res.send("Please set to production"));
 }
 
 app.use(errorHandler);
