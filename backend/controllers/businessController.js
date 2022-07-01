@@ -12,12 +12,24 @@ const addBusinessData = asyncHandler(async (req, res) => {
 });
 
 const getBusinessData = asyncHandler(async (req, res) => {
-  const business = await pool.query(
-    "SELECT b.business_id, b.business_name, b.categories, b.has_digitalized FROM business AS b LEFT JOIN user_account AS u ON u.user_id = b.manager_id WHERE u.user_id = $1",
-    [req.user.user_id]
-  );
+  const { id } = req.params;
 
-  res.status(200).json(business.rows);
+  if (id) {
+    const specificBusiness = await pool.query(
+      "SELECT b.business_id, b.business_name, b.categories, b.has_digitalized FROM business AS b LEFT JOIN user_account AS u ON u.user_id = b.manager_id WHERE u.user_id = $1 AND b.business_id = $2",
+      [req.user.user_id, id]
+    );
+    
+    const result = specificBusiness.rows[0];
+    res.status(result ? 200 : 404).json(result ? result : {message: "This user doesn't have this business or this business doesn't exist"});
+  } else {
+    const business = await pool.query(
+      "SELECT b.business_id, b.business_name, b.categories, b.has_digitalized FROM business AS b LEFT JOIN user_account AS u ON u.user_id = b.manager_id WHERE u.user_id = $1",
+      [req.user.user_id]
+    );
+
+    res.status(200).json(business.rows);
+  }
 });
 
 const updateBusinessData = asyncHandler(async (req, res) => {
