@@ -27,7 +27,7 @@ export default function RouteManager() {
           </Route>
 
           {/* For routes that doesn't exist*/}
-          <Route path="*" element={InvalidLink} />
+          <Route path="*" element={<InvalidLink />} />
         </Route>
       </Route>
     </Routes>
