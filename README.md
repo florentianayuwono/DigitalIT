@@ -1,10 +1,10 @@
-# Milestone I Submission
+# Milestone II Submission
 
 ## Team Name
 DigitalIT
 
 ## Proposed Level of Achievement
-Apollo
+Apollo 11
 
 ## Motivation
 Digitalizing one's business is often regarded as the most fundamental thing we should do in today's world. From setting up a seller account in Instagram, Facebook, Shoppee, hiring influencers to review and promote our products and services, using online finance and banking tools in keeping track of our business performance - the list is never ending!
@@ -71,7 +71,9 @@ DigitalIT features are outlined in the following sections, organized by the foll
 2. Log in
 3. Forgot password
 
-**Current Progress** - we have finished the design of Sign up, Log in and Forgot password pages using Figma. Currently we have the working form of Sign up and Log in with basic styling.
+**Current Progress**
+Milestone 1: We have finished the design of Sign up, Log in and Forgot password pages using Figma. Currently we have the working form of Signup and Log in with basic styling.
+Milestone 2: We have finished creating and deploying the feature for Sign up, Login and authentication of users.
 
 **Additional Features** - users can read and agree on these pages before signing up:
 1. Terms and conditions
@@ -89,9 +91,22 @@ DigitalIT features are outlined in the following sections, organized by the foll
 
 This is the very first task that the users need to complete in order to be able to use our service. This data will then be stored in DigitalIT database and will be used to generate insights and recommended strategies.
 
-**Current Progress** - a form that enables users to key in business information such as:
+**Current Progress**
+Milestone 1:
+A form that enables users to key in business information such as:
 1. Business name
 2. Focus area or categories
+
+Milestone 2:
+A form that enables users to key in business information such as:
+1. Business name (text based)
+2. Focus area or categories (dropdown)
+3. Current progress of digitalization (dropdown)
+4. Product and services information such as name, description, price and cost (text and number based)
+5. Store information such as platforms the user currently use to sell the goods (dropdown)
+
+The information is able to be stored automatically on the DigitalIT database. The database design and backend for viewing, editing and deleting these information have also been built.
+
 
 **Additional Feature** - improve the user experience and accuracy of the data by adding functionality to accomodate for:
 1. Automatic integration of data, if the users have previously stored their business financial data in other applications such as Microsoft Excel, Buku Kas and other bookkeeping applications
@@ -108,7 +123,11 @@ This is the very first task that the users need to complete in order to be able 
 
 The recommendations will be updated indefinitely to suit the business condition that changes from time to time, which in turn will be reflected once the users update their data. The recommendations will also require users to update their progress, such as telling DigitalIT which platforms they decide to use and the sales generated from each platform. Ultimately, the concept will follow a mission-based game system, in which users are required to continue on hitting each milestone before moving on to the next part.
 
-**Current Progress** - we are providing basic recommendation on e-commerce platform based on the business type using dropdowns menu and simple if-else algorithm.
+**Current Progress** 
+Milestone 1:
+We are providing basic recommendations on e-commerce platforms based on the business type using dropdowns menu and simple if-else algorithm.
+Milestone 2:
+We disabled the previous feature progress to be able to work on the improvised version with machine learning.
 
 **Additional Feature** - we are hoping to integrate machine learning into our algorithm to allow for more precise recommendations to enhance business in aspects such as digital marketing and pricing strategies. For example, DigitalIT will be able to retrieve information on prices of similar products offered by our users and recommend on suitable pricing tiers to optimize profit.
 
@@ -139,7 +158,11 @@ The generated result will be in a easy-to-understand charts and tables, as we wa
 1. Review and Discussion section for users to key in their concerns and issues with the recommended platforms or other general topics. Users can communicate with other users in this section, creating an "asking for an advice" environment.
 2. Ideation section for users who have yet to build their business. This section will help users in decision making process from scratch.
 
+
 ## Diagram
+
+### Current Implementation
+
 ### Project and Database Design Map
 ![image](https://user-images.githubusercontent.com/76247368/170954200-661d741f-6d82-4db0-a415-c396a49f899f.png)
 
@@ -149,25 +172,81 @@ The generated result will be in a easy-to-understand charts and tables, as we wa
 ### React, API and Database Mapping
 ![image](https://user-images.githubusercontent.com/76247368/170954268-2b79e51e-b41e-467b-ae88-b3f74430d083.png)
 
-## Timeline and Development Plan
-| MS |	Task	| Description	| Person In-Charge |	Date |
-| --- | --- | --- | --- | --- |
-||	Preliminary research on business digitalization needs and tools |	Familiarize with available e-commerce platforms and digital banking or financial tools available in Indonesia |	Arsyad & Floren |	10 – 15 May |
-||	Grand design of the web application |	Map the overall system, such as integration between user, frontend, backend and database |	Arsyad	| 16 – 22 May |
-||| Design the user flow and Figma prototype |	Floren	|
-| 1 | Basic realization of web application that works on localhost	| Build the frontend display to enable basic features such as Sign In and Log In and navigation between pages |	Floren |	23 – 25 May |
-|||	Build the backend framework, such as controllers, middleware, routes and server	| Arsyad	|
-|||	Build the Dashboard for users to key in the business information and simple recommendation generation	| Floren	| 26 – 29 May |
-|||	Set up the database of DigitalIT and testing of sending and posting user data	| Arsyad	|
 
-### Evaluation Milestone 1 (30 May)
-**Ideation**
-- [Poster](https://drive.google.com/file/d/1rX7za62RaUTeCFa2GgRoqO3HT0qqB9Qb/view?usp=sharing)
-- [Video](https://drive.google.com/file/d/1g17o1f-4Qixqsoz_eJqggDwQwcF2iJJA/view?usp=sharing)
-- [Figma prototype](https://www.figma.com/proto/VXxKDwZek0VMqg2x39RwPr/DigitalIT-Orbital?node-id=46%3A40&scaling=scale-down&page-id=46%3A38&starting-point-node-id=46%3A40)
+## Tech Stack
 
-**Proof of concept**
-- Web application that can run on localhost for users to test out.
+### Heroku
+Online database to store information and deploy our web application.
 
-**Work log**
-- Refer to this [spreadsheet](https://docs.google.com/spreadsheets/d/1jsP8Ze1n_VNq5SzKchqSWBlT14Fb4PC3CkECqB2x5DQ/edit?usp=sharing).
+### GitHub
+Collaborate, version control and organize our workflow.
+
+### Express + Node.js
+Build the backend and control the server routing. request, etc.
+
+### Figma
+Build design prototype and customized elements.
+
+### React
+Build user interfaces for our web application.
+
+### PostgreSQL
+Primary database.
+
+
+## Software Engineering Principles
+
+### Project Management
+We make use of GitHub Projects (classic) for organizing tasks into 3 categories: To Do, In Progress and Done. We are still new to this GitHub feature, so hopefully we will be able to implement a more sophisticated project management in future work.
+
+
+### Version Control
+We make use of Git and GitHub for version control of our product. Currently we have 107 commits on the main branch, 16 pull requests (closed), 5 issues (closed) and 9 branches. We assign each other as reviewers, put labels, projects  and milestones on each pull request and issues to make sure we are always updated on each other's work.
+
+
+### Continuous Deployment
+We have opted to host our database and web application on Heroku.
+
+
+## Quality Assurance
+
+### Manual Testing
+
+Smoke Testing - 
+We perform smoke testing whenever a new feature or improvement is added to the main branch to ensure that the new feature is working. Testing is usually done directly through the web application after deployment. Before deployment, we use Postman to test the server and routing connection.
+
+Regression Testing - 
+We perform regression testing whenever a new feature or improvement is added to the main branch to ensure that all the previous features are still working. Testing is usually done by several steps:
+1. Work on a separate branch for new feature
+2. Make a pull request in GitHub and assign another member as reviewer. Reviewer then reviews the changes (addition and deletion) made to the code and solve conflicts
+3. Test all the existing and new features are working properly using Postman and/or deploy the branch using Heroku
+4. If all features are working fine, merge the branch to the main and it will be continuously deployed
+5. Test again by visiting the deployed link on another devices or at later time
+
+## Automated Testing
+Not available. We plan on setting up automated testing  by using features available on Postman.
+
+## Limitations
+In this section, we would like to discuss various problems and constraints that we face during the development process. Some of these limitations result from our own choices, while some are inevitable.
+### Heroku Free Version
+Since we host our database using Heroku free-tier plan, there will be limitations on the type of testing that we can perform.
+### Slow Progress
+We opt for a “traditional” tech stack and try to code everything from scratch for a better learning experience. Therefore it usually takes us a while to build, integrate and deploy new features.
+### Time Constraint
+It may be due to the lack of our time management skill, but we do feel like we are lacking behind our plan. We have not yet implemented our most essential feature, and might not be able to bring the [ Additional Features ] into realization. However, we do plan to make more efforts for the next milestone.
+
+
+## Conclusion
+While we are not really satisfied with our performance for this milestone, we still believe that we will be able to complete the proposed features by Milestone 3 / Splashdown. Aspects that we would like to improve in the next milestone are as follow:
+### Better code
+We would like to improve our code efficiency and readability by enhancing its structure, usage and documentation.
+### Better design
+Our web application is still using the Bootstrap pre-made design with modifications to suit our needs. We would like to make further modifications to introduce customized elements and increase our identity.
+### Better workflow
+We would like to exploit more of the GitHub features to increase our collaboration effort. Some of them include CI/CD, Actions and Projects.
+### Better feature
+Bugs-free and achieve our goals.
+
+
+# Appendix
+Refer to this [document](https://docs.google.com/document/d/1xibS-kvBRR_ODVdeFJM3MOX6dzGsIJrJ/edit?usp=sharing&ouid=103654914173748571741&rtpof=true&sd=true) for more detailed README.
