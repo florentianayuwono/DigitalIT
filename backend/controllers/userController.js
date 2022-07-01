@@ -84,7 +84,7 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 // @desc    Get user data
-// @route   Get /api/users/dashboard
+// @route   GET /api/users/dashboard
 // @access  Private
 const getUser = asyncHandler(async (req, res) => {
   const request = await pool.query(
@@ -101,7 +101,7 @@ const getUser = asyncHandler(async (req, res) => {
 });
 
 // @desc    Delete user data
-// @route   Get /api/users/delete
+// @route   DELETE /api/users/delete
 // @access  Private
 const deleteUser = asyncHandler(async (req, res) => {
   const process = await pool.query(
