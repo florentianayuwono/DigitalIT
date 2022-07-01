@@ -100,7 +100,9 @@ const getUser = asyncHandler(async (req, res) => {
   });
 });
 
-//** FOR ADMIN PURPOSES ONLY. DELETE WHEN DEPLOYING */
+// @desc    Delete user data
+// @route   Get /api/users/delete
+// @access  Private
 const deleteUser = asyncHandler(async (req, res) => {
   const process = await pool.query(
     "DELETE FROM user_account WHERE user_id = $1",
@@ -111,7 +113,7 @@ const deleteUser = asyncHandler(async (req, res) => {
     res.status(200).json("success");
   } else {
     res.status(400);
-    throw new Error("Fail to delete; bad request");
+    throw new Error("Failed to delete.");
   }
 });
 
