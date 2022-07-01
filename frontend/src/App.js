@@ -1,15 +1,14 @@
-import React, { Fragment } from "react";
-
-// Components
-import LoginForm from "./components/LoginForm";
+import React from "react";
+import Header from "./components/Header";
+import { Outlet } from "react-router-dom";
 
 function App() {
-  return <Fragment>
+  return (
     <div className="container">
-      <LoginForm>
-      </LoginForm>
+      <Header />
+      <Outlet />
     </div>
-  </Fragment>;
+  );
 }
 
 export default App;

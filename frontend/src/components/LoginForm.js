@@ -3,14 +3,14 @@ import React, { Fragment, useState } from "react";
 const LoginForm = () => {
   const [email, setEmail] = useState("input your email");
   const [password, setPassword] = useState("");
-  const [status, setStatus] = useState("empty status"); 
+  const [status, setStatus] = useState("not logged in"); 
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
 
     try {
       const body = { "email": email, "password": password };
-      const response = await fetch("http://localhost:5000/api/users/login", {
+      const response = await fetch("/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
@@ -28,7 +28,6 @@ const LoginForm = () => {
 
   return (
     <Fragment>
-      <h1 className="text-center mt-5">(!!˃ᆺ˂) This is a funny login page (˃ᆺ˂)</h1>
       <form className="d-flex mt-5" onSubmit={onSubmitForm}>
         <input
           type="text"
