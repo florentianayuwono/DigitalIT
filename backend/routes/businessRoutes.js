@@ -11,6 +11,7 @@ const { protect } = require("../middlewares/authMiddleware");
 router.route("/").get(protect, getBusinessData).post(protect, addBusinessData);
 router
   .route("/:id")
+  .get(protect, getBusinessData)
   .put(protect, updateBusinessData)
   .delete(protect, deleteBusinessData);
 
