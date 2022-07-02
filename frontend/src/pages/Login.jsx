@@ -58,7 +58,7 @@ export default function Login(props) {
           <FaSignInAlt /> Login
         </h1>
 
-        {message === "" ? <p>Login</p> : message}
+        {message === "" ? <p>Start digitalizing</p> : message}
       </section>
 
       <section className="form">
