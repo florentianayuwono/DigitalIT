@@ -80,8 +80,8 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <footer className="pt-3 mt-4 text-muted border-top">
-            &copy; 2022
+          <footer className="pt-3 mt-4 text-muted border-top landing">
+            &copy; DigitalIT 2022
           </footer>
         </div>
       </main>
