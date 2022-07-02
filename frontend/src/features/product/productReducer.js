@@ -52,18 +52,18 @@ export const productReducer = (state, action) => {
         message: "",
       };
     case "GET_PRODUCTS_SUCCESS":
+      let newProducts = {};
+      action.payload.forEach(product => newProducts[product.product_id] = productWithoutID(product));
+
       return {
         ...state,
         isLoading: false,
         isError: false,
         isSuccess: true,
         message: "",
-        products: action.payload.reduce((acc, product) => {
-          acc[product.product_id] = productCreator(product);
-          return acc;
-        })
-        // products: action.payload.map(productCreator),
+        products: newProducts,
       };
+
     case "GET_PRODUCT_SUCCESS":
       return {
         ...state,
