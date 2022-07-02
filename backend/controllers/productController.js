@@ -31,7 +31,14 @@ const addProductData = asyncHandler(async (req, res) => {
 // @access  Private
 const getProductData = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { business_id } = req.body;
+  /*
+  The next line is edited from req.body to req.headers because it seems that
+  using the body for HTTP GET Requests is not a recommended practice and is not
+  supported by the libraries used in frontend.
+  
+  This change might also have to be applied to other controllers as well.
+  */
+  const business_id = req.headers.business_id;
   const manager_id = await pool.query(
     "SELECT manager_id from business WHERE business_id = $1",
     [business_id]
@@ -44,7 +51,7 @@ const getProductData = asyncHandler(async (req, res) => {
   // If there is id specified, return the specified product
   if (id) {
     const specificProduct = await pool.query(
-      "SELECT p.product_name, p.product_description, p.price, p.cost FROM product AS p LEFT JOIN business AS b ON b.business_id = p.business_id WHERE b.business_id = $1 AND p.product_id = $2",
+      "SELECT p.product_id, p.product_name, p.product_description, p.price, p.cost FROM product AS p LEFT JOIN business AS b ON b.business_id = p.business_id WHERE b.business_id = $1 AND p.product_id = $2",
       [business_id, id]
     );
 
@@ -52,7 +59,7 @@ const getProductData = asyncHandler(async (req, res) => {
     // Since there is no id specified, return all the products that this business has
   } else {
     const product = await pool.query(
-      "SELECT p.product_name, p.product_description, p.price, p.cost FROM product AS p LEFT JOIN business AS b ON b.business_id = p.business_id WHERE b.business_id = $1",
+      "SELECT p.product_id, p.product_name, p.product_description, p.price, p.cost FROM product AS p LEFT JOIN business AS b ON b.business_id = p.business_id WHERE b.business_id = $1",
       [business_id]
     );
 

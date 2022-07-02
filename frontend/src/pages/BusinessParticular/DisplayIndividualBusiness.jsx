@@ -1,6 +1,15 @@
-export const DisplayIndividualBusiness = (props) => {
-  const { business_name, categories, has_digitalized } = props.business;
+import { useEffect } from "react";
+import { Outlet, useNavigate, useOutletContext } from "react-router-dom";
+import Products from "../Product/Products";
 
+export const DisplayIndividualBusiness = (props) => {
+  const [selectedBusiness] = useOutletContext();
+  const { business_id, business_name, categories, has_digitalized } = selectedBusiness;
+  const nav = useNavigate();
+
+  useEffect(() => {
+    nav("/business/display/" + business_id);
+  }, [nav, selectedBusiness]);
 
   return (
     <>
@@ -17,6 +26,9 @@ export const DisplayIndividualBusiness = (props) => {
             </h3>
           </div>
         </div>
+      </div>
+      <div className="col-md-12">
+        <Outlet />
       </div>
     </>
   );
