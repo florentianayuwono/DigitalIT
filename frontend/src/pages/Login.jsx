@@ -51,7 +51,6 @@ export default function Login(props) {
     return () => setMessage("");
   }, [user.message]);
 
-
   return (
     <>
       <section className="heading">
@@ -87,12 +86,16 @@ export default function Login(props) {
             />
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-block">
+            <button type="submit" className="btn btn-primary btn-lg btn-block">
               Submit
             </button>
           </div>
         </form>
       </section>
+
+      <footer className="pt-3 mt-4 text-muted border-top">
+        &copy; DigitalIT 2022
+      </footer>
     </>
   );
 }

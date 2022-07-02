@@ -62,7 +62,7 @@ export default function Register() {
         <h1>
           <FaUser /> Register
         </h1>
-        
+
         {message === "" ? <p>Create an account</p> : message}
       </section>
 
@@ -113,12 +113,16 @@ export default function Register() {
             />
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-block">
+            <button type="submit" className="btn btn-primary btn-lg btn-block">
               Submit
             </button>
           </div>
         </form>
       </section>
+
+      <footer className="pt-3 mt-4 text-muted border-top">
+        &copy; DigitalIT 2022
+      </footer>
     </>
   );
 }
