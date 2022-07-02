@@ -63,11 +63,12 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new Error("Please complete all required fields.");
   }
 
+  // Retrieve user
   const user = await pool.query("SELECT * FROM user_account WHERE email = $1", [
     email,
   ]);
 
-  if (user.rows[0] && await bcrypt.compare(password, user.rows[0].password)) {
+  if (user.rows[0] && (await bcrypt.compare(password, user.rows[0].password))) {
     const userRow = user.rows[0];
 
     res.json({
@@ -83,14 +84,14 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 // @desc    Get user data
-// @route   Get /api/users/dashboard
+// @route   GET /api/users/dashboard
 // @access  Private
 const getUser = asyncHandler(async (req, res) => {
   const request = await pool.query(
     "SELECT * FROM user_account WHERE user_id = $1",
     [req.user.user_id]
   );
-  const { user_id, fullName , email } = request.rows[0];
+  const { user_id, fullName, email } = request.rows[0];
 
   res.status(200).json({
     user_id,
@@ -99,7 +100,9 @@ const getUser = asyncHandler(async (req, res) => {
   });
 });
 
-//** FOR ADMIN PURPOSES ONLY. DELETE WHEN DEPLOYING */
+// @desc    Delete user data
+// @route   DELETE /api/users/delete
+// @access  Private
 const deleteUser = asyncHandler(async (req, res) => {
   const process = await pool.query(
     "DELETE FROM user_account WHERE user_id = $1",
@@ -110,7 +113,7 @@ const deleteUser = asyncHandler(async (req, res) => {
     res.status(200).json("success");
   } else {
     res.status(400);
-    throw new Error("Fail to delete; bad request");
+    throw new Error("Failed to delete.");
   }
 });
 

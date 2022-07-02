@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 // Get today's date
 const getDate = () => {
@@ -14,8 +14,8 @@ const getDate = () => {
 // Generate JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-      expiresIn: '30d'
-  })
-}
+    expiresIn: "30d",
+  });
+};
 
 module.exports = { getDate, generateToken };
