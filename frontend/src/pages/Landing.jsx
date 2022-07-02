@@ -1,6 +1,6 @@
 export default function Landing() {
   return (
-    <div className="container col-xxl-8">
+    <div className="container col-xxl-8 landing">
       <div className="row flex-lg-row-reverse align-items-center g-5">
         <div className="col-10 col-sm-8 col-lg-6">
           <img

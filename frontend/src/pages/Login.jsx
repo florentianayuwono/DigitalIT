@@ -53,7 +53,7 @@ export default function Login(props) {
 
   return (
     <>
-      <section className="heading">
+      <section className="heading landing">
         <h1>
           <FaSignInAlt /> Login
         </h1>
@@ -93,7 +93,7 @@ export default function Login(props) {
         </form>
       </section>
 
-      <footer className="pt-3 mt-4 text-muted border-top">
+      <footer className="pt-3 mt-4 text-muted border-top landing">
         &copy; DigitalIT 2022
       </footer>
     </>
