@@ -15,7 +15,7 @@ function HeaderLoggedIn() {
       <div className="logo">
         <Link to="/">
           <img
-            className="d-block mx-auto mb-4"
+            className="rounded d-block mx-auto mb-4"
             src="/images/DigitalIT Logo.png"
             alt=""
           />
@@ -28,7 +28,7 @@ function HeaderLoggedIn() {
           </Link>
         </li>
         <li>
-          <button className="btn" onClick={handleLogout}>
+          <button className="btn btn-primary btn-lg" onClick={handleLogout}>
             <FaSignOutAlt /> Logout
           </button>
         </li>

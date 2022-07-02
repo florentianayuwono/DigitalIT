@@ -58,7 +58,7 @@ export default function Register() {
 
   return (
     <>
-      <section className="heading">
+      <section className="heading landing">
         <h1>
           <FaUser /> Register
         </h1>
@@ -120,7 +120,7 @@ export default function Register() {
         </form>
       </section>
 
-      <footer className="pt-3 mt-4 text-muted border-top">
+      <footer className="pt-3 mt-4 text-muted border-top landing">
         &copy; DigitalIT 2022
       </footer>
     </>

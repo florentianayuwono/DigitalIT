@@ -27,7 +27,7 @@ export default function Dashboard() {
 
   return (
     <>
-      {/* CHANGE: Dashboard Display */}
+      {/* Dashboard Display */}
       <main>
         <div className="container py-4">
           <header className="pb-3 mb-4 border-bottom">
@@ -43,18 +43,17 @@ export default function Dashboard() {
             <div className="container-fluid py-5">
               <h1 className="display-5 fw-bold">Business Profile</h1>
               <p className="col-md-8 fs-4">
-                Tell us your current business field and we will tell you the
-                best e-commerce platform for your business!
+                Documenting your business has never been this easy. Store all of your business, product and store information in one place.
               </p>
-              <button className="btn" onClick={onClick}>
-                View Business Data
+              <button className="btn btn-primary btn-lg profile" onClick={onClick}>
+                View business data
               </button>
             </div>
           </div>
 
           <div className="row align-items-md-stretch">
             <div className="col-md-6">
-              <div className="h-100 p-5 text-white bg-dark rounded-3">
+              <div className="h-100 p-5 text-white bg-darkpurple rounded-3">
                 <h2 className="text-white">Level up your game</h2>
                 <p>
                   At DigitalIT, we are committed to be your personal business
@@ -67,7 +66,7 @@ export default function Dashboard() {
               </div>
             </div>
             <div className="col-md-6">
-              <div className="h-100 p-5 bg-light border rounded-3">
+              <div className="h-100 p-5 bg-lightgreen border rounded-3">
                 <h2>Track your performance</h2>
                 <p>
                   Your business data is now more powerful than ever. Every piece
@@ -81,8 +80,8 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <footer className="pt-3 mt-4 text-muted border-top">
-            &copy; 2022
+          <footer className="pt-3 mt-4 text-muted border-top landing">
+            &copy; DigitalIT 2022
           </footer>
         </div>
       </main>

@@ -30,7 +30,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPass = await bcrypt.hash(password, salt);
 
-  // check this returning * thing later because this might get very slow if we have to return everything
+  // Insert user data
   const newUser = await pool.query(
     "INSERT INTO user_account (full_name, email, password, phone_number, creation_date) VALUES ($1, $2, $3, $4, $5) RETURNING *",
     [fullName, email, hashedPass, phoneNumber, getDate()]

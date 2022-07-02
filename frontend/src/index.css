@@ -36,7 +36,7 @@ h3 {
   color: rgb(92, 22, 78);
 }
 
-.container {
+.landing {
   width: 100%;
   margin: 0 auto;
   padding: 0 20px;
@@ -173,6 +173,22 @@ h3 {
 .btn-primary {
   --bs-btn-hover-bg: rgb(92, 22, 78);
   --bs-btn-border-color: rgb(92, 22, 78);
+  --bs-btn-focus-shadow-rgb: rgb(92, 22, 78);
+  --bs-btn-active-bg: rgba(92, 22, 78, 0.8);
+  --bs-btn-active-border-color: rgba(92, 22, 78, 0.8);
+}
+
+.profile {
+  background: rgb(92, 22, 78);
+  color: rgb(255, 255, 255);
+}
+
+.bg-darkpurple {
+  background: rgb(92, 22, 78);
+}
+
+.bg-lightgreen {
+  background: rgb(226, 252, 239);
 }
 
 .loadingSpinnerContainer {
