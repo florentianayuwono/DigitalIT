@@ -8,9 +8,9 @@ where product is of structure: {
 */
 
 function productCreator(rawProduct) {
-  const { id, product_name, product_description, price, cost } = rawProduct;
+  const { product_id, product_name, product_description, price, cost } = rawProduct;
   return {
-    id,
+    product_id,
     product: {
       product_name,
       product_description,
@@ -58,7 +58,11 @@ export const productReducer = (state, action) => {
         isError: false,
         isSuccess: true,
         message: "",
-        products: action.payload.map(productCreator),
+        products: action.payload.reduce((acc, product) => {
+          acc[product.product_id] = productCreator(product);
+          return acc;
+        })
+        // products: action.payload.map(productCreator),
       };
     case "GET_PRODUCT_SUCCESS":
       return {

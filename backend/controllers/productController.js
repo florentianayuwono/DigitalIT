@@ -24,7 +24,14 @@ const addProductData = asyncHandler(async (req, res) => {
 
 const getProductData = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { business_id } = req.body;
+  /*
+  The next line is edited from req.body to req.headers because it seems that
+  using the body for HTTP GET Requests is not a recommended practice and is not
+  supported by the libraries used in frontend.
+  
+  This change might also have to be applied to other controllers as well.
+  */
+  const business_id = req.headers.business_id;
   const manager_id = await pool.query(
     "SELECT manager_id from business WHERE business_id = $1",
     [business_id]

@@ -3,15 +3,18 @@ import axios from "axios";
 const API_LINK =
   process.env.NODE_ENV === "production"
     ? "/api/product/"
-    : "https://orbital-digital-it.herokuapp.com/api/product/";
+    : "http://localhost:5000/api/product/";
+    // : "https://orbital-digital-it.herokuapp.com/api/product/";
 
 // id is not a required field
-export const getProducts = async (dispatch, id) => {
+export const getProducts = async (dispatch, getProductPayload) => {
   const token = JSON.parse(localStorage.getItem("user")).token;
+  const { id, business_id } = getProductPayload;
 
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
+      business_id: business_id,
     },
   };
   
@@ -20,7 +23,7 @@ export const getProducts = async (dispatch, id) => {
     try {
       dispatch({ type: "REQUEST_PRODUCT" });
 
-      const response = await axios.get(API_LINK + id, config);
+      const response = await axios(API_LINK + id, config);
       const data = await response.data;
       const status = await response.status;
 
@@ -42,7 +45,7 @@ export const getProducts = async (dispatch, id) => {
       dispatch({ type: "RESET" });
       dispatch({ type: "REQUEST_PRODUCTS" });
 
-      const response = await axios.get(API_LINK, config);
+      const response = await axios(API_LINK, config);
       const data = await response.data;
       const status = await response.status;
 
