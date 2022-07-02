@@ -2,7 +2,7 @@
   every component that's routed under this empty component will be able 
   to access the authentication context provider.
   */
-import { Outlet } from "react-router-dom"
+import { Outlet } from "react-router-dom";
 import { AuthProvider } from "./authContext";
 
 export const AuthRoute = () => {
@@ -11,4 +11,4 @@ export const AuthRoute = () => {
       <Outlet />
     </AuthProvider>
   );
-}
+};
