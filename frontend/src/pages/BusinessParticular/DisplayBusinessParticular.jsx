@@ -5,12 +5,14 @@ import { BusinessItem } from "../../components/BusinessItem";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../features/auth/authContext";
 import Button from "react-bootstrap/esm/Button";
-import { DisplayIndividualBusiness } from "./DisplayIndividualBusiness";
+import { Outlet } from "react-router-dom";
 
 export default function DisplayBusinessParticular() {
   const { businesses, dispatch } = useBusinessContext();
   const [businessesState, setBusinesses] = useState(businesses.businesses);
-  const [selectedBusiness, setSelectedBusiness] = useState("No selected business");
+  const [selectedBusiness, setSelectedBusiness] = useState(
+    "No selected business"
+  );
   const { user } = useAuthContext();
 
   const nav = useNavigate();
@@ -42,7 +44,13 @@ export default function DisplayBusinessParticular() {
   return (
     <>
       <div className="row align-items-md-stretch">
-        <div className={selectedBusiness !== "No selected business" ? "col-md-4" : "container"}>
+        <div
+          className={
+            selectedBusiness !== "No selected business"
+              ? "col-md-4"
+              : "container"
+          }
+        >
           <div
             className="container"
             style={{
@@ -65,7 +73,10 @@ export default function DisplayBusinessParticular() {
                 <BusinessItem
                   business={business}
                   key={business.business_id}
-                  onClick={() => setSelectedBusiness(business)}
+                  onClick={() => {
+                    nav("/business/display");
+                    setSelectedBusiness(business);
+                  }}
                 />
               ))}
               <Button variant="secondary" size="lg" onClick={onClick}>
@@ -75,9 +86,16 @@ export default function DisplayBusinessParticular() {
           </div>
         </div>
 
-        <div className={selectedBusiness !== "No selected business" ? "col-md-8" : "container"}>
+        {/* right side of the screen (details)*/}
+        <div
+          className={
+            selectedBusiness !== "No selected business"
+              ? "col-md-8"
+              : "container"
+          }
+        >
           <div className="container">
-            <DisplayIndividualBusiness business={selectedBusiness} />
+            <Outlet context={[selectedBusiness]} />
           </div>
         </div>
       </div>

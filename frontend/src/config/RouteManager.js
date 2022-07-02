@@ -9,6 +9,9 @@ import DisplayBusinessParticular from "../pages/BusinessParticular/DisplayBusine
 import { AuthRoute } from "../features/auth/authRoute";
 import InvalidLink from "../components/InvalidLink";
 import { BusinessRoute } from "../features/business/businessRoute";
+import Products from "../pages/Product/Products";
+import { ProductRoute } from "../features/product/productRoute";
+import { DisplayIndividualBusiness } from "../pages/BusinessParticular/DisplayIndividualBusiness";
 
 export default function RouteManager() {
   return (
@@ -22,8 +25,14 @@ export default function RouteManager() {
           <Route path="dashboard" element={<Dashboard />} />
 
           <Route element={<BusinessRoute />}>
-            <Route path="business" element={<DisplayBusinessParticular />} />
-            <Route path="business/add" element={<AddBusiness />} />
+            <Route path="business" element={<DisplayBusinessParticular />}>
+              <Route path="add" element={<AddBusiness />} />
+              <Route path="display" element={<DisplayIndividualBusiness />}>
+                <Route element={<ProductRoute />}>
+                  <Route path=":business_id" element={<Products />} />
+                </Route>
+              </Route>
+            </Route>
           </Route>
 
           {/* For routes that doesn't exist*/}
