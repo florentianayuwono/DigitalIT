@@ -28,7 +28,7 @@ function HeaderLoggedIn() {
           </Link>
         </li>
         <li>
-          <button className="btn" onClick={handleLogout}>
+          <button className="btn btn-primary btn-lg" onClick={handleLogout}>
             <FaSignOutAlt /> Logout
           </button>
         </li>
