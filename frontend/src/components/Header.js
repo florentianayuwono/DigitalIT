@@ -15,7 +15,7 @@ function HeaderLoggedIn() {
       <div className="logo">
         <Link to="/">
           <img
-            className="d-block mx-auto mb-4"
+            className="rounded d-block mx-auto mb-4"
             src="/images/DigitalIT Logo.png"
             alt=""
           />
