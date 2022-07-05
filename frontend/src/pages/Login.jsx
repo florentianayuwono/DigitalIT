@@ -15,7 +15,7 @@ export default function Login(props) {
 
   const nav = useNavigate();
 
-  // Set navigation to dashboard if login successful
+  // If already logged in, then go straight to dashboard
   useEffect(() => {
     if (user.user) {
       nav("/dashboard");
@@ -33,7 +33,7 @@ export default function Login(props) {
     }));
   };
 
-  // User submit the form
+  // Function when user submit the form
   const onSubmit = async (e) => {
     // Prevent browser to be refreshed/reloaded
     e.preventDefault();
