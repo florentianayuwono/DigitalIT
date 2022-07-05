@@ -35,16 +35,16 @@ export default function Login(props) {
 
   // User submit the form
   const onSubmit = async (e) => {
-    // First, prevent browser to be refreshed/reloaded
+    // Prevent browser to be refreshed/reloaded
     e.preventDefault();
 
-    // Second, wrap the data collected
+    // Wrap the data collected
     const loginData = {
       email,
       password,
     };
 
-    // Third, authenticate the data collected by calling loginUser from authServices
+    // Authenticate the data collected by calling loginUser from authServices
     try {
       const response = await loginUser(dispatch, loginData);
       if (!response || !response.user_id) return;
@@ -53,6 +53,7 @@ export default function Login(props) {
     }
   };
 
+  // Set the message to bear message returned by authentication process, then clean up
   useEffect(() => {
     setMessage(user.message);
 
@@ -61,6 +62,7 @@ export default function Login(props) {
 
   return (
     <>
+      {/* Login page display */}
       <section className="heading landing">
         <h1>
           <FaSignInAlt /> Login
