@@ -17,16 +17,19 @@ export default function DisplayBusinessParticular() {
 
   const nav = useNavigate();
 
+  // If is not logged in, then go back to login page
   useEffect(() => {
     if (!user.user) {
       nav("/login");
     }
   });
 
+  // When clicked, navigate to page to add business
   const onClick = () => {
     nav("/business/add");
   };
 
+  // Function to check if the user is authorized and get the business data (by calling getBusinesses)
   const getData = async (e) => {
     try {
       const response = await getBusinesses(dispatch);
@@ -37,6 +40,7 @@ export default function DisplayBusinessParticular() {
     }
   };
 
+  // Call the getData function
   useEffect(() => {
     getData();
   }, []);
