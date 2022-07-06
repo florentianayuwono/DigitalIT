@@ -85,6 +85,34 @@ export const productReducer = (state, action) => {
         isSuccess: false,
         message: action.error,
       };
+    case "REQUEST_ADD_PRODUCT":
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        isSuccess: false,
+        message: "",
+      };
+    case "ADD_PRODUCT_SUCCESS":
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        isSuccess: true,
+        message: "",
+        products: {
+          ...state.products,
+          [action.payload.id]: productWithoutID(action.payload),
+        },
+      };
+    case "ADD_PRODUCT_ERROR":
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        isSuccess: false,
+        message: action.error,
+      };
     default:
       return state;
   }
