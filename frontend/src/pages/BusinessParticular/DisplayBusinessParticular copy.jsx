@@ -18,13 +18,6 @@ export default function DisplayBusinessParticular() {
 
   const nav = useNavigate();
 
-  // If is not logged in, then go back to login page
-  useEffect(() => {
-    if (!user.user) {
-      nav("/login");
-    }
-  });
-
   // When clicked, navigate to page to add business
   const onClick = () => {
     nav("/business/add");

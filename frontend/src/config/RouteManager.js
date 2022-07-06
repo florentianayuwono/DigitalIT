@@ -14,6 +14,7 @@ import { ProductRoute } from "../features/product/productRoute";
 import { DisplayIndividualBusiness } from "../pages/BusinessParticular/DisplayIndividualBusiness";
 import AddProduct from "../pages/Product/AddProduct";
 import MainBusinessPage from "../pages/BusinessParticular/MainBusinessPage";
+import RequireAuth from "../components/RequireAuth";
 
 export default function RouteManager() {
   return (
@@ -24,19 +25,20 @@ export default function RouteManager() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
 
-          <Route path="dashboard" element={<Dashboard />} />
-
-          <Route element={<BusinessRoute />}>
-            <Route element={<ProductRoute />}>
-              <Route path="business" element={<MainBusinessPage />}>
-                <Route path="" element={<DisplayBusinessParticular />} />
-                <Route path="add" element={<AddBusiness />} />
-                <Route
-                  path=":business_id"
-                  element={<DisplayIndividualBusiness />}
-                >
-                  <Route path="" element={<Products />} />
-                  <Route path="addProduct" element={<AddProduct />} />
+          <Route element={<RequireAuth />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route element={<BusinessRoute />}>
+              <Route element={<ProductRoute />}>
+                <Route path="business" element={<MainBusinessPage />}>
+                  <Route path="" element={<DisplayBusinessParticular />} />
+                  <Route path="add" element={<AddBusiness />} />
+                  <Route
+                    path=":business_id"
+                    element={<DisplayIndividualBusiness />}
+                  >
+                    <Route path="" element={<Products />} />
+                    <Route path="addProduct" element={<AddProduct />} />
+                  </Route>
                 </Route>
               </Route>
             </Route>
