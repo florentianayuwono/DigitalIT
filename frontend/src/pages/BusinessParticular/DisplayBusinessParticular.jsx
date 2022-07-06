@@ -89,7 +89,7 @@ export default function DisplayBusinessParticular() {
                   }}
                 />
               ))}
-              <Button variant="secondary" size="lg" onClick={onClick}>
+              <Button class="btn btn-primary lg profile" onClick={onClick}>
                 Add New
               </Button>
             </div>

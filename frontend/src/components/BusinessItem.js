@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 
-// component that takes in a busines object and outputs a box with the business name.
+// Takes in business object and output a card with the business details in it
 export const BusinessItem = (props) => {
   return (
     <>
