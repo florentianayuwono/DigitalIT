@@ -1,5 +1,5 @@
 import { useAuthContext } from "../features/auth/authContext";
-import { FaUser } from "react-icons/fa";
+import { FaAddressCard } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useBusinessContext } from "../features/business/businessContext";
 import { addBusiness } from "../features/business/businessServices";
@@ -18,7 +18,7 @@ export default function InputBusinessParticular() {
   });
   const { businesses, dispatch } = useBusinessContext();
   const { user } = useAuthContext();
-  const [ isSubmitted, refresh ] = useState(false);
+  const [isSubmitted, refresh] = useState(false);
   const nav = useNavigate();
 
   useEffect(() => {
@@ -86,7 +86,7 @@ export default function InputBusinessParticular() {
     <>
       <section className="heading">
         <h1>
-          <FaUser /> Business Particulars
+          <FaAddressCard /> Business Particulars
         </h1>
 
         <p>Input Your Business Details</p>
@@ -113,7 +113,11 @@ export default function InputBusinessParticular() {
             <div className="row g-5">
               <div>
                 <h4 className="mb-3">General Information</h4>
-                <form className="needs-validation" noValidate onSubmit={onSubmit}>
+                <form
+                  className="needs-validation"
+                  noValidate
+                  onSubmit={onSubmit}
+                >
                   <div className="row g-3">
                     <div className="col-12">
                       <label for="businessName" className="form-label">
@@ -137,21 +141,22 @@ export default function InputBusinessParticular() {
                       <label for="category" className="form-label">
                         Category
                       </label>
-                      <select className="form-select" value={formData.category} id="category" name="category" onChange={onChange} required>
+                      <select
+                        className="form-select"
+                        value={formData.category}
+                        id="category"
+                        name="category"
+                        onChange={onChange}
+                        required
+                      >
                         <option value="">Select below</option>
-                        <option
-                          value="Fashion and Clothings"
-                        >
+                        <option value="Fashion and Clothings">
                           Fashion and Clothings
                         </option>
-                        <option
-                          value="Electronics and Hardwares"
-                        >
+                        <option value="Electronics and Hardwares">
                           Electronics and Hardwares
                         </option>
-                        <option
-                          value="Food and Groceries"
-                        >
+                        <option value="Food and Groceries">
                           Food and Groceries
                         </option>
                       </select>
@@ -164,16 +169,18 @@ export default function InputBusinessParticular() {
                       <label for="hasDigitalized" className="form-label">
                         Digitalization Progress
                       </label>
-                      <select className="form-select" id="hasDigitalized" name="hasDigitalized" onChange={onChange} required>
+                      <select
+                        className="form-select"
+                        id="hasDigitalized"
+                        name="hasDigitalized"
+                        onChange={onChange}
+                        required
+                      >
                         <option value={null}>
                           Have you digitalized your business?
                         </option>
-                        <option value={true}>
-                          Yes
-                        </option>
-                        <option value={false}>
-                          No
-                        </option>
+                        <option value={true}>Yes</option>
+                        <option value={false}>No</option>
                       </select>
                       <div className="invalid-feedback">
                         Please provide a valid answer.
@@ -276,26 +283,10 @@ export default function InputBusinessParticular() {
                         <option value="">
                           Where do you sell your product?
                         </option>
-                        <option
-                          value="Offline Store"
-                        >
-                          Offline store
-                        </option>
-                        <option
-                          value="Bukalapak"
-                        >
-                          Bukalapak
-                        </option>
-                        <option
-                          value="Tokopedia"
-                        >
-                          Tokopedia
-                        </option>
-                        <option
-                          value="Shopee"
-                        >
-                          Shopee
-                        </option>
+                        <option value="Offline Store">Offline store</option>
+                        <option value="Bukalapak">Bukalapak</option>
+                        <option value="Tokopedia">Tokopedia</option>
+                        <option value="Shopee">Shopee</option>
                       </select>
                       <div className="invalid-feedback">
                         Please select a valid location.
@@ -304,7 +295,10 @@ export default function InputBusinessParticular() {
                   </div>
                   <hr className="my-4" />
 
-                  <button className="w-100 btn btn-primary btn-lg" type="submit">
+                  <button
+                    className="w-100 btn btn-primary btn-lg"
+                    type="submit"
+                  >
                     Save Information
                   </button>
                   {status === "" ? message : status}
