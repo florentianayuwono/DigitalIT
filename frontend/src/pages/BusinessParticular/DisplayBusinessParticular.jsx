@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FaBuilding } from "react-icons/fa";
 import { getBusinesses } from "../../features/business/businessServices";
 import { useBusinessContext } from "../../features/business/businessContext";
 import { BusinessItem } from "../../components/BusinessItem";
@@ -17,27 +18,31 @@ export default function DisplayBusinessParticular() {
 
   const nav = useNavigate();
 
+  // If is not logged in, then go back to login page
   useEffect(() => {
     if (!user.user) {
       nav("/login");
     }
   });
 
+  // When clicked, navigate to page to add business
   const onClick = () => {
     nav("/business/add");
   };
+  
+  // Function to check if the user is authorized and get the business data (by calling getBusinesses)
+  const getData = async (e) => {
+    try {
+      const response = await getBusinesses(dispatch);
+      setBusinesses((prev) => response);
+    } catch (err) {
+      console.error(err.message);
+      return;
+    }
+  };
 
+  // Call the getData function
   useEffect(() => {
-    const getData = async (e) => {
-      try {
-        const response = await getBusinesses(dispatch);
-        setBusinesses((prev) => response);
-      } catch (err) {
-        console.error(err.message);
-        return;
-      }
-    };
-    
     getData();
   }, []);
 
@@ -66,9 +71,14 @@ export default function DisplayBusinessParticular() {
                 fontWeight: "700",
               }}
             >
-              Your {businessesState.length > 1 ? "Businesses" : "Business"}
+              <section className="heading">
+                <h1>
+                  <FaBuilding /> Your{" "}
+                  {businessesState.length > 1 ? "Businesses" : "Business"}
+                </h1>
+              </section>
             </div>
-            <div className="d-grid gap-5">
+            <div class="row">
               {businessesState.map((business) => (
                 <BusinessItem
                   business={business}

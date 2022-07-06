@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
 
 * {
   margin: 0;
@@ -7,13 +7,13 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   height: 100vh;
 }
 
 a {
   text-decoration: none;
-  color: #000;
+  color: rgb(92, 22, 78);
 }
 
 p {
@@ -36,7 +36,7 @@ h3 {
   color: rgb(92, 22, 78);
 }
 
-.container {
+.landing {
   width: 100%;
   margin: 0 auto;
   padding: 0 20px;
@@ -141,7 +141,7 @@ h3 {
   border: 1px solid rgb(23, 15, 17);
   border-radius: 5px;
   background: rgb(226, 252, 239);
-  color: rgb(0, 0, 0);
+  color: rgb(92, 22, 78);
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
@@ -168,6 +168,27 @@ h3 {
 
 .btn:hover {
   transform: scale(0.98);
+}
+
+.btn-primary {
+  --bs-btn-hover-bg: rgb(92, 22, 78);
+  --bs-btn-border-color: rgb(92, 22, 78);
+  --bs-btn-focus-shadow-rgb: rgb(92, 22, 78);
+  --bs-btn-active-bg: rgba(92, 22, 78, 0.8);
+  --bs-btn-active-border-color: rgba(92, 22, 78, 0.8);
+}
+
+.profile {
+  background: rgb(92, 22, 78);
+  color: rgb(255, 255, 255);
+}
+
+.bg-darkpurple {
+  background: rgb(92, 22, 78);
+}
+
+.bg-lightgreen {
+  background: rgb(226, 252, 239);
 }
 
 .loadingSpinnerContainer {

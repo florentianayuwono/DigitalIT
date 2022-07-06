@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  // Set initial state to empty string
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,8 +24,10 @@ export default function Register() {
     }
   });
 
+  // Collect data from user
   const { name, email, password, phoneNumber } = formData;
 
+  // Enable user to see live what they type
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -32,9 +35,12 @@ export default function Register() {
     }));
   };
 
+  // Function when user submit the form
   const onSubmit = async (e) => {
+    // Prevent browser to be refreshed/reloaded
     e.preventDefault();
 
+    // Wrap the data collected
     const registrationData = {
       fullName: name,
       email,
@@ -42,6 +48,7 @@ export default function Register() {
       phoneNumber,
     };
 
+    // Authenticate the data collected by calling registerUser from authServices
     try {
       const response = await registerUser(dispatch, registrationData);
       if (!response || !response.user_id) return;
@@ -50,6 +57,7 @@ export default function Register() {
     }
   };
 
+  // Set the message to bear message returned by authentication process, then clean up
   useEffect(() => {
     setMessage(user.message);
 
@@ -58,11 +66,12 @@ export default function Register() {
 
   return (
     <>
-      <section className="heading">
+      {/* Registration page display */}
+      <section className="heading landing">
         <h1>
           <FaUser /> Register
         </h1>
-        
+
         {message === "" ? <p>Create an account</p> : message}
       </section>
 
@@ -113,12 +122,16 @@ export default function Register() {
             />
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-block">
+            <button type="submit" className="btn btn-primary btn-lg btn-block">
               Submit
             </button>
           </div>
         </form>
       </section>
+
+      <footer className="pt-3 mt-4 text-muted border-top landing">
+        &copy; DigitalIT 2022
+      </footer>
     </>
   );
 }

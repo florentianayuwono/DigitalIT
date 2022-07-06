@@ -4,7 +4,7 @@ const axios = require("axios").default;
 const API_LINK =
   process.env.NODE_ENV === "production"
     ? "/api/users/"
-    : // CHANGE: use heroku api
+    : // Heroku api database for testing
       "https://orbital-digital-it.herokuapp.com/api/users/";
 
 export const loginUser = async (dispatch, loginPayload) => {
