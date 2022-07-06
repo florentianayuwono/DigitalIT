@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate, useOutletContext } from "react-router-dom";
-import Products from "../Product/Products";
 
 export const DisplayIndividualBusiness = (props) => {
   const [selectedBusiness] = useOutletContext();
@@ -9,7 +8,7 @@ export const DisplayIndividualBusiness = (props) => {
 
   useEffect(() => {
     nav("/business/display/" + business_id);
-  }, [nav, selectedBusiness]);
+  }, [nav, business_id]);
 
   return (
     <>

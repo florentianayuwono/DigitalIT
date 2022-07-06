@@ -29,7 +29,7 @@ export default function DisplayBusinessParticular() {
   const onClick = () => {
     nav("/business/add");
   };
-
+  
   // Function to check if the user is authorized and get the business data (by calling getBusinesses)
   const getData = async (e) => {
     try {
@@ -84,8 +84,7 @@ export default function DisplayBusinessParticular() {
                   business={business}
                   key={business.business_id}
                   onClick={() => {
-                    nav("/business/display");
-                    setSelectedBusiness(business);
+                    nav(`/business/${business.business_id}`);
                   }}
                 />
               ))}

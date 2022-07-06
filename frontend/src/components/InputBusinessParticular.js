@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useBusinessContext } from "../features/business/businessContext";
 import { addBusiness } from "../features/business/businessServices";
 import { useNavigate } from "react-router-dom";
+import { useProductContext } from "../features/product/productContext";
+import { getProducts } from "../features/product/productServices";
 
 export default function InputBusinessParticular() {
   const [formData, setFormData] = useState({
@@ -17,6 +19,7 @@ export default function InputBusinessParticular() {
     platform: "",
   });
   const { businesses, dispatch } = useBusinessContext();
+  const productDispatch = useProductContext()[1];
   const { user } = useAuthContext();
   const [isSubmitted, refresh] = useState(false);
   const nav = useNavigate();
@@ -57,6 +60,13 @@ export default function InputBusinessParticular() {
       category,
       hasDigitalized,
     };
+
+    const productData = {
+      product_name: productName,
+      product_description: productDescription,
+      price,
+      cost,
+    }
 
     try {
       const response = await addBusiness(dispatch, businessData);
@@ -311,13 +321,13 @@ export default function InputBusinessParticular() {
             <p className="mb-1">&copy; 2022 DigitalIT</p>
             <ul className="list-inline">
               <li className="list-inline-item">
-                <a href="#">Privacy</a>
+                <a href="/">Privacy</a>
               </li>
               <li className="list-inline-item">
-                <a href="#">Terms</a>
+                <a href="/">Terms</a>
               </li>
               <li className="list-inline-item">
-                <a href="#">Support</a>
+                <a href="/">Support</a>
               </li>
             </ul>
           </footer>
