@@ -5,6 +5,7 @@ import { useAuthContext } from "../features/auth/authContext";
 import { loginUser } from "../features/auth/authServices";
 
 export default function Login(props) {
+  // Set initial state to empty string
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,14 +15,17 @@ export default function Login(props) {
 
   const nav = useNavigate();
 
+  // If already logged in, then go straight to dashboard
   useEffect(() => {
     if (user.user) {
       nav("/dashboard");
     }
   });
 
+  // Collect data from user
   const { email, password } = formData;
 
+  // Enable user to see live what they type
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -29,14 +33,18 @@ export default function Login(props) {
     }));
   };
 
+  // Function when user submit the form
   const onSubmit = async (e) => {
+    // Prevent browser to be refreshed/reloaded
     e.preventDefault();
 
+    // Wrap the data collected
     const loginData = {
       email,
       password,
     };
 
+    // Authenticate the data collected by calling loginUser from authServices
     try {
       const response = await loginUser(dispatch, loginData);
       if (!response || !response.user_id) return;
@@ -45,6 +53,7 @@ export default function Login(props) {
     }
   };
 
+  // Set the message to bear message returned by authentication process, then clean up
   useEffect(() => {
     setMessage(user.message);
 
@@ -53,6 +62,7 @@ export default function Login(props) {
 
   return (
     <>
+      {/* Login page display */}
       <section className="heading landing">
         <h1>
           <FaSignInAlt /> Login

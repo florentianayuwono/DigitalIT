@@ -101,7 +101,7 @@ export const updateBusiness = async (dispatch, businessPayload) => {
   }
 };
 
-const deleteBusiness = async (dispatch, businessId) => {
+export const deleteBusiness = async (dispatch, businessId) => {
   const config = {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -1,22 +1,25 @@
-import { useAuthContext} from "../features/auth/authContext";
+import { useAuthContext } from "../features/auth/authContext";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
-  const { user } = useAuthContext(); 
+  const { user } = useAuthContext();
   const nav = useNavigate();
   const [isSubmitted, refresh] = useState(false);
 
+  // If is not logged in, then go back to login page
   useEffect(() => {
     if (!user.user) {
       nav("/login");
     }
   });
 
+  // When clicked, change the previous state of isSubmitted (from false to true)
   const onClick = () => {
     refresh((prev) => !prev);
   };
 
+  // If the isSubmitted state is true, navigate to business page
   useEffect(() => {
     if (isSubmitted) {
       nav("/business");
@@ -31,6 +34,7 @@ export default function Dashboard() {
       <main>
         <div className="container py-4">
           <header className="pb-3 mb-4 border-bottom">
+            {/* When clicked, Hi, {user.username}! will direct user to dashboard */}
             <a
               href="/dashboard"
               className="d-flex align-items-center text-dark text-decoration-none"
@@ -43,9 +47,14 @@ export default function Dashboard() {
             <div className="container-fluid py-5">
               <h1 className="display-5 fw-bold">Business Profile</h1>
               <p className="col-md-8 fs-4">
-                Documenting your business has never been this easy. Store all of your business, product and store information in one place.
+                Documenting your business has never been this easy. Store all of
+                your business, product and store information in one place.
               </p>
-              <button className="btn btn-primary btn-lg profile" onClick={onClick}>
+              {/* Change state of isSubmitted to true and navigate to business page */}
+              <button
+                className="btn btn-primary btn-lg profile"
+                onClick={onClick}
+              >
                 View business data
               </button>
             </div>
