@@ -1,21 +1,35 @@
 import { useProductContext } from "../../features/product/productContext";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { addProduct } from "../../features/product/productServices";
 
 export default function AddProduct() {
-  // const { products, dispatch } = useProductContext();
+  const { dispatch } = useProductContext();
   const nav = useNavigate();
   const [productForm, setProductForm] = useState({
     productName: "",
     productDescription: "",
     price: "",
     cost: "",
+    business_id: useParams().business_id,
   });
-  
+
+  const onSubmitForm = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await addProduct(dispatch, productForm);
+      if (!response) return;
+
+      nav("/business/" + productForm.business_id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const onChange = (e) => {
     setProductForm({ ...productForm, [e.target.name]: e.target.value });
-  }
+  };
 
   return (
     <div className="container">
@@ -23,7 +37,7 @@ export default function AddProduct() {
         <div className="col-md-6">
           <div className="h-100 p-5 bg-light border rounded-3">
             <h3>Add New Product</h3>
-            <form>
+            <form onSubmit={onSubmitForm}>
               <div className="form-group">
                 <label htmlFor="productName">Product Name</label>
                 <input

@@ -31,8 +31,11 @@ export default function RouteManager() {
               <Route path="business" element={<MainBusinessPage />}>
                 <Route path="" element={<DisplayBusinessParticular />} />
                 <Route path="add" element={<AddBusiness />} />
-                <Route path=":business_id" element={<DisplayIndividualBusiness />}></Route>
-                <Route element={<DisplayIndividualBusiness />}>
+                <Route
+                  path=":business_id"
+                  element={<DisplayIndividualBusiness />}
+                >
+                  <Route path="" element={<Products />} />
                   <Route path="addProduct" element={<AddProduct />} />
                 </Route>
               </Route>
