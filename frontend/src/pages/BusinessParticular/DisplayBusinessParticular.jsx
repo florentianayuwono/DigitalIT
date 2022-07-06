@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FaBuilding } from "react-icons/fa";
 import { getBusinesses } from "../../features/business/businessServices";
 import { useBusinessContext } from "../../features/business/businessContext";
 import { BusinessItem } from "../../components/BusinessItem";
@@ -70,9 +71,14 @@ export default function DisplayBusinessParticular() {
                 fontWeight: "700",
               }}
             >
-              Your {businessesState.length > 1 ? "Businesses" : "Business"}
+              <section className="heading">
+                <h1>
+                  <FaBuilding /> Your{" "}
+                  {businessesState.length > 1 ? "Businesses" : "Business"}
+                </h1>
+              </section>
             </div>
-            <div className="d-grid gap-5">
+            <div class="row">
               {businessesState.map((business) => (
                 <BusinessItem
                   business={business}
