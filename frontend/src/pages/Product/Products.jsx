@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, Outlet } from "react-router-dom";
 import { useProductContext } from "../../features/product/productContext";
 import { getProducts } from "../../features/product/productServices";
 
 export default function Products() {
   const business_id = useParams().business_id;
   const { products, dispatch } = useProductContext();
+  const nav = useNavigate();
 
   // When the component first mount, load the list of products.
 
@@ -29,7 +30,7 @@ export default function Products() {
 
         return (
           <div className="col-md-6" key={product.product_id}>
-            <div className="h-100 p-5 bg-light border rounded-3">
+            <div className="h-100 p-5 bg-light border rounded-3" key={product.product_id}>
               <h3>{product.product_name}</h3>
               <p> Description: {product.product_description}</p>
               <p> Price: {product.price}</p>
@@ -39,7 +40,10 @@ export default function Products() {
         );
       })}
       <div className="col-md-6">
-        <div className="btn h-100 p-5 border-solid rounded-3">
+        <div
+          className="btn h-100 p-5 border-solid rounded-3"
+          onClick={() => nav(`/business/display/addProduct`)}
+        >
           <h3>Add New Product</h3>
         </div>
       </div>

@@ -12,6 +12,7 @@ import { BusinessRoute } from "../features/business/businessRoute";
 import Products from "../pages/Product/Products";
 import { ProductRoute } from "../features/product/productRoute";
 import { DisplayIndividualBusiness } from "../pages/BusinessParticular/DisplayIndividualBusiness";
+import AddProduct from "../pages/Product/AddProduct";
 
 export default function RouteManager() {
   return (
@@ -21,15 +22,16 @@ export default function RouteManager() {
           <Route index element={<Landing />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
-
+          
           <Route path="dashboard" element={<Dashboard />} />
 
           <Route element={<BusinessRoute />}>
-            <Route path="business" element={<DisplayBusinessParticular />}>
-              <Route path="add" element={<AddBusiness />} />
-              <Route path="display" element={<DisplayIndividualBusiness />}>
-                <Route element={<ProductRoute />}>
-                  <Route path=":business_id" element={<Products />} />
+            <Route element={<ProductRoute />}>
+              <Route path="business" element={<DisplayBusinessParticular />}>
+                <Route path="add" element={<AddBusiness />} />
+                <Route element={<DisplayIndividualBusiness />}>
+                  <Route path=":business_id" element={<Products />}></Route>
+                  <Route path="addProduct" element={<AddProduct />} />
                 </Route>
               </Route>
             </Route>

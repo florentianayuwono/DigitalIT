@@ -27,17 +27,17 @@ export default function DisplayBusinessParticular() {
     nav("/business/add");
   };
 
-  const getData = async (e) => {
-    try {
-      const response = await getBusinesses(dispatch);
-      setBusinesses((prev) => response);
-    } catch (err) {
-      console.error(err.message);
-      return;
-    }
-  };
-
   useEffect(() => {
+    const getData = async (e) => {
+      try {
+        const response = await getBusinesses(dispatch);
+        setBusinesses((prev) => response);
+      } catch (err) {
+        console.error(err.message);
+        return;
+      }
+    };
+    
     getData();
   }, []);
 
@@ -74,8 +74,7 @@ export default function DisplayBusinessParticular() {
                   business={business}
                   key={business.business_id}
                   onClick={() => {
-                    nav("/business/display");
-                    setSelectedBusiness(business);
+                    nav(`/business/${business.business_id}`);
                   }}
                 />
               ))}
