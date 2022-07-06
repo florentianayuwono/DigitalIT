@@ -29,7 +29,7 @@ export default function DisplayBusinessParticular() {
   const onClick = () => {
     nav("/business/add");
   };
-
+  
   // Function to check if the user is authorized and get the business data (by calling getBusinesses)
   const getData = async (e) => {
     try {
@@ -49,10 +49,17 @@ export default function DisplayBusinessParticular() {
   return (
     <>
       <div className="row align-items-md-stretch">
-        <div className="container">
+        <div
+          className={
+            selectedBusiness !== "No selected business"
+              ? "col-md-4"
+              : "container"
+          }
+        >
           <div
             className="container"
             style={{
+              borderRight: "10px solid #ebebeb",
               paddingBottom: "solid 5px",
             }}
           >
@@ -71,7 +78,7 @@ export default function DisplayBusinessParticular() {
                 </h1>
               </section>
             </div>
-            <div className="row">
+            <div class="row">
               {businessesState.map((business) => (
                 <BusinessItem
                   business={business}
@@ -85,6 +92,19 @@ export default function DisplayBusinessParticular() {
                 Add New
               </Button>
             </div>
+          </div>
+        </div>
+
+        {/* right side of the screen (details)*/}
+        <div
+          className={
+            selectedBusiness !== "No selected business"
+              ? "col-md-8"
+              : "container"
+          }
+        >
+          <div className="container">
+            <Outlet context={[selectedBusiness]} />
           </div>
         </div>
       </div>

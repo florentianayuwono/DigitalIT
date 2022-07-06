@@ -1,14 +1,22 @@
-import { useEffect } from "react";
-import { Outlet, useNavigate, useOutletContext } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
+import { useBusinessContext } from "../../features/business/businessContext";
 
-export const DisplayIndividualBusiness = (props) => {
-  const [selectedBusiness] = useOutletContext();
-  const { business_id, business_name, categories, has_digitalized } = selectedBusiness;
-  const nav = useNavigate();
+const selectBusiness = (business_id, businesses) => {
+  const business = businesses.businesses.find(
+    (business) => parseInt(business.business_id) === parseInt(business_id)
+  );
 
-  useEffect(() => {
-    nav("/business/display/" + business_id);
-  }, [nav, business_id]);
+  return business;
+};
+
+export const DisplayIndividualBusiness = () => {
+  const { businesses } = useBusinessContext();
+
+  const { business_id } = useParams();
+  const { business_name, categories, has_digitalized } = selectBusiness(
+    business_id,
+    businesses
+  );
 
   return (
     <>

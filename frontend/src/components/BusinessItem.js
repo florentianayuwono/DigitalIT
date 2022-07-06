@@ -4,17 +4,17 @@ import Button from "react-bootstrap/Button";
 export const BusinessItem = (props) => {
   return (
     <>
-      <div class="col-sm-6 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">{props.business.business_name}</h5>
-            <p class="card-text">Category: {props.business.categories}</p>
-            <p class="card-text">
+      <div className="col-sm-6 mb-4">
+        <div className="card">
+          <div className="card-body">
+            <h5 className="card-title">{props.business.business_name}</h5>
+            <p className="card-text">Category: {props.business.categories}</p>
+            <p className="card-text">
               {props.business.has_digitalized
                 ? "Digitalized"
                 : "Not Digitalized"}
             </p>
-            <Button class="btn btn-primary" onClick={props.onClick}>
+            <Button className="btn btn-primary" onClick={props.onClick}>
               View details
             </Button>
           </div>
