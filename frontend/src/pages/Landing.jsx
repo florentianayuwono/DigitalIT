@@ -1,4 +1,7 @@
+import { useAuthContext } from "../features/auth/authContext";
+
 export default function Landing() {
+  const { user } = useAuthContext();
   return (
     <div className="container col-xxl-8 landing">
       <div className="row flex-lg-row-reverse align-items-center g-5">
@@ -23,11 +26,11 @@ export default function Landing() {
           <div className="d-grid gap-2 d-md-flex justify-content-md-start">
             <a
               className="btn btn-primary btn-lg px-4 me-md-2"
-              href="login"
+              href={user.user ? "/dashboard" : "/login"}
               role="button"
               aria-pressed="true"
             >
-              Sign In
+              {user.user ? "Dashboard" : "Login"}
             </a>
           </div>
         </div>
