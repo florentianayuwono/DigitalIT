@@ -42,7 +42,7 @@ export default function Products() {
       <div className="col-md-6">
         <div
           className="btn h-100 p-5 border-solid rounded-3"
-          onClick={() => nav(`/business/display/addProduct`)}
+          onClick={() => nav(`addProduct`)}
         >
           <h3>Add New Product</h3>
         </div>

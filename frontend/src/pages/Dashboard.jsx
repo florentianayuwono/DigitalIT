@@ -7,13 +7,6 @@ export default function Dashboard() {
   const nav = useNavigate();
   const [isSubmitted, refresh] = useState(false);
 
-  // If is not logged in, then go back to login page
-  useEffect(() => {
-    if (!user.user) {
-      nav("/login");
-    }
-  });
-
   // When clicked, change the previous state of isSubmitted (from false to true)
   const onClick = () => {
     refresh((prev) => !prev);

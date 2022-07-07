@@ -15,7 +15,7 @@ export const getBusinesses = async (dispatch) => {
   };
 
   try {
-    dispatch({ type: "RESET"});
+    // dispatch({ type: "RESET"});
     dispatch({ type: "REQUEST_BUSINESSES" });
 
     const response = await axios.get(API_LINK, config);

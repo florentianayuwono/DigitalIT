@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { FaSignInAlt } from "react-icons/fa";
 import { useAuthContext } from "../features/auth/authContext";
 import { loginUser } from "../features/auth/authServices";
@@ -12,6 +12,8 @@ export default function Login(props) {
   });
   const { user, dispatch } = useAuthContext();
   const [message, setMessage] = useState("");
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const nav = useNavigate();
 
@@ -48,6 +50,7 @@ export default function Login(props) {
     try {
       const response = await loginUser(dispatch, loginData);
       if (!response || !response.user_id) return;
+      nav(from, { replace: true });
     } catch (error) {
       console.log(error);
     }
