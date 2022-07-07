@@ -34,10 +34,10 @@ export default function Products() {
 
   return (
     <div className="row align-items-md-stretch">
-      {Object.keys(products.products).map((key) => {
+      {Object.keys(products.products).filter(key => products.products[key] !== undefined).map((key) => {
         const product = products.products[key];
 
-        return !product ? <></> : (
+        return (
           <div className="col-md-6" key={key}>
             <div className="h-100 p-5 bg-light border rounded-3" key={key}>
               <h3>{product.product_name}</h3>
