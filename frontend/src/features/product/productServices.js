@@ -4,7 +4,7 @@ const API_LINK =
   process.env.NODE_ENV === "production"
     ? "/api/product/"
     : "http://localhost:5000/api/product/";
-      // "https://orbital-digital-it.herokuapp.com/api/product/";
+// "https://orbital-digital-it.herokuapp.com/api/product/";
 
 // id is not a required field
 export const getProducts = async (dispatch, getProductPayload) => {
@@ -91,6 +91,40 @@ export const addProduct = async (dispatch, addProductPayload) => {
     }
   } catch (e) {
     dispatch({ type: "ADD_PRODUCT_ERROR", error: e.response.data.message });
+    console.log(e.response.data.message);
+  }
+};
+
+export const deleteProduct = async (dispatch, deleteProductPayload) => {
+  const token = JSON.parse(localStorage.getItem("user")).token;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: deleteProductPayload,
+  };
+
+  try {
+    dispatch({ type: "REQUEST_DELETE_PRODUCT" });
+
+    const response = await axios.delete(
+      API_LINK + deleteProductPayload.product_id,
+      config
+    );
+    const data = await response.data;
+    const status = await response.status;
+
+    if (status === 200) {
+      dispatch({ type: "DELETE_PRODUCT_SUCCESS", payload: data });
+
+      return data;
+    } else {
+      dispatch({ type: "DELETE_PRODUCT_ERROR", error: data.message });
+      return;
+    }
+  } catch (e) {
+    dispatch({ type: "DELETE_PRODUCT_ERROR", error: e.response.data.message });
     console.log(e.response.data.message);
   }
 };

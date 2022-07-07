@@ -119,7 +119,7 @@ const updateProductData = asyncHandler(async (req, res) => {
 // @route   DELETE /api/product/:id
 // @access  Private
 const deleteProductData = asyncHandler(async (req, res) => {
-  const { id } = req.params;
+  const { id: product_id } = req.params;
   const { business_id } = req.body;
 
   const manager_id = await pool.query(
@@ -134,14 +134,14 @@ const deleteProductData = asyncHandler(async (req, res) => {
 
   const deleteProduct = await pool.query(
     "DELETE FROM product WHERE product_id = $1 AND business_id = $2 RETURNING *",
-    [id, business_id]
+    [product_id, business_id]
   );
 
   if (deleteProduct.rows.length === 0) {
     return res.json("You do not have this product.");
   }
 
-  res.status(200).json("Product data was deleted.");
+  res.status(200).json({ success: true, product_id: product_id });
 });
 
 module.exports = {
