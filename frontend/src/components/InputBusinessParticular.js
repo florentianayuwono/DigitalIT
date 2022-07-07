@@ -1,11 +1,10 @@
-import { useAuthContext } from "../features/auth/authContext";
 import { FaAddressCard } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useBusinessContext } from "../features/business/businessContext";
 import { addBusiness } from "../features/business/businessServices";
 import { useNavigate } from "react-router-dom";
 import { useProductContext } from "../features/product/productContext";
-import { getProducts } from "../features/product/productServices";
+import { addProduct, getProducts } from "../features/product/productServices";
 
 export default function InputBusinessParticular() {
   const [formData, setFormData] = useState({
@@ -19,16 +18,9 @@ export default function InputBusinessParticular() {
     platform: "",
   });
   const { businesses, dispatch } = useBusinessContext();
-  const productDispatch = useProductContext()[1];
-  const { user } = useAuthContext();
+  const { dispatch: productDispatch } = useProductContext();
   const [isSubmitted, refresh] = useState(false);
   const nav = useNavigate();
-
-  useEffect(() => {
-    if (!user.user) {
-      nav("/login");
-    }
-  });
 
   // Message to be shown (if there's error or something)
   const [message, setMessage] = useState("");
@@ -62,15 +54,22 @@ export default function InputBusinessParticular() {
     };
 
     const productData = {
-      product_name: productName,
+      productName,
       product_description: productDescription,
       price,
       cost,
-    }
+    };
 
     try {
       const response = await addBusiness(dispatch, businessData);
       if (!response || !response.business_id) return;
+
+      const addProductResponse = await addProduct(productDispatch, {
+        ...productData,
+        business_id: response.business_id,
+      });
+      
+      if (!addProductResponse || !addProductResponse.product_id) return;
       setStatus((prev) => "Successfully added business!");
     } catch (error) {
       console.log(error);
