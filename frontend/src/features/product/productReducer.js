@@ -8,7 +8,8 @@ where product is of structure: {
 */
 
 function productCreator(rawProduct) {
-  const { product_id, product_name, product_description, price, cost } = rawProduct;
+  const { product_id, product_name, product_description, price, cost } =
+    rawProduct;
   return {
     product_id,
     product: {
@@ -53,7 +54,10 @@ export const productReducer = (state, action) => {
       };
     case "GET_PRODUCTS_SUCCESS":
       let newProducts = {};
-      action.payload.forEach(product => newProducts[product.product_id] = productWithoutID(product));
+      action.payload.forEach(
+        (product) =>
+          (newProducts[product.product_id] = productWithoutID(product))
+      );
 
       return {
         ...state,
@@ -106,6 +110,36 @@ export const productReducer = (state, action) => {
         },
       };
     case "ADD_PRODUCT_ERROR":
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        isSuccess: false,
+        message: action.error,
+      };
+    case "REQUEST_DELETE_PRODUCT":
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        isSuccess: false,
+        message: "",
+      };
+    case "DELETE_PRODUCT_SUCCESS":
+      const newProductsWithoutDeleted = {
+        ...state,
+        isLoading: false,
+        isError: false,
+        isSuccess: true,
+        message: "",
+        products: {
+          ...state.products,
+          [action.payload.product_id]: undefined,
+        },
+      };
+
+      return newProductsWithoutDeleted;
+    case "DELETE_PRODUCT_ERROR":
       return {
         ...state,
         isLoading: false,

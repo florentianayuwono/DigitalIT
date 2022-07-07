@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams, useNavigate, Outlet } from "react-router-dom";
 import { useProductContext } from "../../features/product/productContext";
-import { getProducts } from "../../features/product/productServices";
+import { deleteProduct, getProducts } from "../../features/product/productServices";
 
 export default function Products() {
   const business_id = useParams().business_id;
@@ -23,18 +23,30 @@ export default function Products() {
     getData();
   }, []);
 
+  const deleteAction = async (product_id) => {
+    try {
+      await deleteProduct(dispatch, { product_id, business_id });
+    } catch (err) {
+      console.error(err.message);
+      return;
+    }
+  }
+
   return (
     <div className="row align-items-md-stretch">
       {Object.keys(products.products).map((key) => {
         const product = products.products[key];
 
-        return (
-          <div className="col-md-6" key={product.product_id}>
-            <div className="h-100 p-5 bg-light border rounded-3" key={product.product_id}>
+        return !product ? <></> : (
+          <div className="col-md-6" key={key}>
+            <div className="h-100 p-5 bg-light border rounded-3" key={key}>
               <h3>{product.product_name}</h3>
               <p> Description: {product.product_description}</p>
               <p> Price: {product.price}</p>
               <p> Cost: {product.cost}</p>
+              <button className="btn btn-primary" onClick={() => deleteAction(key)}>
+                Delete
+              </button>
             </div>
           </div>
         );

@@ -4,18 +4,11 @@ import { getBusinesses } from "../../features/business/businessServices";
 import { useBusinessContext } from "../../features/business/businessContext";
 import { BusinessItem } from "../../components/BusinessItem";
 import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "../../features/auth/authContext";
 import Button from "react-bootstrap/esm/Button";
-import { Outlet } from "react-router-dom";
 
 export default function DisplayBusinessParticular() {
   const { businesses, dispatch } = useBusinessContext();
   const [businessesState, setBusinesses] = useState(businesses.businesses);
-  const [selectedBusiness, setSelectedBusiness] = useState(
-    "No selected business"
-  );
-  const { user } = useAuthContext();
-
   const nav = useNavigate();
 
   // When clicked, navigate to page to add business
