@@ -5,6 +5,23 @@ const API_LINK =
     ? "/api/business/"
     : "https://orbital-digital-it.herokuapp.com/api/business/";
 
+export const getIndividualBusiness = async (id) => {
+  const token = JSON.parse(localStorage.getItem("user")).token;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const response = await axios.get(`${API_LINK}${id}`, config);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const getBusinesses = async (dispatch) => {
   const token = JSON.parse(localStorage.getItem("user")).token;
 

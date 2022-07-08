@@ -1,5 +1,6 @@
 import { Outlet, useParams } from "react-router-dom";
 import { useBusinessContext } from "../../features/business/businessContext";
+import { getIndividualBusiness } from "../../features/business/businessServices";
 
 
 /*
@@ -20,13 +21,19 @@ import { useBusinessContext } from "../../features/business/businessContext";
   the productReducer file. Once that's done, remember to modify the function below so that
   it's suitable for the modified data structure.
 */
-const selectBusiness = (business_id, businesses) => {
-  const business = businesses.businesses.find(
+const selectBusiness = async (business_id, businesses) => {
+  let business = businesses.businesses.find(
     (business) => parseInt(business.business_id) === parseInt(business_id)
   );
 
-  return business;
+  if (business) {
+    return business;
+  } else {
+    business = await getIndividualBusiness(business_id);
+    return business;
+  }
 };
+
 
 export const DisplayIndividualBusiness = () => {
   const { businesses } = useBusinessContext();
