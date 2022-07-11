@@ -16,9 +16,9 @@
     - GET BUSINESS DATA (**GET** to `/api/business/`)
         Fields: -
     - ADD BUSINESS DATA (**POST** to `/api/business/`)
-        Fields: businessName, categories, hasDigitalized
+        Fields: businessName, business_category, hasDigitalized
     - UPDATE BUSINESS DATA (**PUT** to `/api/business/:id`)
-        Fields: businessName, category, progress
+        Fields: businessName, business_category, progress
     - DELETE BUSINESS DATA (**DELETE** to `/api/business/:id`)
         Fields: -
 

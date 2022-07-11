@@ -8,7 +8,7 @@ export const BusinessItem = (props) => {
         <div className="card">
           <div className="card-body">
             <h5 className="card-title">{props.business.business_name}</h5>
-            <p className="card-text">Category: {props.business.categories}</p>
+            <p className="card-text">Category: {props.business.business_category}</p>
             <p className="card-text">
               {props.business.has_digitalized
                 ? "Digitalized"

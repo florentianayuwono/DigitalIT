@@ -32,7 +32,7 @@ CREATE TABLE business (
 );
 
 -- Inserting a business --
-INSERT INTO business (manager_id, business_name, categories, has_digitalized)
+INSERT INTO business (manager_id, business_name, business_category, has_digitalized)
 VALUES ('60dc16dd-c7f1-4fde-827a-90c0e101555c', 'my business', 'electronics', 'yes');
 
 CREATE TABLE product_main (

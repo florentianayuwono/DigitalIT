@@ -32,7 +32,7 @@ export const DisplayIndividualBusiness = () => {
   const { businesses } = useBusinessContext();
 
   const { business_id } = useParams();
-  const { business_name, categories, has_digitalized } = selectBusiness(
+  const { business_name, business_category, has_digitalized } = selectBusiness(
     business_id,
     businesses
   );
@@ -48,7 +48,7 @@ export const DisplayIndividualBusiness = () => {
           </div>
           <div className="col-md-12">
             <h3 style={has_digitalized ? {} : { color: "rgb(119,119,119)" }}>
-              {categories}
+              {business_category}
             </h3>
           </div>
         </div>

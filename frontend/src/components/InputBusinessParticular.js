@@ -9,7 +9,7 @@ import { addProduct, getProducts } from "../features/product/productServices";
 export default function InputBusinessParticular() {
   const [formData, setFormData] = useState({
     businessName: "",
-    category: "",
+    business_category: "",
     hasDigitalized: "",
     productName: "",
     productDescription: "",
@@ -28,7 +28,7 @@ export default function InputBusinessParticular() {
 
   const {
     businessName,
-    category,
+    business_category,
     hasDigitalized,
     productName,
     productDescription,
@@ -49,7 +49,7 @@ export default function InputBusinessParticular() {
 
     const businessData = {
       businessName,
-      category,
+      business_category,
       hasDigitalized,
     };
 
@@ -147,14 +147,14 @@ export default function InputBusinessParticular() {
                     </div>
 
                     <div className="col-12">
-                      <label for="category" className="form-label">
+                      <label for="business_category" className="form-label">
                         Category
                       </label>
                       <select
                         className="form-select"
-                        value={formData.category}
-                        id="category"
-                        name="category"
+                        value={formData.business_category}
+                        id="business_category"
+                        name="business_category"
                         onChange={onChange}
                         required
                       >
