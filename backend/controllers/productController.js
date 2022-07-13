@@ -141,7 +141,6 @@ const getLocalProductData = asyncHandler(async (req, res) => {
     );
 
     res.status(resultQuery.rows[0] ? 200 : 401).json(resultQuery.rows[0] || {message: "Not found"});
-    
   } else if (store_id) {
     const store = await pool.query(
       "SELECT * FROM store WHERE store_id = $1",
@@ -187,31 +186,8 @@ const getLocalProductData = asyncHandler(async (req, res) => {
 
     res.status(resultQuery.rows ? 200 : 401).json(resultQuery.rows || {message: "Not found"});
   } else {
-
+    res.status(400).json({ message: "Improper input" });
   }
-
-  // if (store.rows[0].store_manager_id !== req.user.user_id) {
-  //   res.status(401);
-  //   throw new Error("You do not own this product.");
-  // }
-  // // If there is id specified, return the specified product
-  // if (id) {
-  //   const specificProduct = await pool.query(
-  //     "SELECT p.product_id, pm.product_name, pm.product_description, p.product_cost, p.product_price FROM product_secondary AS p LEFT JOIN product_main as pm ON p.product_id = pm.product_id WHERE p.store_id = $1 AND p.product_id = $2",
-  //     [store_id, id]
-  //   );
-
-  //   res.status(200).json(specificProduct.rows[0]);
-  //   // Since there is no id specified, return all the products that this business has
-  // } else {
-  //   const product = await pool.query(
-  //     // "SELECT * FROM product_secondary WHERE business_id = $1",
-  //     "SELECT p.product_id, pm.product_name, pm.product_description, p.product_cost, p.product_price FROM product_secondary AS p LEFT JOIN product_main as pm ON p.product_id = pm.product_id WHERE p.store_id = $1",
-  //     [store_id]
-  //   );
-
-  //   res.status(200).json(product.rows);
-  // }
 });
 
 // @desc    Update product data
