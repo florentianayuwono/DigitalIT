@@ -18,6 +18,8 @@ const addStoreData = asyncHandler(async (req, res) => {
     throw new Error("You do not own this business.");
   }
 
+  console.log("HELLO");
+
   const newStore = await pool.query(
     "INSERT INTO store (store_name, business_id, store_manager_id, store_platform_id, creation_date) VALUES ($1, $2, $3, $4, $5) RETURNING *",
     [

@@ -12,6 +12,7 @@ const {
 const { protect } = require("../middlewares/authMiddleware");
 
 router.post("/", protect, addLocalProductData);
+router.get("/", protect, getLocalProductData);
 router
   .route("/:id")
   .get(protect, getLocalProductData)
