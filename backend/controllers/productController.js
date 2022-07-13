@@ -139,7 +139,7 @@ const getLocalProductData = asyncHandler(async (req, res) => {
         (SELECT * FROM product_main WHERE product_id = (SELECT product_id FROM ps)) as pm`,
       [id]
     );
-    
+
     res.status(resultQuery.rows[0] ? 200 : 401).json(resultQuery.rows[0] || {message: "Not found"});
     
   } else if (store_id) {
@@ -148,8 +148,44 @@ const getLocalProductData = asyncHandler(async (req, res) => {
       [store_id]
     )
 
-  } else if (business_id) {
+    if (store.rows[0].store_manager_id !== req.user.user_id) {
+      res
+        .status(401)
+        .json({ message: "You are not authorized to view this product" });
+    }
 
+    const resultQuery = await pool.query(
+      `
+      SELECT p.product_id, p.store_id, pm.product_name, pm.product_description, p.product_cost, p.product_price 
+      FROM 
+      product_secondary AS p LEFT JOIN product_main as pm ON p.product_id = pm.product_id WHERE p.store_id = $1
+      `,
+      [store_id]
+    );
+
+    res.status(resultQuery.rows ? 200 : 401).json(resultQuery.rows || {message: "Not found"});
+  } else if (business_id) {
+    const business = await pool.query(
+      "SELECT * FROM business WHERE business_id = $1",
+      [business_id]
+    )
+
+    if (business.rows[0].manager_id !== req.user.user_id) {
+      res
+        .status(401)
+        .json({ message: "You are not authorized to view this product" });
+    }
+
+    const resultQuery = await pool.query(
+      `
+      SELECT p.product_id, p.store_id, pm.product_name, pm.product_description, p.product_cost, p.product_price 
+      FROM 
+      product_secondary AS p LEFT JOIN product_main as pm ON p.product_id = pm.product_id WHERE p.business_id = $1
+      `,
+      [business_id]
+    );
+
+    res.status(resultQuery.rows ? 200 : 401).json(resultQuery.rows || {message: "Not found"});
   } else {
 
   }
