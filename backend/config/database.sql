@@ -45,6 +45,7 @@ CREATE TABLE product_main (
   gender_target INT NOT NULL,
   PRIMARY KEY (product_id)
 );
+
 CREATE TABLE platform (
   platform_id SERIAL UNIQUE NOT NULL,
   platform_name VARCHAR(255) NOT NULL,

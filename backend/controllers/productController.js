@@ -1,35 +1,105 @@
 const asyncHandler = require("express-async-handler");
 const pool = require("../config/db");
 
-// @desc    Add new product
+// @desc    Add a new local product
 // @route   POST /api/product/
 // @access  Private
-const addProductData = asyncHandler(async (req, res) => {
-  const { productName, productDescription, price, cost, business_id } =
+const addLocalProductData = asyncHandler(async (req, res) => {
+  const { store_id, business_id, product_id, product_cost, product_price } =
     req.body;
-  const manager_id = await pool.query(
-    "SELECT manager_id from business WHERE business_id = $1",
+  const manager_id_confirm = await pool.query(
+    "SELECT manager_id FROM business WHERE business_id = $1",
     [business_id]
   );
 
-  // Check whether the user who tries to add new product is indeed the business owner
-  if (manager_id.rows[0].manager_id === req.user.user_id) {
+  if (manager_id_confirm.rows[0].manager_id === req.user.user_id) {
     const newProduct = await pool.query(
-      "INSERT INTO product (business_id, product_name, product_description, price, cost) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-      [business_id, productName, productDescription, price, cost]
+      "INSERT INTO product_secondary (store_id, business_id, product_id, product_cost, product_price) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+      [store_id, business_id, product_id, product_cost, product_price]
     );
 
     res.status(201).json(newProduct.rows[0]);
   } else {
-    res.status(401);
-    throw new Error("You do not own this product.");
+    res
+      .status(401)
+      .json({ message: "You are not authorized to add this product" });
   }
+});
+
+// @desc    Add new main product
+// @route   POST /api/product/main/
+// @access  Private
+const addProductData = asyncHandler(async (req, res) => {
+  const {
+    product_name,
+    product_description,
+    product_category,
+    product_importance,
+    age_target,
+    gender_target,
+  } = req.body;
+
+  const newProduct = await pool.query(
+    "INSERT INTO product_main (product_name, product_description, product_category, product_importance, age_target, gender_target) VALUES ($1, $2, $3, 0, $4, $5) RETURNING *",
+    [
+      product_name,
+      product_description,
+      product_category,
+      age_target,
+      gender_target,
+    ]
+  );
+  
+  const resultQuery = newProduct.rows[0];
+
+  res.status(resultQuery ? 201 : 401).json(resultQuery ? resultQuery : {message: "failed to add"});
+});
+
+/**
+ * @desc    Get a main product data
+ * @route   GET /api/product/main/:id&:keyword
+ * @access  PUBLIC
+ */
+const getProductData = asyncHandler(async (req, res) => {
+  const { id, keyword } = req.params;
+  let resultQuery;
+
+  if (id && id !== "all") {
+    resultQuery = await pool.query(
+      "SELECT * FROM product_main WHERE product_id = $1",
+      [id]
+    );
+
+    result = resultQuery.rows[0];
+
+    res
+      .status(result ? 200 : 401)
+      .json(result ? result : { message: "Not found" });
+  } else {
+    // MODIFY THIS LATER TO LIMIT SEARCH SIZE.
+    // OR MODIFY TO SEARCH FOR ANY SUBSTRING EFFICIENTLY.
+    resultQuery = await pool.query(
+      "SELECT * FROM product_main WHERE product_name ILIKE $1",
+      [`%${keyword === "none" ? "" : keyword}%`]
+      );
+
+    res.status(200).json(resultQuery.rows);
+  }
+});
+
+/**
+ * @desc    Update a main product data
+ * @route   PUT /api/product/main/:id
+ * @access  Private
+ */
+const updateProductData = asyncHandler(async (req, res) => {
+  res.status(200).json({ message: "Not implemented yet" });
 });
 
 // @desc    Get product data
 // @route   GET /api/product/:id
 // @access  Private
-const getProductData = asyncHandler(async (req, res) => {
+const getLocalProductData = asyncHandler(async (req, res) => {
   const { id } = req.params;
   /*
   The next line is edited from req.body to req.headers because it seems that
@@ -70,7 +140,7 @@ const getProductData = asyncHandler(async (req, res) => {
 // @desc    Update product data
 // @route   PUT /api/product/:id
 // @access  Private
-const updateProductData = asyncHandler(async (req, res) => {
+const updateLocalProductData = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { productName, productDescription, price, cost, business_id } =
     req.body;
@@ -118,7 +188,7 @@ const updateProductData = asyncHandler(async (req, res) => {
 // @desc    Delete product data
 // @route   DELETE /api/product/:id
 // @access  Private
-const deleteProductData = asyncHandler(async (req, res) => {
+const deleteLocalProductData = asyncHandler(async (req, res) => {
   const { id: product_id } = req.params;
   const { business_id } = req.body;
 
@@ -148,5 +218,8 @@ module.exports = {
   addProductData,
   getProductData,
   updateProductData,
-  deleteProductData,
+  addLocalProductData,
+  getLocalProductData,
+  updateLocalProductData,
+  deleteLocalProductData,
 };
