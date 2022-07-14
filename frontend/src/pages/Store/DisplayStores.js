@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import AddStoreForm from "../../components/AddStoreForm";
+import PopupMessageButton from "../../components/PopupMessageButton";
 import { addStore, getStore } from "../../features/store/storeServices";
 
 export default function DisplayStores({ business_id }) {
@@ -25,6 +27,8 @@ export default function DisplayStores({ business_id }) {
           );
         })}
       </ul>
+      <AddStoreForm business_id={business_id} />
     </div>
   );
 }
+
