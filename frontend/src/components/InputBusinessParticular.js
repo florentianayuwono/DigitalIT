@@ -4,7 +4,7 @@ import { useBusinessContext } from "../features/business/businessContext";
 import { addBusiness } from "../features/business/businessServices";
 import { useNavigate } from "react-router-dom";
 import { useProductContext } from "../features/product/productContext";
-import { addProduct, getProducts } from "../features/product/productServices";
+import { addProduct } from "../features/product/productServices";
 
 export default function InputBusinessParticular() {
   const [formData, setFormData] = useState({
