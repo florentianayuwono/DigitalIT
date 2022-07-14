@@ -5,13 +5,11 @@ const pool = require("../config/db");
 // @route   POST /api/product/
 // @access  Private
 const addLocalProductData = asyncHandler(async (req, res) => {
-  const { store_id, product_id, product_cost, product_price } =
-    req.body;
+  const { store_id, product_id, product_cost, product_price } = req.body;
 
-  const store = await pool.query(
-    "SELECT * FROM store WHERE store_id = $1",
-    [store_id]
-  );
+  const store = await pool.query("SELECT * FROM store WHERE store_id = $1", [
+    store_id,
+  ]);
 
   const { business_id, store_manager_id } = store.rows[0];
 
@@ -21,7 +19,9 @@ const addLocalProductData = asyncHandler(async (req, res) => {
       [store_id, business_id, product_id, product_cost, product_price]
     );
 
-    res.status(newProduct.rows[0] ? 201 : 400).json(newProduct.rows[0] || {message: "Failed to add product."});
+    res
+      .status(newProduct.rows[0] ? 201 : 400)
+      .json(newProduct.rows[0] || { message: "Failed to add product." });
   } else {
     res
       .status(401)
@@ -52,10 +52,12 @@ const addProductData = asyncHandler(async (req, res) => {
       gender_target,
     ]
   );
-  
+
   const resultQuery = newProduct.rows[0];
 
-  res.status(resultQuery ? 201 : 401).json(resultQuery ? resultQuery : {message: "failed to add"});
+  res
+    .status(resultQuery ? 201 : 401)
+    .json(resultQuery ? resultQuery : { message: "failed to add" });
 });
 
 /**
@@ -84,7 +86,7 @@ const getProductData = asyncHandler(async (req, res) => {
     resultQuery = await pool.query(
       "SELECT * FROM product_main WHERE product_name ILIKE $1",
       [`%${keyword === "none" ? "" : keyword}%`]
-      );
+    );
 
     res.status(200).json(resultQuery.rows);
   }
@@ -120,8 +122,8 @@ const getLocalProductData = asyncHandler(async (req, res) => {
       `SELECT manager_id FROM business WHERE business_id = 
         (SELECT business_id FROM product_secondary WHERE product_local_id = $1)`,
       [id]
-      );
-      
+    );
+
     // Check whether the user who tries to access product data is indeed the business owner
     if (manager.rows[0].manager_id !== req.user.user_id) {
       res
@@ -140,12 +142,13 @@ const getLocalProductData = asyncHandler(async (req, res) => {
       [id]
     );
 
-    res.status(resultQuery.rows[0] ? 200 : 401).json(resultQuery.rows[0] || {message: "Not found"});
+    res
+      .status(resultQuery.rows[0] ? 200 : 401)
+      .json(resultQuery.rows[0] || { message: "Not found" });
   } else if (store_id) {
-    const store = await pool.query(
-      "SELECT * FROM store WHERE store_id = $1",
-      [store_id]
-    )
+    const store = await pool.query("SELECT * FROM store WHERE store_id = $1", [
+      store_id,
+    ]);
 
     if (store.rows[0].store_manager_id !== req.user.user_id) {
       res
@@ -162,12 +165,14 @@ const getLocalProductData = asyncHandler(async (req, res) => {
       [store_id]
     );
 
-    res.status(resultQuery.rows ? 200 : 401).json(resultQuery.rows || {message: "Not found"});
+    res
+      .status(resultQuery.rows ? 200 : 401)
+      .json(resultQuery.rows || { message: "Not found" });
   } else if (business_id) {
     const business = await pool.query(
       "SELECT * FROM business WHERE business_id = $1",
       [business_id]
-    )
+    );
 
     if (business.rows[0].manager_id !== req.user.user_id) {
       res
@@ -184,7 +189,9 @@ const getLocalProductData = asyncHandler(async (req, res) => {
       [business_id]
     );
 
-    res.status(resultQuery.rows ? 200 : 401).json(resultQuery.rows || {message: "Not found"});
+    res
+      .status(resultQuery.rows ? 200 : 401)
+      .json(resultQuery.rows || { message: "Not found" });
   } else {
     res.status(400).json({ message: "Improper input" });
   }
@@ -242,29 +249,33 @@ const updateLocalProductData = asyncHandler(async (req, res) => {
 // @route   DELETE /api/product/:id
 // @access  Private
 const deleteLocalProductData = asyncHandler(async (req, res) => {
+  // ID is local product ID
   const { id: product_id } = req.params;
-  const { business_id } = req.body;
 
-  const manager_id = await pool.query(
-    "SELECT manager_id from business WHERE business_id = $1",
-    [business_id]
+  const manager = await pool.query(
+    `SELECT manager_id, business_id FROM business 
+    WHERE business_id = (SELECT business_id FROM product_secondary WHERE product_local_id = $1)`,
+    [product_id]
   );
+
   // Check whether the user who tries to delete product data is indeed the business owner
-  if (manager_id.rows[0].manager_id !== req.user.user_id) {
+  if (manager.rows[0].manager_id !== req.user.user_id) {
     res.status(401);
     throw new Error("You do not own this product.");
   }
 
-  const deleteProduct = await pool.query(
-    "DELETE FROM product WHERE product_id = $1 AND business_id = $2 RETURNING *",
-    [product_id, business_id]
+  const deleted = await pool.query(
+    `DELETE FROM product_secondary WHERE product_local_id = $1 RETURNING *`,
+    [product_id]
   );
 
-  if (deleteProduct.rows.length === 0) {
-    return res.json("You do not have this product.");
-  }
-
-  res.status(200).json({ success: true, product_id: product_id });
+  res
+    .status(deleted.rows[0] ? 200 : 401)
+    .json(
+      deleted.rows[0]
+        ? { ...deleted.rows[0], success: true }
+        : { message: "Failed to delete" }
+    );
 });
 
 module.exports = {
