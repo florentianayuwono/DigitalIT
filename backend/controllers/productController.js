@@ -184,7 +184,7 @@ const getLocalProductData = asyncHandler(async (req, res) => {
 
     const resultQuery = await pool.query(
       `
-      SELECT p.product_id, p.store_id, pm.product_name, pm.product_description, p.product_cost, p.product_price 
+      SELECT p.product_id, p.product_local_id, p.store_id, pm.product_name, pm.product_description, p.product_cost, p.product_price 
       FROM 
       product_secondary AS p LEFT JOIN product_main as pm ON p.product_id = pm.product_id WHERE p.business_id = $1
       `,

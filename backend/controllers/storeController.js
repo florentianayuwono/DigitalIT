@@ -18,12 +18,15 @@ const addStoreData = asyncHandler(async (req, res) => {
     throw new Error("You do not own this business.");
   }
 
-  console.log("HELLO");
+  const platform = await pool.query(
+    `SELECT * from platform WHERE platform_id = $1`,
+    [platform_id]
+  );
 
   const newStore = await pool.query(
     "INSERT INTO store (store_name, business_id, store_manager_id, store_platform_id, creation_date) VALUES ($1, $2, $3, $4, $5) RETURNING *",
     [
-      business.rows[0].business_name,
+      business.rows[0].business_name + ` - ${platform.rows[0].platform_name}`,
       business_id,
       business.rows[0].manager_id,
       platform_id,
@@ -62,7 +65,9 @@ const getStoreData = asyncHandler(async (req, res) => {
       "SELECT * FROM store AS s LEFT JOIN business AS b ON b.business_id = s.business_id WHERE b.business_id = $1 AND s.store_id = $2",
       [business_id, store_id]
     );
-    res.status(specificStore.rows[0] ? 200 : 400).json(specificStore.rows[0] || {message: "Store not found."});
+    res
+      .status(specificStore.rows[0] ? 200 : 400)
+      .json(specificStore.rows[0] || { message: "Store not found." });
     // Since there is no id specified, return all the stores that this business has
   } else {
     const store = await pool.query(
@@ -70,7 +75,9 @@ const getStoreData = asyncHandler(async (req, res) => {
       [business_id]
     );
 
-    res.status(store.rows ? 200 : 400).json(store.rows || {message: "No stores found."});
+    res
+      .status(store.rows ? 200 : 400)
+      .json(store.rows || { message: "No stores found." });
   }
 });
 

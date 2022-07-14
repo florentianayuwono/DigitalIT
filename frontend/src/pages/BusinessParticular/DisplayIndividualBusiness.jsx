@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { useBusinessContext } from "../../features/business/businessContext";
 import { getIndividualBusiness } from "../../features/business/businessServices";
+import DisplayStores from "../Store/DisplayStores";
 
 /*
   Improvement for later here!!
@@ -75,6 +76,9 @@ export const DisplayIndividualBusiness = () => {
             </h3>
           </div>
         </div>
+      </div>
+      <div className="col-md-12">
+        <DisplayStores business_id={business_id} />
       </div>
       <div className="col-md-12">
         <Outlet />

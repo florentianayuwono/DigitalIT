@@ -3,7 +3,8 @@ import axios from "axios";
 const API_LINK =
   process.env.NODE_ENV === "production"
     ? "/api/business/"
-    : "https://orbital-digital-it.herokuapp.com/api/business/";
+    : "http://localhost:5000/api/business/";
+    // : "https://orbital-digital-it.herokuapp.com/api/business/";
 
 export const getIndividualBusiness = async (id) => {
   const token = JSON.parse(localStorage.getItem("user")).token;
