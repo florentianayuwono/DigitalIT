@@ -101,9 +101,11 @@ const updateProductData = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Not implemented yet" });
 });
 
-// @desc    Get product data
-// @route   GET /api/product/:id
-// @access  Private
+/**
+ * @desc    Get product data
+ * @route   GET /api/product/:id
+ * @access  Private
+ */
 const getLocalProductData = asyncHandler(async (req, res) => {
   // id is the local product ID
   const { id } = req.params;
@@ -135,7 +137,7 @@ const getLocalProductData = asyncHandler(async (req, res) => {
       `
       WITH ps AS (SELECT * FROM product_secondary WHERE product_local_id = $1)
       
-      SELECT p.product_id, pm.product_name, pm.product_description, p.product_cost, p.product_price
+      SELECT p.product_id, p.product_local_id, pm.product_name, pm.product_description, p.product_cost, p.product_price
       FROM 
         (SELECT * FROM product_secondary WHERE product_local_id = $1) as p,
         (SELECT * FROM product_main WHERE product_id = (SELECT product_id FROM ps)) as pm`,
@@ -158,7 +160,7 @@ const getLocalProductData = asyncHandler(async (req, res) => {
 
     const resultQuery = await pool.query(
       `
-      SELECT p.product_id, p.store_id, pm.product_name, pm.product_description, p.product_cost, p.product_price 
+      SELECT p.product_id, p.product_local_id, p.store_id, pm.product_name, pm.product_description, p.product_cost, p.product_price 
       FROM 
       product_secondary AS p LEFT JOIN product_main as pm ON p.product_id = pm.product_id WHERE p.store_id = $1
       `,
