@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { useBusinessContext } from "../../features/business/businessContext";
-
+import { getIndividualBusiness } from "../../features/business/businessServices";
 
 /*
   Improvement for later here!!
@@ -21,34 +22,56 @@ import { useBusinessContext } from "../../features/business/businessContext";
   it's suitable for the modified data structure.
 */
 const selectBusiness = (business_id, businesses) => {
-  const business = businesses.businesses.find(
+  let business = businesses.businesses.find(
     (business) => parseInt(business.business_id) === parseInt(business_id)
   );
 
-  return business;
+  if (business) {
+    return business;
+  } else {
+    // if the business data is not found, we need to fetch it from the server individually using the
+    // getIndividualBusiness function
+    return getIndividualBusiness(business_id);
+  }
 };
 
 export const DisplayIndividualBusiness = () => {
   const { businesses } = useBusinessContext();
-
   const { business_id } = useParams();
-  const { business_name, categories, has_digitalized } = selectBusiness(
-    business_id,
-    businesses
+  const [business, setBusiness] = useState(
+    {
+      business_name: "",
+      categories: "",
+      has_digitalized: "",
+    }
   );
+  
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await selectBusiness(business_id, businesses);
+        setBusiness(response);
+      } catch (err) {
+        console.error(err.message);
+        return;
+      }
+    }
+
+    getData();
+  }, [business_id, businesses]);
 
   return (
     <>
       <div className="heading border-bottom">
         <div className="row">
           <div className="col-md-12">
-            <h1 style={has_digitalized ? {} : { color: "rgb(119,119,119)" }}>
-              {business_name}
+            <h1 style={business.has_digitalized ? {} : { color: "rgb(119,119,119)" }}>
+              {business.business_name}
             </h1>
           </div>
           <div className="col-md-12">
-            <h3 style={has_digitalized ? {} : { color: "rgb(119,119,119)" }}>
-              {categories}
+            <h3 style={business.has_digitalized ? {} : { color: "rgb(119,119,119)" }}>
+              {business.categories}
             </h3>
           </div>
         </div>
