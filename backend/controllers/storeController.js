@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const pool = require("../config/db");
+const { deleteAllStoreProducts } = require("./productController");
 const getDate = require("../auxiliaries/helperFunctions").getDate;
 
 // @desc    Add new store
@@ -101,11 +102,16 @@ const deleteStoreData = asyncHandler(async (req, res) => {
     [store_id]
   );
 
+  let deleteProducts;
+  if (deleteStore.rows[0]) {
+    deleteProducts = deleteAllStoreProducts();
+  }
+
   res
     .status(deleteStore.rows[0] ? 200 : 400)
     .json(
       deleteStore.rows[0]
-        ? { ...deleteStore.rows[0], message: "Store deleted." }
+        ? { ...deleteStore.rows[0], message: "Store deleted.", deletedProducts: deleteProducts }
         : { message: "Failed to delete store." }
     );
 });

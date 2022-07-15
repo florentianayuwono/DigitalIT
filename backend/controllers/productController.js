@@ -280,6 +280,29 @@ const deleteLocalProductData = asyncHandler(async (req, res) => {
     );
 });
 
+/**
+ * @desc    Delete all products in the specified store
+ * @route   No Route. This is an internal function.
+ * @access  Private
+ */
+const deleteAllStoreProducts = asyncHandler(async (store_id, user_id) => {
+  const store = await pool.query(
+    `SELECT * FROM STORE WHERE store_id = $1 AND store_manager_id = $2`,
+    [store_id, user_id]
+  );
+
+  if (!store.rows[0]) {
+    throw new Error("Store does not exist or user is unauthorized");
+  }
+
+  const deleted = await pool.query(
+    `DELETE FROM product_secondary WHERE store_id = $1 RETURNING *`,
+    [store_id]
+  );
+
+  return deleted.rows;
+});
+
 module.exports = {
   addProductData,
   getProductData,
@@ -288,4 +311,5 @@ module.exports = {
   getLocalProductData,
   updateLocalProductData,
   deleteLocalProductData,
+  deleteAllStoreProducts,
 };
