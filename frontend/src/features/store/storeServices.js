@@ -8,15 +8,24 @@ const API_LINK =
 
 export const getStore = async ({ store_id, business_id }) => {
   const token = JSON.parse(localStorage.getItem("user")).token;
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      business_id,
-    },
-  };
+  const config = business_id
+    ? {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          business_id: business_id,
+        },
+      }
+    : {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
 
   try {
-    const response = await axios(store_id ? API_LINK + store_id : API_LINK, config);
+    const response = await axios(
+      store_id ? API_LINK + store_id : API_LINK,
+      config
+    );
     const data = await response.data;
     const status = await response.status;
 
@@ -39,7 +48,11 @@ export const addStore = async ({ business_id, platform_id }) => {
   };
 
   try {
-    const response = await axios.post(API_LINK, {business_id, platform_id}, config);
+    const response = await axios.post(
+      API_LINK,
+      { business_id, platform_id },
+      config
+    );
     const data = await response.data;
     const status = await response.status;
 
@@ -51,7 +64,7 @@ export const addStore = async ({ business_id, platform_id }) => {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 export const deleteStore = async ({ store_id }) => {
   const token = JSON.parse(localStorage.getItem("user")).token;
@@ -74,4 +87,4 @@ export const deleteStore = async ({ store_id }) => {
   } catch (e) {
     console.log(e);
   }
-}
+};

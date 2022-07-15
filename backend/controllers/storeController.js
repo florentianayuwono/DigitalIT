@@ -47,24 +47,30 @@ const addStoreData = asyncHandler(async (req, res) => {
 // @access  Private
 const getStoreData = asyncHandler(async (req, res) => {
   const { store_id } = req.params;
+  let { business_id } = req.headers;
 
-  const { business_id } = req.headers;
-
-  const manager_id = await pool.query(
-    "SELECT * from business WHERE business_id = $1",
-    [business_id]
+  const manager = await pool.query(
+    business_id
+      ? `SELECT * from business WHERE business_id = $1`
+      : `SELECT * from store WHERE store_id = $1`,
+    [business_id || parseInt(store_id)]
   );
+  
+  const manager_id = business_id ? manager.rows[0].manager_id : manager.rows[0].store_manager_id;
+  business_id = business_id || manager.rows[0].business_id;
+
   // Check whether the user who tries to access store data is indeed the business owner
-  if (manager_id.rows[0].manager_id !== req.user.user_id) {
+  if (manager_id !== req.user.user_id) {
     res.status(401);
     throw new Error("You do not own this store.");
   }
 
   // If there is id specified, return the specified store
   if (store_id) {
+    
     const specificStore = await pool.query(
       "SELECT * FROM store AS s LEFT JOIN business AS b ON b.business_id = s.business_id WHERE b.business_id = $1 AND s.store_id = $2",
-      [business_id, store_id]
+      [business_id, parseInt(store_id)]
     );
     res
       .status(specificStore.rows[0] ? 200 : 400)
@@ -111,7 +117,11 @@ const deleteStoreData = asyncHandler(async (req, res) => {
     .status(deleteStore.rows[0] ? 200 : 400)
     .json(
       deleteStore.rows[0]
-        ? { ...deleteStore.rows[0], message: "Store deleted.", deletedProducts: deleteProducts }
+        ? {
+            ...deleteStore.rows[0],
+            message: "Store deleted.",
+            deletedProducts: deleteProducts,
+          }
         : { message: "Failed to delete store." }
     );
 });
