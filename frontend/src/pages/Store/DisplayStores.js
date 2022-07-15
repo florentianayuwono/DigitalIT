@@ -1,11 +1,15 @@
+import { Button } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import AddStoreForm from "../../components/AddStoreForm";
 import PopupMessageButton from "../../components/PopupMessageButton";
 import { deleteStore, getStore } from "../../features/store/storeServices";
 
-export default function DisplayStores({ business_id }) {
+export default function DisplayStores() {
   const [stores, setStores] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const nav = useNavigate();
+  const { business_id } = useParams();
 
   useEffect(() => {
     const fetchStores = async (business_id) => {
@@ -37,6 +41,9 @@ export default function DisplayStores({ business_id }) {
                   title="Delete"
                   executeTitle="Delete"
                 />
+                <Button colorScheme={"purple"} onClick={() => nav(`${store.store_id}`)}>
+                  View details
+                </Button>
               </div>
             </div>
           );

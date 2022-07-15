@@ -78,9 +78,6 @@ export const DisplayIndividualBusiness = () => {
         </div>
       </div>
       <div className="col-md-12">
-        <DisplayStores business_id={business_id} />
-      </div>
-      <div className="col-md-12">
         <Outlet />
       </div>
     </>
