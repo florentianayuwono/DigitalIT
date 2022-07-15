@@ -291,10 +291,6 @@ const deleteAllStoreProducts = asyncHandler(async (store_id, user_id) => {
     [store_id, user_id]
   );
 
-  if (!store.rows[0]) {
-    throw new Error("Store does not exist or user is unauthorized");
-  }
-
   const deleted = await pool.query(
     `DELETE FROM product_secondary WHERE store_id = $1 RETURNING *`,
     [store_id]

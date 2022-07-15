@@ -35,7 +35,6 @@ export default function AddStoreForm({ business_id, refresh }) {
 
   const handleSubmit = async () => {
     const store = await addStore({ business_id, platform_id });
-    console.log(store);
   };
 
   return (
@@ -81,7 +80,7 @@ export default function AddStoreForm({ business_id, refresh }) {
                 <Button ref={cancelRef} onClick={onClose}>
                   Cancel
                 </Button>
-                <Button colorScheme="red" onClick={execute} ml={3}>
+                <Button colorScheme="purple" onClick={execute} ml={3}>
                   Add Store
                 </Button>
               </AlertDialogFooter>

@@ -52,3 +52,26 @@ export const addStore = async ({ business_id, platform_id }) => {
     console.log(e);
   }
 }
+
+export const deleteStore = async ({ store_id }) => {
+  const token = JSON.parse(localStorage.getItem("user")).token;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const response = await axios.delete(API_LINK + store_id, config);
+    const data = await response.data;
+    const status = await response.status;
+
+    if (status === 200) {
+      return data;
+    } else {
+      return;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
