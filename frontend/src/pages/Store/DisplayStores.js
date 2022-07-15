@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import AddStoreForm from "../../components/AddStoreForm";
 import PopupMessageButton from "../../components/PopupMessageButton";
-import { addStore, getStore } from "../../features/store/storeServices";
+import { getStore } from "../../features/store/storeServices";
 
 export default function DisplayStores({ business_id }) {
   const [stores, setStores] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     const fetchStores = async (business_id) => {
@@ -13,21 +14,23 @@ export default function DisplayStores({ business_id }) {
     };
 
     fetchStores(business_id);
-  }, [business_id]);
+  }, [business_id, refresh]);
 
   return (
-    <div>
+    <div className="row align-items-md-stretch">
       <h1>Stores</h1>
       <ul>
         {stores.map((store) => {
           return (
-            <li key={store.store_id}>
-              <h2>{store.store_name}</h2>
-            </li>
+            <div className="col-md-6" key={store.store_id}>
+              <div className="h-100 p-5 bg-light border rounded-3" key={store.store_id}>
+                <h3>{store.store_name}</h3>
+              </div>
+            </div>
           );
         })}
       </ul>
-      <AddStoreForm business_id={business_id} />
+      <AddStoreForm business_id={business_id} refresh={setRefresh} />
     </div>
   );
 }
