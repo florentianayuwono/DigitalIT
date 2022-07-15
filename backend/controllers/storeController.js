@@ -85,29 +85,29 @@ const getStoreData = asyncHandler(async (req, res) => {
 // @route   DELETE /api/store/:id
 // @access  Private
 const deleteStoreData = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const { business_id } = req.body;
+  const { store_id } = req.params;
+  const store = await pool.query(`SELECT * from store WHERE store_id = $1`, [
+    store_id,
+  ]);
 
-  const manager_id = await pool.query(
-    "SELECT manager_id from business WHERE business_id = $1",
-    [business_id]
-  );
   // Check whether the user who tries to delete store data is indeed the business owner
-  if (manager_id.rows[0].manager_id !== req.user.user_id) {
+  if (store.rows[0].store_manager_id !== req.user.user_id) {
     res.status(401);
     throw new Error("You do not own this store.");
   }
 
   const deleteStore = await pool.query(
-    "DELETE FROM store WHERE store_id = $1 AND business_id = $2 RETURNING *",
-    [id, business_id]
+    "DELETE FROM store WHERE store_id = $1 RETURNING *",
+    [store_id]
   );
 
-  if (deleteStore.rows.length === 0) {
-    return res.status(401).json("You do not have this store.");
-  }
-
-  res.status(200).json("Store data was deleted.");
+  res
+    .status(deleteStore.rows[0] ? 200 : 400)
+    .json(
+      deleteStore.rows[0]
+        ? { ...deleteStore.rows[0], message: "Store deleted." }
+        : { message: "Failed to delete store." }
+    );
 });
 
 module.exports = {
