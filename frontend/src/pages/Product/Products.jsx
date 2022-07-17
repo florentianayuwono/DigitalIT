@@ -1,6 +1,9 @@
+import { Radio, RadioGroup, Stack } from "@chakra-ui/react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { useParams, useNavigate, Outlet } from "react-router-dom";
 import PopupMessageButton from "../../components/PopupMessageButton";
+import ProductSearchBar from "../../components/ProductSearchBar";
 import { useProductContext } from "../../features/product/productContext";
 import {
   deleteProduct,
@@ -68,6 +71,7 @@ export default function Products() {
           <h3>Add New Product</h3>
         </div>
       </div>
+      <ProductSearchBar />
     </div>
   );
 }

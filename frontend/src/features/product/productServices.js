@@ -128,3 +128,20 @@ export const deleteProduct = async (dispatch, deleteProductPayload) => {
     console.log(e.response.data.message);
   }
 };
+
+// Search for a product by keyword
+export const searchProduct = async (keyword) => {
+  try {
+    const response = await axios.get(API_LINK + "main/all&" + keyword);
+    const data = await response.data;
+    const status = await response.status;
+
+    if (status === 200) {
+      return data;
+    } else {
+      return;
+    }
+  } catch (e) {
+    console.log(e.response.data.message);
+  }
+};
