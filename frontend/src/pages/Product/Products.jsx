@@ -40,38 +40,42 @@ export default function Products() {
   };
 
   return (
-    <div className="row align-items-md-stretch">
-      {Object.keys(products.products)
-        .filter((key) => products.products[key] !== undefined)
-        .map((key) => {
-          const product = products.products[key];
+    <>
+      <div className="row align-items-md-stretch">
+        {Object.keys(products.products)
+          .filter((key) => products.products[key] !== undefined)
+          .map((key) => {
+            const product = products.products[key];
 
-          return (
-            <div className="col-md-6" key={key}>
-              <div className="h-100 p-5 bg-light border rounded-3" key={key}>
-                <h3>{product.product_name}</h3>
-                <p> Description: {product.product_description}</p>
-                <p> Price: {product.price}</p>
-                <p> Cost: {product.cost}</p>
-                <PopupMessageButton
-                  action={() => deleteAction(key)}
-                  message="Are you sure to delete this product?"
-                  title="Delete"
-                  executeTitle="Delete"
-                />
+            return (
+              <div className="col-md-6" key={key}>
+                <div className="h-100 p-5 bg-light border rounded-3" key={key}>
+                  <h3>{product.product_name}</h3>
+                  <p> Description: {product.product_description}</p>
+                  <p> Price: {product.price}</p>
+                  <p> Cost: {product.cost}</p>
+                  <PopupMessageButton
+                    action={() => deleteAction(key)}
+                    message="Are you sure to delete this product?"
+                    title="Delete"
+                    executeTitle="Delete"
+                  />
+                </div>
               </div>
-            </div>
-          );
-        })}
-      <div className="col-md-6">
-        <div
-          className="btn h-100 p-5 border-solid rounded-3"
-          onClick={() => nav(`addProduct`)}
-        >
-          <h3>Add New Product</h3>
+            );
+          })}
+        <div className="col-md-6">
+          <div
+            className="btn h-100 p-5 border-solid rounded-3"
+            onClick={() => nav(`addProduct`)}
+          >
+            <h3>Add New Product</h3>
+          </div>
         </div>
       </div>
-      <ProductSearchBar />
-    </div>
+      <div>
+        <ProductSearchBar />
+      </div>
+    </>
   );
 }

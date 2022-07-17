@@ -9,6 +9,10 @@ import {
   RadioGroup,
   Stack,
   Radio,
+  Box,
+  InputGroup,
+  InputRightAddon,
+  InputLeftAddon,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { searchProduct } from "../features/product/productServices";
@@ -19,15 +23,20 @@ export default function ProductSearchBar() {
   const [selected, setSelected] = useState({});
   console.log(selected);
 
-  const handleSubmit = async (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
     const result = await searchProduct(keyword);
     setSearch(result);
   };
 
+  const handleAddProduct = async (e) => {
+    // e.preventDefault;
+    // const product = selected
+  };
+
   return (
-    <Container>
-      <form onSubmit={handleSubmit}>
+    <>
+      <form onSubmit={handleSearch}>
         <FormControl>
           <FormLabel htmlFor="search">Search</FormLabel>
           <Input
@@ -40,15 +49,18 @@ export default function ProductSearchBar() {
           <Button type="submit">Search</Button>
         </FormControl>
       </form>
-      <RadioGroup onChange={setSelected} value={selected}>
-        <Stack direction={"column"}>
-          {search?.map((product) => (
-            <Radio value={product.product_id} key={product.product_id}>
-              {product.product_name}
-            </Radio>
-          ))}
-        </Stack>
-      </RadioGroup>
-    </Container>
+      <div>
+        {/* FOR IMPROVEMENTS: Show only products that are not on the store yet */}
+        {search.map((product) => (
+          <InputGroup>
+            {/* FOR IMPROVEMENTS: Add modal here for left addon to show full product description */}
+            <InputLeftAddon minWidth={"400"} children={product.product_name} />
+            <Input type="number" maxWidth={"120"} placeholder="cost" />
+            <Input type="number" maxWidth={"120"} placeholder="price" />
+            <InputRightAddon children={<Button>Add Product to Store</Button>} />
+          </InputGroup>
+        ))}
+      </div>
+    </>
   );
 }

@@ -145,3 +145,41 @@ export const searchProduct = async (keyword) => {
     console.log(e.response.data.message);
   }
 };
+
+export const addLocalProduct = async ({
+  product_id,
+  store_id,
+  product_cost,
+  product_price,
+}) => {
+  const token = JSON.parse(localStorage.getItem("user")).token;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const response = await axios.post(
+      API_LINK,
+      {
+        store_id,
+        product_id,
+        product_cost,
+        product_price,
+      },
+      config
+    );
+    const data = await response.data;
+    const status = await response.status;
+
+    if (status === 201) {
+      return data;
+    } else {
+      return;
+    }
+  } catch (e) {
+    console.log(e.response.data.message);
+  }
+};
