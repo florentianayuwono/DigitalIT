@@ -7,22 +7,6 @@ where product is of structure: {
 }
 */
 
-function productCreator(rawProduct) {
-  const { product_id, product_local_id, store_id, product_name, product_description, product_price, product_cost } =
-    rawProduct;
-  return {
-    product_local_id,
-    product: {
-      product_id,
-      store_id,
-      product_name,
-      product_description,
-      product_price,
-      product_cost,
-    },
-  };
-}
-
 function productWithoutID(rawProduct) {
   const { product_id, store_id, product_name, product_description, product_price, product_cost } = rawProduct;
   return {

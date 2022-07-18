@@ -19,7 +19,6 @@ export default function ProductSearchResultItem({ product, store_id, onAdd }) {
 
   const handleAddProduct = async (e) => {
     e.preventDefault();
-    console.log(product_price)
     const result = await addLocalProduct({
       product_id: product.product_id,
       store_id: store_id,

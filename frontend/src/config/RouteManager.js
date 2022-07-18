@@ -33,6 +33,7 @@ export default function RouteManager() {
             <Route element={<BusinessRoute />}>
               <Route element={<ProductRoute />}>
                 <Route path="business" element={<MainBusinessPage />}>
+                  <Route path="addProduct" element={<AddProduct />} />
                   <Route path="" element={<DisplayBusinessParticular />} />
                   <Route path="add" element={<AddBusiness />} />
                   <Route
@@ -48,7 +49,6 @@ export default function RouteManager() {
                         <Route path="" element={<Products />} />
                       </Route>
                     </Route>
-                    <Route path="addProduct" element={<AddProduct />} />
                   </Route>
                 </Route>
               </Route>

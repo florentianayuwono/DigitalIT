@@ -66,7 +66,7 @@ export const getProducts = async (dispatch, getProductPayload) => {
   }
 };
 
-export const addProduct = async (dispatch, addProductPayload) => {
+export const addProduct1 = async (dispatch, addProductPayload) => {
   const token = JSON.parse(localStorage.getItem("user")).token;
 
   const config = {
@@ -95,6 +95,37 @@ export const addProduct = async (dispatch, addProductPayload) => {
     console.log(e.response.data.message);
   }
 };
+
+// Replacement for the function above.
+export const addProduct = async (dispatch, addProductPayload) => {
+  const token = JSON.parse(localStorage.getItem("user")).token;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    dispatch({ type: "REQUEST_ADD_PRODUCT" });
+
+    const response = await axios.post(API_LINK + "main/", addProductPayload, config);
+    const data = await response.data;
+    const status = await response.status;
+
+    if (status === 201) {
+      dispatch({ type: "ADD_PRODUCT_SUCCESS", payload: data });
+
+      return data;
+    } else {
+      dispatch({ type: "ADD_PRODUCT_ERROR", error: data.message });
+      return;
+    }
+  } catch (e) {
+    dispatch({ type: "ADD_PRODUCT_ERROR", error: e.response.data.message });
+    console.log(e.response.data.message);
+  }
+}
 
 export const deleteProduct = async (dispatch, deleteProductPayload) => {
   const token = JSON.parse(localStorage.getItem("user")).token;
