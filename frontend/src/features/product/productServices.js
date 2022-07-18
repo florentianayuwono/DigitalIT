@@ -9,12 +9,13 @@ const API_LINK =
 // id is not a required field
 export const getProducts = async (dispatch, getProductPayload) => {
   const token = JSON.parse(localStorage.getItem("user")).token;
-  const { id, business_id } = getProductPayload;
+  const { id, business_id, store_id } = getProductPayload;
 
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
-      business_id: business_id,
+      business_id,
+      store_id,
     },
   };
 
@@ -102,16 +103,16 @@ export const deleteProduct = async (dispatch, deleteProductPayload) => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: deleteProductPayload,
   };
 
   try {
     dispatch({ type: "REQUEST_DELETE_PRODUCT" });
 
     const response = await axios.delete(
-      API_LINK + deleteProductPayload.product_id,
+      API_LINK + deleteProductPayload.product_local_id,
       config
     );
+    console.log(deleteProductPayload);
     const data = await response.data;
     const status = await response.status;
 
@@ -175,6 +176,31 @@ export const addLocalProduct = async ({
     const status = await response.status;
 
     if (status === 201) {
+      return data;
+    } else {
+      return;
+    }
+  } catch (e) {
+    console.log(e.response.data.message);
+  }
+};
+
+export const getAllLocalProducts = async ({ store_id }) => {
+  const token = JSON.parse(localStorage.getItem("user")).token;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      store_id,
+    },
+  };
+
+  try {
+    const response = await axios.get(API_LINK, config);
+    const data = await response.data;
+    const status = await response.status;
+
+    if (status === 200) {
       return data;
     } else {
       return;

@@ -8,26 +8,30 @@ where product is of structure: {
 */
 
 function productCreator(rawProduct) {
-  const { product_id, product_name, product_description, price, cost } =
+  const { product_id, product_local_id, store_id, product_name, product_description, product_price, product_cost } =
     rawProduct;
   return {
-    product_id,
+    product_local_id,
     product: {
+      product_id,
+      store_id,
       product_name,
       product_description,
-      price,
-      cost,
+      product_price,
+      product_cost,
     },
   };
 }
 
 function productWithoutID(rawProduct) {
-  const { product_name, product_description, price, cost } = rawProduct;
+  const { product_id, store_id, product_name, product_description, product_price, product_cost } = rawProduct;
   return {
+    product_id,
+    store_id,
     product_name,
     product_description,
-    price,
-    cost,
+    product_price,
+    product_cost,
   };
 }
 
@@ -56,7 +60,7 @@ export const productReducer = (state, action) => {
       let newProducts = {};
       action.payload.forEach(
         (product) =>
-          (newProducts[product.product_id] = productWithoutID(product))
+          (newProducts[product.product_local_id] = productWithoutID(product))
       );
 
       return {
@@ -77,7 +81,7 @@ export const productReducer = (state, action) => {
         message: "",
         products: {
           ...state.products,
-          [action.payload.id]: productWithoutID(action.payload),
+          [action.payload.product_local_id]: productWithoutID(action.payload),
         },
       };
     case "GET_PRODUCTS_ERROR":
@@ -106,7 +110,7 @@ export const productReducer = (state, action) => {
         message: "",
         products: {
           ...state.products,
-          [action.payload.id]: productWithoutID(action.payload),
+          [action.payload.product_local_id]: productWithoutID(action.payload),
         },
       };
     case "ADD_PRODUCT_ERROR":
@@ -134,7 +138,7 @@ export const productReducer = (state, action) => {
         message: "",
         products: {
           ...state.products,
-          [action.payload.product_id]: undefined,
+          [action.payload.product_local_id]: undefined,
         },
       };
 

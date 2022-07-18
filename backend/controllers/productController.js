@@ -255,10 +255,11 @@ const deleteLocalProductData = asyncHandler(async (req, res) => {
   const { id: product_id } = req.params;
 
   const manager = await pool.query(
-    `SELECT manager_id, business_id FROM business 
+    `SELECT * FROM business 
     WHERE business_id = (SELECT business_id FROM product_secondary WHERE product_local_id = $1)`,
     [product_id]
   );
+  console.log(req.params)
 
   // Check whether the user who tries to delete product data is indeed the business owner
   if (manager.rows[0].manager_id !== req.user.user_id) {
