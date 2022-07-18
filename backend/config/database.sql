@@ -37,7 +37,7 @@ VALUES ('60dc16dd-c7f1-4fde-827a-90c0e101555c', 'my business', 'electronics', 'y
 
 CREATE TABLE product_main (
   product_id uuid DEFAULT uuid_generate_v4() UNIQUE NOT NULL,
-  product_name VARCHAR(255) NOT NULL,
+  product_name VARCHAR(255) UNIQUE NOT NULL,
   product_description VARCHAR(255) NOT NULL,
   product_category VARCHAR(255) NOT NULL,
   product_importance INT NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE platform (
 
 CREATE TABLE store (
   store_id SERIAL UNIQUE NOT NULL,
-  store_name VARCHAR(255) NOT NULL,
+  store_name VARCHAR(255) UNIQUE NOT NULL,
   business_id SERIAL NOT NULL,
   store_manager_id uuid NOT NULL,
   store_platform_id SERIAL NOT NULL,
@@ -94,4 +94,15 @@ CREATE TABLE product_sales (
   FOREIGN KEY (product_id) REFERENCES product_main (product_id),
   FOREIGN KEY (product_local_id) REFERENCES product_secondary (product_local_id),
   FOREIGN KEY (store_id) REFERENCES store (store_id)
+);
+
+CREATE TABLE operational_expenses (
+  transaction_id SERIAL UNIQUE NOT NULL,
+  business_id SERIAL NOT NULL,
+  expense_type INT NOT NULL,
+  expense_amount NUMERIC NOT NULL,
+  input_date DATE NOT NULL,
+  date_range INT NOT NULL,
+  PRIMARY KEY (transaction_id),
+  FOREIGN KEY (business_id) REFERENCES business (business_id)
 );
