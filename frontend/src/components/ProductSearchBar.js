@@ -21,9 +21,10 @@ export default function ProductSearchBar({ store_id, onAdd }) {
   const handleSearch = async (e) => {
     e.preventDefault();
     const result = await searchProduct(keyword);
-    if (result.length === 0) {
+    if (result?.length === 0) {
       setIsEmpty(true);
     } else {
+      setIsEmpty(false);
       setSearch(result);
     }
   };
@@ -53,6 +54,7 @@ export default function ProductSearchBar({ store_id, onAdd }) {
               key={product.product_id}
               product={product}
               store_id={store_id}
+              onAdd={onAdd}
             />
           ))
         ) : (

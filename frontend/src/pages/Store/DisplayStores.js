@@ -12,13 +12,17 @@ export default function DisplayStores() {
   const { business_id } = useParams();
 
   useEffect(() => {
-    const fetchStores = async (business_id) => {
+    const fetchStores = async () => {
       const stores = await getStore({ business_id });
       setStores(stores);
     };
 
-    fetchStores(business_id);
-  }, [business_id, refresh]);
+    fetchStores();
+
+    return () => {
+      setStores([]);
+    }
+  }, [refresh, business_id]);
 
   return (
     <div className="row align-items-md-stretch">

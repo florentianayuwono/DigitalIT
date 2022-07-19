@@ -25,6 +25,7 @@ export default function ProductSearchResultItem({ product, store_id, onAdd }) {
       product_cost: product_cost,
       product_price: product_price,
     });
+    onAdd(prev => !prev);
   };
 
   const handleInputChange = (e) => {

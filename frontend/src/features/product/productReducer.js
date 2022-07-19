@@ -86,6 +86,14 @@ export const productReducer = (state, action) => {
         message: "",
       };
     case "ADD_PRODUCT_SUCCESS":
+        return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        isSuccess: true,
+        message: "",
+      };
+    case "ADD_LOCAL_PRODUCT_SUCCESS":
       return {
         ...state,
         isLoading: false,

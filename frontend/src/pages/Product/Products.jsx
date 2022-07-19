@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useEffect } from "react";
 import { useParams, useNavigate, Outlet } from "react-router-dom";
 import PopupMessageButton from "../../components/PopupMessageButton";
@@ -11,6 +12,7 @@ import {
 export default function Products() {
   const store_id = useParams().store_id;
   const { products, dispatch } = useProductContext();
+  const [listener, refresh] = useState(true);
 
   // When the component first mount, load the list of products.
   useEffect(() => {
@@ -24,7 +26,7 @@ export default function Products() {
     };
 
     getData();
-  }, []);
+  }, [listener]);
 
   const deleteAction = async (product_local_id) => {
     try {
@@ -62,7 +64,7 @@ export default function Products() {
           })}
       </div>
       <div>
-        <ProductSearchBar store_id={store_id} />
+        <ProductSearchBar onAdd={refresh} store_id={store_id} />
       </div>
     </>
   );
