@@ -1,5 +1,4 @@
 import axios from "axios";
-import React from "react";
 
 const API_LINK =
   process.env.NODE_ENV === "production"

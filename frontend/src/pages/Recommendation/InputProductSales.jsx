@@ -18,7 +18,6 @@ import {
   InputGroup,
   InputLeftAddon,
   InputRightAddon,
-  MenuGroup,
   Select,
 } from "@chakra-ui/react";
 import { useEffect, useState, useRef } from "react";
@@ -27,7 +26,6 @@ import { useBusinessContext } from "../../features/business/businessContext";
 import { useProductContext } from "../../features/product/productContext";
 import { getBusinesses } from "../../features/business/businessServices";
 import { getProducts, productSalesInputHandler } from "../../features/product/productServices";
-import PopupMessageButton from "../../components/PopupMessageButton";
 
 function IndividualProductDisplayOption({ id, product, storage }) {
   const [productSales, setProductSales] = useState(0);
@@ -124,7 +122,7 @@ export default function InputProductSales() {
       const businesses = await getBusinesses(businessDispatch);
     };
     fetchBusinesses();
-  }, []);
+  }, [businessDispatch]);
 
   // Get list of stores when a business is selected
   useEffect(() => {
