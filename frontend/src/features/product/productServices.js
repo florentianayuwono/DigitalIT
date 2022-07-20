@@ -240,3 +240,39 @@ export const getAllLocalProducts = async ({ store_id }) => {
     console.log(e.response.data.message);
   }
 };
+
+const productSalesInputHandler = async (dispatch, productSalesPayload) => {
+  const token = JSON.parse(localStorage.getItem("user")).token;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    dispatch({ type: "REQUEST_INPUT_PRODUCT_SALES" });
+
+    // Since the payload is a list of objects, we need to loop through it and send each object individually.
+    Object.keys(productSalesPayload).forEach(async (key) => {
+      const inputData = {
+        product_local_id: productSalesPayload[key].product_local_id,
+        date_range: productSalesPayload.date_range,
+        sales: productSalesPayload[key].sales,
+      }
+
+      const response = await axios.post(
+        API_LINK + "sales/",
+        {data: inputData},
+        config
+      );
+      const data = await response.data;
+      const status = await response.status;
+      
+    })
+
+  } catch (e) {
+    dispatch({ type: "INPUT_PRODUCT_SALES_ERROR", error: e.response.data.message });
+    console.log(e.response.data.message);
+  }
+};

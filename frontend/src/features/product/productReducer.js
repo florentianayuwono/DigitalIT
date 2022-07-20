@@ -143,6 +143,34 @@ export const productReducer = (state, action) => {
         isSuccess: false,
         message: action.error,
       };
+    case "REQUEST_INPUT_PRODUCT_SALES":
+      // store the action payload into localstorage
+      localStorage.setItem("product_sales", JSON.stringify(action.payload)); 
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        isSuccess: false,
+        message: "Processing...",
+      }
+    case "INPUT_PRODUCT_SALES_SUCCESS":
+      // delete the action payload from localstorage
+      localStorage.removeItem("product_sales");
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        isSuccess: true,
+        message: "",
+      }
+    case "INPUT_PRODUCT_SALES_ERROR":
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        isSuccess: false,
+        message: action.error,
+      }
     default:
       return state;
   }

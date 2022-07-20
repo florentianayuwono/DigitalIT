@@ -8,13 +8,72 @@
  *    - List of Products
  *      [Produt Name | Product Sales (number input) | Checkbox]
  */
-import { FormControl, FormLabel, Select } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  FormLabel,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  Select,
+} from "@chakra-ui/react";
+import { useEffect, useState, useRef } from "react";
 import { getStore } from "../../features/store/storeServices";
 import { useBusinessContext } from "../../features/business/businessContext";
 import { useProductContext } from "../../features/product/productContext";
 import { getBusinesses } from "../../features/business/businessServices";
 import { getProducts } from "../../features/product/productServices";
+import PopupMessageButton from "../../components/PopupMessageButton";
+
+function IndividualProductDisplayOption({ id, product, storage }) {
+  const [productSales, setProductSales] = useState(0);
+  const [isChecked, setIsChecked] = useState(false);
+
+  useEffect(() => {
+    if (storage) {
+      setProductSales(storage.product_sales);
+      setIsChecked(storage.isChecked);
+    }
+  }, [storage]);
+
+  const handleChange = (e) => {
+    setProductSales(e.target.value);
+    storage.product_sales = e.target.value;
+    console.log(storage);
+  };
+
+  const handleCheckbox = (e) => {
+    setIsChecked(e.target.checked);
+    storage.isChecked = e.target.checked;
+  };
+
+  return (
+    <div>
+      <FormControl>
+        <FormLabel htmlFor={id}>{product.product_name}</FormLabel>
+        <InputGroup>
+          <InputLeftAddon
+            children={
+              <Checkbox
+                type="checkbox"
+                checked={isChecked}
+                onChange={handleCheckbox}
+              />
+            }
+          />
+          <Input
+            id={id}
+            type="number"
+            value={productSales}
+            onChange={handleChange}
+            isDisabled={!isChecked}
+          />
+        </InputGroup>
+      </FormControl>
+    </div>
+  );
+}
 
 export default function InputProductSales() {
   const [inputHandlerState, setInputHandlerState] = useState({
@@ -27,6 +86,8 @@ export default function InputProductSales() {
     business: "",
     store: "",
   });
+  const storedInputData = useRef({});
+  console.log(storedInputData.current);
 
   const { period, business, store } = formData;
 
@@ -38,6 +99,7 @@ export default function InputProductSales() {
     setInputHandlerState({ ...inputHandlerState, business: e.target.value });
   };
 
+  // Get list of businesses when the component mounts
   useEffect(() => {
     const fetchBusinesses = async () => {
       const businesses = await getBusinesses(businessDispatch);
@@ -45,6 +107,7 @@ export default function InputProductSales() {
     fetchBusinesses();
   }, []);
 
+  // Get list of stores when a business is selected
   useEffect(() => {
     const fetchStores = async () => {
       const stores = await getStore({
@@ -58,11 +121,18 @@ export default function InputProductSales() {
     }
   }, [inputHandlerState.business]);
 
+  // Get list of products inside a store after a store was selected
   useEffect(() => {
     const fetchProducts = async () => {
-      
+      const products = await getProducts(productDispatch, {
+        store_id: inputHandlerState.store,
+      });
+    };
+
+    if (inputHandlerState.store) {
+      fetchProducts();
     }
-  })
+  }, [inputHandlerState.store, productDispatch]);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -112,18 +182,24 @@ export default function InputProductSales() {
           placeholder="Choose Store"
         >
           {stores?.map((store) => (
-            <option key={store.store_id}>{store.store_name}</option>
+            <option key={store.store_id} value={store.store_id}>
+              {store.store_name}
+            </option>
           ))}
         </Select>
       </FormControl>
-      <FormControl
-        isRequired
-        isDisabled={inputHandlerState.store === ""}
-      >
-        <FormLabel>
-          Test
-        </FormLabel>
-      </FormControl>
+      {Object.keys(products.products).map((productId) => {
+        storedInputData.current[productId] = {product_sales: 0, isChecked: false};
+
+        return (
+        <IndividualProductDisplayOption
+          key={productId}
+          id={productId}
+          product={products.products[productId]}
+          storage={storedInputData.current[productId]}
+        />);
+        })}
+      <PopupMessageButton/>
     </form>
   );
 }
