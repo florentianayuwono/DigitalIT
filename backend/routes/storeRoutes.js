@@ -10,7 +10,7 @@ const { protect } = require("../middlewares/authMiddleware");
 router.route("/").get(protect, getStoreData);
 router.post("/", protect, addStoreData);
 router
-  .route("/:id")
+  .route("/:store_id")
   .get(protect, getStoreData)
   .delete(protect, deleteStoreData);
 

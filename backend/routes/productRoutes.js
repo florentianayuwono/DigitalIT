@@ -1,19 +1,30 @@
 const express = require("express");
 const router = express.Router();
 const {
+  addLocalProductData,
+  getLocalProductData,
+  updateLocalProductData,
+  deleteLocalProductData,
   addProductData,
   getProductData,
   updateProductData,
-  deleteProductData,
 } = require("../controllers/productController");
 const { protect } = require("../middlewares/authMiddleware");
 
-router.route("/").get(protect, getProductData);
-router.post("/", protect, addProductData);
+router.post("/", protect, addLocalProductData);
+router.get("/", protect, getLocalProductData);
 router
   .route("/:id")
-  .get(protect, getProductData)
-  .put(protect, updateProductData)
-  .delete(protect, deleteProductData);
+  .get(protect, getLocalProductData)
+  .put(protect, updateLocalProductData)
+  .delete(protect, deleteLocalProductData);
+
+
+// central route for main products
+router.route("/main").post(protect, addProductData);
+router
+  .route("/main/:id&:keyword")
+  .get(getProductData)
+  .put(protect, updateProductData);
 
 module.exports = router;

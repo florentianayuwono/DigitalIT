@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { useBusinessContext } from "../../features/business/businessContext";
 import { getIndividualBusiness } from "../../features/business/businessServices";
+import DisplayStores from "../Store/DisplayStores";
 
 /*
   Improvement for later here!!
@@ -41,7 +42,7 @@ export const DisplayIndividualBusiness = () => {
   const [business, setBusiness] = useState(
     {
       business_name: "",
-      categories: "",
+      business_category: "",
       has_digitalized: "",
     }
   );
@@ -71,7 +72,7 @@ export const DisplayIndividualBusiness = () => {
           </div>
           <div className="col-md-12">
             <h3 style={business.has_digitalized ? {} : { color: "rgb(119,119,119)" }}>
-              {business.categories}
+              {business.business_category}
             </h3>
           </div>
         </div>

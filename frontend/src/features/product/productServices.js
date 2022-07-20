@@ -9,12 +9,13 @@ const API_LINK =
 // id is not a required field
 export const getProducts = async (dispatch, getProductPayload) => {
   const token = JSON.parse(localStorage.getItem("user")).token;
-  const { id, business_id } = getProductPayload;
+  const { id, business_id, store_id } = getProductPayload;
 
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
-      business_id: business_id,
+      business_id,
+      store_id,
     },
   };
 
@@ -102,16 +103,16 @@ export const deleteProduct = async (dispatch, deleteProductPayload) => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: deleteProductPayload,
   };
 
   try {
     dispatch({ type: "REQUEST_DELETE_PRODUCT" });
 
     const response = await axios.delete(
-      API_LINK + deleteProductPayload.product_id,
+      API_LINK + deleteProductPayload.product_local_id,
       config
     );
+    console.log(deleteProductPayload);
     const data = await response.data;
     const status = await response.status;
 
@@ -125,6 +126,86 @@ export const deleteProduct = async (dispatch, deleteProductPayload) => {
     }
   } catch (e) {
     dispatch({ type: "DELETE_PRODUCT_ERROR", error: e.response.data.message });
+    console.log(e.response.data.message);
+  }
+};
+
+// Search for a product by keyword
+export const searchProduct = async (keyword) => {
+  try {
+    const response = await axios.get(API_LINK + "main/all&" + keyword);
+    const data = await response.data;
+    const status = await response.status;
+
+    if (status === 200) {
+      return data;
+    } else {
+      return;
+    }
+  } catch (e) {
+    console.log(e.response.data.message);
+  }
+};
+
+export const addLocalProduct = async ({
+  product_id,
+  store_id,
+  product_cost,
+  product_price,
+}) => {
+  const token = JSON.parse(localStorage.getItem("user")).token;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const response = await axios.post(
+      API_LINK,
+      {
+        store_id,
+        product_id,
+        product_cost,
+        product_price,
+      },
+      config
+    );
+    const data = await response.data;
+    const status = await response.status;
+
+    if (status === 201) {
+      return data;
+    } else {
+      return;
+    }
+  } catch (e) {
+    console.log(e.response.data.message);
+  }
+};
+
+export const getAllLocalProducts = async ({ store_id }) => {
+  const token = JSON.parse(localStorage.getItem("user")).token;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      store_id,
+    },
+  };
+
+  try {
+    const response = await axios.get(API_LINK, config);
+    const data = await response.data;
+    const status = await response.status;
+
+    if (status === 200) {
+      return data;
+    } else {
+      return;
+    }
+  } catch (e) {
     console.log(e.response.data.message);
   }
 };

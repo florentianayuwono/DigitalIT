@@ -15,6 +15,9 @@ import { DisplayIndividualBusiness } from "../pages/BusinessParticular/DisplayIn
 import AddProduct from "../pages/Product/AddProduct";
 import MainBusinessPage from "../pages/BusinessParticular/MainBusinessPage";
 import RequireAuth from "../components/RequireAuth";
+import MainStoreLayoutPage from "../pages/Store/MainStoreLayoutPage";
+import DisplayStores from "../pages/Store/DisplayStores";
+import DisplayIndividualStore from "../pages/Store/DisplayIndividualStore";
 
 export default function RouteManager() {
   return (
@@ -36,7 +39,15 @@ export default function RouteManager() {
                     path=":business_id"
                     element={<DisplayIndividualBusiness />}
                   >
-                    <Route path="" element={<Products />} />
+                    <Route path="" element={<MainStoreLayoutPage />}>
+                      <Route path="" element={<DisplayStores />} />
+                      <Route
+                        path=":store_id"
+                        element={<DisplayIndividualStore />}
+                      >
+                        <Route path="" element={<Products />} />
+                      </Route>
+                    </Route>
                     <Route path="addProduct" element={<AddProduct />} />
                   </Route>
                 </Route>

@@ -15,17 +15,18 @@ export default function PopupMessageButton({
   message,
   title,
   executeTitle,
+  colorScheme,
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
-  const execute = () => {
-    action();
-    onClose();
+  const execute = (e) => {
+    action(e);
+    onClose(e);
   }
 
   return (
     <>
-      <Button colorScheme="red" onClick={onOpen}>
+      <Button colorScheme={colorScheme || "red"} onClick={onOpen}>
         {title}
       </Button>
 
@@ -48,7 +49,7 @@ export default function PopupMessageButton({
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme="red" onClick={execute} ml={3}>
+              <Button colorScheme={colorScheme || "red"} onClick={execute} ml={3}>
                 {executeTitle}
               </Button>
             </AlertDialogFooter>

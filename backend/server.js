@@ -21,6 +21,8 @@ app.use("/api/business", require("./routes/businessRoutes"));
 app.use("/api/product", require("./routes/productRoutes"));
 // store particulars and data
 app.use("/api/store", require("./routes/storeRoutes"));
+// platform particulars and data
+app.use("/api/platform", require("./routes/platformRoutes"));
 
 if (process.env.NODE_ENV == "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));

@@ -3,13 +3,11 @@ import { useState, useEffect } from "react";
 import { useBusinessContext } from "../features/business/businessContext";
 import { addBusiness } from "../features/business/businessServices";
 import { useNavigate } from "react-router-dom";
-import { useProductContext } from "../features/product/productContext";
-import { addProduct } from "../features/product/productServices";
 
 export default function InputBusinessParticular() {
   const [formData, setFormData] = useState({
     businessName: "",
-    category: "",
+    business_category: "",
     hasDigitalized: "",
     productName: "",
     productDescription: "",
@@ -18,7 +16,6 @@ export default function InputBusinessParticular() {
     platform: "",
   });
   const { businesses, dispatch } = useBusinessContext();
-  const { dispatch: productDispatch } = useProductContext();
   const [isSubmitted, refresh] = useState(false);
   const nav = useNavigate();
 
@@ -28,12 +25,8 @@ export default function InputBusinessParticular() {
 
   const {
     businessName,
-    category,
+    business_category,
     hasDigitalized,
-    productName,
-    productDescription,
-    price,
-    cost,
     platform,
   } = formData;
 
@@ -49,27 +42,14 @@ export default function InputBusinessParticular() {
 
     const businessData = {
       businessName,
-      category,
+      business_category,
       hasDigitalized,
-    };
-
-    const productData = {
-      productName,
-      product_description: productDescription,
-      price,
-      cost,
     };
 
     try {
       const response = await addBusiness(dispatch, businessData);
       if (!response || !response.business_id) return;
-
-      const addProductResponse = await addProduct(productDispatch, {
-        ...productData,
-        business_id: response.business_id,
-      });
       
-      if (!addProductResponse || !addProductResponse.product_id) return;
       setStatus((prev) => "Successfully added business!");
     } catch (error) {
       console.log(error);
@@ -147,14 +127,14 @@ export default function InputBusinessParticular() {
                     </div>
 
                     <div className="col-12">
-                      <label for="category" className="form-label">
+                      <label for="business_category" className="form-label">
                         Category
                       </label>
                       <select
                         className="form-select"
-                        value={formData.category}
-                        id="category"
-                        name="category"
+                        value={formData.business_category}
+                        id="business_category"
+                        name="business_category"
                         onChange={onChange}
                         required
                       >
@@ -196,84 +176,6 @@ export default function InputBusinessParticular() {
                       </div>
                     </div>
                   </div>
-
-                  <hr className="my-4" />
-                  <h4 className="mb-3">Product Information</h4>
-                  <div className="row g-3">
-                    <div className="col-12">
-                      <label for="productName" className="form-label">
-                        Product Name
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="productName"
-                        name="productName"
-                        placeholder="Batik Dress"
-                        value={productName}
-                        onChange={onChange}
-                      />
-                      <div className="invalid-feedback">
-                        Please enter a valid product name for future reference.
-                      </div>
-                    </div>
-
-                    <div className="col-12">
-                      <label for="productDescription" className="form-label">
-                        Product Description
-                        <span className="text-muted">(Optional)</span>
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="productDescription"
-                        name="productDescription"
-                        placeholder="Midi dress for women. Made in Indonesia."
-                        value={productDescription}
-                        onChange={onChange}
-                      />
-                      <div className="invalid-feedback">
-                        Please enter a valid description for future reference.
-                      </div>
-                    </div>
-
-                    <div className="col-12">
-                      <label for="productPrice" className="form-label">
-                        Product Price
-                      </label>
-                      <input
-                        type="number"
-                        className="form-control"
-                        id="price"
-                        name="price"
-                        value={price}
-                        placeholder="How much do you intend to sell this product?"
-                        onChange={onChange}
-                      />
-                      <div className="invalid-feedback">
-                        Please enter a valid price for future reference.
-                      </div>
-                    </div>
-
-                    <div className="col-12">
-                      <label for="productCost" className="form-label">
-                        Product Cost
-                      </label>
-                      <input
-                        type="number"
-                        className="form-control"
-                        id="cost"
-                        name="cost"
-                        value={cost}
-                        placeholder="How much does it cost you to produce this?"
-                        onChange={onChange}
-                      />
-                      <div className="invalid-feedback">
-                        Please enter a valid cost for future reference.
-                      </div>
-                    </div>
-                  </div>
-                  <hr className="my-4" />
 
                   <h4 className="mb-3">Store</h4>
                   <div className="row g-3">
