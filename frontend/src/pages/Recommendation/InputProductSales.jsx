@@ -12,10 +12,13 @@ import {
   Button,
   Checkbox,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Input,
   InputGroup,
   InputLeftAddon,
+  InputRightAddon,
+  MenuGroup,
   Select,
 } from "@chakra-ui/react";
 import { useEffect, useState, useRef } from "react";
@@ -23,24 +26,29 @@ import { getStore } from "../../features/store/storeServices";
 import { useBusinessContext } from "../../features/business/businessContext";
 import { useProductContext } from "../../features/product/productContext";
 import { getBusinesses } from "../../features/business/businessServices";
-import { getProducts } from "../../features/product/productServices";
+import { getProducts, productSalesInputHandler } from "../../features/product/productServices";
 import PopupMessageButton from "../../components/PopupMessageButton";
 
 function IndividualProductDisplayOption({ id, product, storage }) {
   const [productSales, setProductSales] = useState(0);
   const [isChecked, setIsChecked] = useState(false);
+  const [isValid, setIsValid] = useState(true);
 
   useEffect(() => {
-    if (storage) {
-      setProductSales(storage.product_sales);
-      setIsChecked(storage.isChecked);
+    if (productSales > 0 && isChecked) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
     }
-  }, [storage]);
+
+    return () => {
+      setIsValid(false);
+    };
+  }, [productSales, isChecked]);
 
   const handleChange = (e) => {
     setProductSales(e.target.value);
     storage.product_sales = e.target.value;
-    console.log(storage);
   };
 
   const handleCheckbox = (e) => {
@@ -50,24 +58,32 @@ function IndividualProductDisplayOption({ id, product, storage }) {
 
   return (
     <div>
-      <FormControl>
-        <FormLabel htmlFor={id}>{product.product_name}</FormLabel>
+      <FormControl isInvalid={!isValid && isChecked} isRequired={isChecked && isValid}>
+        <FormErrorMessage>Please enter a valid number</FormErrorMessage>
         <InputGroup>
           <InputLeftAddon
-            children={
-              <Checkbox
-                type="checkbox"
-                checked={isChecked}
-                onChange={handleCheckbox}
-              />
-            }
+            children={<>{product.product_name}</>}
+            minWidth="300px"
           />
           <Input
             id={id}
             type="number"
-            value={productSales}
+            value={productSales === 0 ? undefined : productSales}
             onChange={handleChange}
             isDisabled={!isChecked}
+            placeholder="quantity sold during the period"
+          />
+
+          <InputRightAddon
+            children={
+              <>
+                <Checkbox
+                  type="checkbox"
+                  checked={isChecked}
+                  onChange={handleCheckbox}
+                />
+              </>
+            }
           />
         </InputGroup>
       </FormControl>
@@ -87,7 +103,6 @@ export default function InputProductSales() {
     store: "",
   });
   const storedInputData = useRef({});
-  console.log(storedInputData.current);
 
   const { period, business, store } = formData;
 
@@ -98,6 +113,10 @@ export default function InputProductSales() {
     e.preventDefault();
     setInputHandlerState({ ...inputHandlerState, business: e.target.value });
   };
+
+  /*
+    Next step: Don't forget to cleanup the useEffect when switching to a new business or store. 
+  */
 
   // Get list of businesses when the component mounts
   useEffect(() => {
@@ -142,8 +161,18 @@ export default function InputProductSales() {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+      period,
+      ...storedInputData.current,
+    };
+
+    const response = await productSalesInputHandler(productDispatch, data);
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <FormControl isRequired>
         <FormLabel htmlFor="period">Choose Period</FormLabel>
         <Select
@@ -188,18 +217,25 @@ export default function InputProductSales() {
           ))}
         </Select>
       </FormControl>
+      <FormLabel htmlFor="products">Products</FormLabel>
       {Object.keys(products.products).map((productId) => {
-        storedInputData.current[productId] = {product_sales: 0, isChecked: false};
+        storedInputData.current[productId] = {
+          product_sales: 0,
+          isChecked: false,
+        };
 
         return (
-        <IndividualProductDisplayOption
-          key={productId}
-          id={productId}
-          product={products.products[productId]}
-          storage={storedInputData.current[productId]}
-        />);
-        })}
-      <PopupMessageButton/>
+          <IndividualProductDisplayOption
+            key={productId}
+            id={productId}
+            product={products.products[productId]}
+            storage={storedInputData.current[productId]}
+          />
+        );
+      })}
+      <Button type="submit" colorScheme="teal">
+        Submit Form
+      </Button>
     </form>
   );
 }

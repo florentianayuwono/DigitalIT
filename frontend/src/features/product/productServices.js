@@ -1,4 +1,5 @@
 import axios from "axios";
+import React from "react";
 
 const API_LINK =
   process.env.NODE_ENV === "production"
@@ -109,7 +110,11 @@ export const addProduct = async (dispatch, addProductPayload) => {
   try {
     dispatch({ type: "REQUEST_ADD_PRODUCT" });
 
-    const response = await axios.post(API_LINK + "main/", addProductPayload, config);
+    const response = await axios.post(
+      API_LINK + "main/",
+      addProductPayload,
+      config
+    );
     const data = await response.data;
     const status = await response.status;
 
@@ -125,7 +130,7 @@ export const addProduct = async (dispatch, addProductPayload) => {
     dispatch({ type: "ADD_PRODUCT_ERROR", error: e.response.data.message });
     console.log(e.response.data.message);
   }
-}
+};
 
 export const deleteProduct = async (dispatch, deleteProductPayload) => {
   const token = JSON.parse(localStorage.getItem("user")).token;
@@ -241,7 +246,15 @@ export const getAllLocalProducts = async ({ store_id }) => {
   }
 };
 
-const productSalesInputHandler = async (dispatch, productSalesPayload) => {
+/**
+ * @param {React.DispatchWithoutAction} dispatch The dispatcher for the reducer.
+ * @param {Object} productSalesPayload The payload to be sent to the server.
+ * @returns {Object} The list of responses from the server.
+ */
+export const productSalesInputHandler = async (
+  dispatch,
+  productSalesPayload
+) => {
   const token = JSON.parse(localStorage.getItem("user")).token;
 
   const config = {
@@ -251,28 +264,48 @@ const productSalesInputHandler = async (dispatch, productSalesPayload) => {
   };
 
   try {
-    dispatch({ type: "REQUEST_INPUT_PRODUCT_SALES" });
+    dispatch({
+      type: "REQUEST_INPUT_PRODUCT_SALES",
+      payload: productSalesPayload,
+    });
+
+    const responseData = {};
 
     // Since the payload is a list of objects, we need to loop through it and send each object individually.
-    Object.keys(productSalesPayload).forEach(async (key) => {
-      const inputData = {
-        product_local_id: productSalesPayload[key].product_local_id,
-        date_range: productSalesPayload.date_range,
-        sales: productSalesPayload[key].sales,
-      }
+    // Filter objects that isChecked is false
+    Object.keys(productSalesPayload)
+      .filter(
+        (key) => productSalesPayload[key].isChecked === true && key !== "period"
+      )
+      .forEach(async (key) => {
+        const inputData = {
+          product_local_id: key,
+          date_range: productSalesPayload.period,
+          number_of_sales: productSalesPayload[key].product_sales,
+        };
 
-      const response = await axios.post(
-        API_LINK + "sales/",
-        {data: inputData},
-        config
-      );
-      const data = await response.data;
-      const status = await response.status;
-      
-    })
+        const response = await axios.post(
+          API_LINK + "sales/",
+          inputData,
+          config
+        );
+        const data = response.data;
+        const status = response.status;
 
+        if (status !== 201) {
+          dispatch({ type: "INPUT_PRODUCT_SALES_ERROR", error: data.message });
+          throw new Error(data.message);
+        } else {
+          responseData[key] = data;
+        }
+      });
+
+    return responseData;
   } catch (e) {
-    dispatch({ type: "INPUT_PRODUCT_SALES_ERROR", error: e.response.data.message });
+    dispatch({
+      type: "INPUT_PRODUCT_SALES_ERROR",
+      error: e.response.data.message,
+    });
     console.log(e.response.data.message);
   }
 };
