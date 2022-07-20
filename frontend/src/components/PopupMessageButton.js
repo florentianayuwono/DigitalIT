@@ -10,6 +10,16 @@ import {
 } from "@chakra-ui/react";
 import { useRef } from "react";
 
+/**
+ * 
+ * @param {Object} props - The prop of the component
+ * @param {function} props.action - The function to call when the popup is closed
+ * @param {string} props.message - The message to display in the popup
+ * @param {string} props.title - The title of the popup
+ * @param {string} props.executeTitle - The title of the button to execute the action
+ * @param {string} props.colorScheme - The color scheme of the popup
+ * @returns {JSX.Element} - The popup with button component
+ */
 export default function PopupMessageButton({
   action,
   message,
