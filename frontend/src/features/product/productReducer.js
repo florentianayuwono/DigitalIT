@@ -7,22 +7,6 @@ where product is of structure: {
 }
 */
 
-function productCreator(rawProduct) {
-  const { product_id, product_local_id, store_id, product_name, product_description, product_price, product_cost } =
-    rawProduct;
-  return {
-    product_local_id,
-    product: {
-      product_id,
-      store_id,
-      product_name,
-      product_description,
-      product_price,
-      product_cost,
-    },
-  };
-}
-
 function productWithoutID(rawProduct) {
   const { product_id, store_id, product_name, product_description, product_price, product_cost } = rawProduct;
   return {
@@ -102,6 +86,14 @@ export const productReducer = (state, action) => {
         message: "",
       };
     case "ADD_PRODUCT_SUCCESS":
+        return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        isSuccess: true,
+        message: "",
+      };
+    case "ADD_LOCAL_PRODUCT_SUCCESS":
       return {
         ...state,
         isLoading: false,
@@ -151,6 +143,34 @@ export const productReducer = (state, action) => {
         isSuccess: false,
         message: action.error,
       };
+    case "REQUEST_INPUT_PRODUCT_SALES":
+      // store the action payload into localstorage
+      localStorage.setItem("product_sales", JSON.stringify(action.payload)); 
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        isSuccess: false,
+        message: "Processing...",
+      }
+    case "INPUT_PRODUCT_SALES_SUCCESS":
+      // delete the action payload from localstorage
+      localStorage.removeItem("product_sales");
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        isSuccess: true,
+        message: "",
+      }
+    case "INPUT_PRODUCT_SALES_ERROR":
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        isSuccess: false,
+        message: action.error,
+      }
     default:
       return state;
   }

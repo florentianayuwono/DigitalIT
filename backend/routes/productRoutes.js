@@ -8,17 +8,20 @@ const {
   addProductData,
   getProductData,
   updateProductData,
+  addProductSalesInput
 } = require("../controllers/productController");
 const { protect } = require("../middlewares/authMiddleware");
 
 router.post("/", protect, addLocalProductData);
 router.get("/", protect, getLocalProductData);
+
+router.post("/sales", protect, addProductSalesInput);
+
 router
   .route("/:id")
   .get(protect, getLocalProductData)
   .put(protect, updateLocalProductData)
   .delete(protect, deleteLocalProductData);
-
 
 // central route for main products
 router.route("/main").post(protect, addProductData);

@@ -103,15 +103,11 @@ const deleteStoreData = asyncHandler(async (req, res) => {
     throw new Error("You do not own this store.");
   }
 
+  const deleteProducts = await deleteAllStoreProducts(store_id);
   const deleteStore = await pool.query(
-    "DELETE FROM store WHERE store_id = $1 RETURNING *",
+    `DELETE FROM store WHERE store_id = $1 RETURNING *`,
     [store_id]
   );
-
-  let deleteProducts;
-  if (deleteStore.rows[0]) {
-    deleteProducts = deleteAllStoreProducts();
-  }
 
   res
     .status(deleteStore.rows[0] ? 200 : 400)

@@ -4,7 +4,7 @@ const { admin } = require("../middlewares/authAdminMiddleware");
 const { addPlatform, getPlatform } = require("../controllers/platformController");
 
 router.post("/", admin, addPlatform);
-router.get("/", admin, getPlatform);
-router.get("/:platform_id", admin, getPlatform);
+router.get("/", getPlatform);
+router.get("/:platform_id", getPlatform);
 
 module.exports = router;

@@ -80,7 +80,7 @@ export const deleteStore = async ({ store_id }) => {
     const status = await response.status;
 
     if (status === 200) {
-      return data;
+      return;
     } else {
       return;
     }

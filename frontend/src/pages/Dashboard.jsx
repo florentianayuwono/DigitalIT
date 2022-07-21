@@ -62,7 +62,7 @@ export default function Dashboard() {
                   consultant and accompany your rocky journey. Find out the next
                   big steps to grow your company here.
                 </p>
-                <button className="btn btn-outline-light" type="button">
+                <button className="btn btn-outline-light" type="button" onClick={() => nav("/business/recommendation/")}>
                   Learn more
                 </button>
               </div>
