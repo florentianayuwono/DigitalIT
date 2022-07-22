@@ -98,6 +98,16 @@ const deleteBusinessData = asyncHandler(async (req, res) => {
   res.status(200).json("Business data was deleted.");
 });
 
+const businessSummary = asyncHandler(async (req, res) => {
+  const { business_id } = req.params;
+
+
+});
+
+const digitalizationRecommendation = asyncHandler(async (req, res) => {
+
+});
+
 module.exports = {
   addBusinessData,
   getBusinessData,
