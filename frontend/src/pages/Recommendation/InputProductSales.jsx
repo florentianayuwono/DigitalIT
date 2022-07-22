@@ -167,6 +167,7 @@ export default function InputProductSales() {
     };
 
     const response = await productSalesInputHandler(productDispatch, data);
+    console.log(response);
   };
 
   return (

@@ -108,3 +108,11 @@ function productRelativePerformanceMessage(zScore, quantileRank, otherProductsSo
     return "Very good performing product";
   }
 }
+
+module.exports = {
+  deltaProductSales,
+  deltaProductSalesMessage,
+  productProfitScore,
+  productRelativeSalesScore,
+  productRelativePerformanceMessage
+};
