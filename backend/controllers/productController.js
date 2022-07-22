@@ -394,6 +394,7 @@ const addProductSalesInput = asyncHandler(async (req, res) => {
 /**
  * @desc Compare the product sales input with the product_sales table.
  * @route POST /api/product/sales/compareglobal
+ * @access private
  */
 const productRelativePerformance = asyncHandler(async (req, res) => {
   const { product_local_id, date_range } = req.body;

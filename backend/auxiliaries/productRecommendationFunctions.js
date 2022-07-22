@@ -19,7 +19,7 @@ function deltaProductSales(lastPeriodProductSales, thisPeriodProductSales) {
 */
 /**
  * Return a message based on the delta product sales.
- * @param {int} delta 
+ * @param {int} delta
  * @returns {String} message
  */
 function deltaProductSalesMessage(delta) {
@@ -44,7 +44,7 @@ function productProfitScore(price, cost) {
 
 /**
  * Calculate the zScore and quantile rank of a product sales compared to the sales of all products.
- * 
+ *
  * The array of sales of all products can be an array of sales of the same product across all stores
  * or an array of sales of different products inside the same store.
  * @param {int[]} arrayOfSales
@@ -85,7 +85,11 @@ function productRelativeSalesScore(arrayOfSales, productSales) {
  * @param {int} numberOfOtherProducts
  * @returns {String} message
  */
-function productRelativePerformanceMessage(zScore, quantileRank, otherProductsSold) {
+function productRelativePerformanceMessage(
+  zScore,
+  quantileRank,
+  otherProductsSold
+) {
   if (otherProductsSold < 10) {
     if (quantileRank < 0.25) {
       return "Very poor performing product";
@@ -109,10 +113,35 @@ function productRelativePerformanceMessage(zScore, quantileRank, otherProductsSo
   }
 }
 
+/**
+ * Given an array of sales of a subset of products,
+ * return the product that is most profitable.
+ *
+ * @param {Object[]} productSales
+ * @returns The product sales of the product with the highest total profit.
+ */
+function mostProfitableProduct(productSales) {
+  const mostProfitableProduct = productSales.reduce((a, b) => {
+    return a.total_profit > b.total_profit ? a : b;
+  });
+
+  return mostProfitableProduct;
+}
+
+function mostSoldProduct(productSales) {
+  const mostSoldProduct = productSales.reduce((a, b) => {
+    return a.quantity > b.quantity ? a : b;
+  });
+
+  return mostSoldProduct;
+}
+
 module.exports = {
   deltaProductSales,
   deltaProductSalesMessage,
   productProfitScore,
   productRelativeSalesScore,
-  productRelativePerformanceMessage
+  productRelativePerformanceMessage,
+  mostProfitableProduct,
+  mostSoldProduct,
 };
