@@ -1,3 +1,4 @@
+const { getDate } = require("../auxiliaries/helperFunctions");
 const asyncHandler = require("express-async-handler");
 const pool = require("../config/db");
 
@@ -259,7 +260,7 @@ const deleteLocalProductData = asyncHandler(async (req, res) => {
     WHERE business_id = (SELECT business_id FROM product_secondary WHERE product_local_id = $1)`,
     [product_id]
   );
-  console.log(req.params)
+  console.log(req.params);
 
   // Check whether the user who tries to delete product data is indeed the business owner
   if (manager.rows[0].manager_id !== req.user.user_id) {
@@ -287,17 +288,60 @@ const deleteLocalProductData = asyncHandler(async (req, res) => {
  * @access  Private
  */
 const deleteAllStoreProducts = asyncHandler(async (store_id, user_id) => {
-  const store = await pool.query(
-    `SELECT * FROM STORE WHERE store_id = $1 AND store_manager_id = $2`,
-    [store_id, user_id]
-  );
-
   const deleted = await pool.query(
     `DELETE FROM product_secondary WHERE store_id = $1 RETURNING *`,
     [store_id]
   );
 
   return deleted.rows;
+});
+
+/**
+ * @desc   Add a product sales input to the product_sales table.
+ * @route  POST /api/product/sales
+ * @access Private
+ */
+const addProductSalesInput = asyncHandler(async (req, res) => {
+  const { product_local_id, date_range, number_of_sales } = req.body;
+
+  const product = await pool.query(
+    `SELECT * FROM product_secondary WHERE product_local_id = $1`,
+    [product_local_id]
+  );
+
+  let { product_id, store_id, product_cost, product_price } = product.rows[0];
+  product_cost = parseFloat(product_cost);
+  product_price = parseFloat(product_price);
+  
+  const store = await pool.query(
+    `SELECT * FROM store WHERE store_id = $1`,
+    [store_id]
+  );
+
+  if (store?.rows[0].store_manager_id !== req.user.user_id) {
+    res.status(401);
+    throw new Error("You do not own this product.");
+  }
+
+  const addInput = await pool.query(
+    `INSERT INTO product_sales
+    (product_id, product_local_id, store_id, input_date, date_range, quantity, product_cost, product_price, individual_profit, total_profit)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
+    [
+      product_id,
+      product_local_id,
+      store_id,
+      getDate(),
+      date_range,
+      number_of_sales,
+      product_cost,
+      product_price,
+      product_price-product_cost,
+      (product_price-product_cost)*number_of_sales,
+    ]
+  );
+
+  res.status(addInput.rows[0] ? 201 : 401).json(addInput.rows[0] || {});
 });
 
 module.exports = {
@@ -309,4 +353,5 @@ module.exports = {
   updateLocalProductData,
   deleteLocalProductData,
   deleteAllStoreProducts,
+  addProductSalesInput,
 };

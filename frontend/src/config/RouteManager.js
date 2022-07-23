@@ -18,6 +18,9 @@ import RequireAuth from "../components/RequireAuth";
 import MainStoreLayoutPage from "../pages/Store/MainStoreLayoutPage";
 import DisplayStores from "../pages/Store/DisplayStores";
 import DisplayIndividualStore from "../pages/Store/DisplayIndividualStore";
+import InputProductSales from "../pages/Recommendation/InputProductSales";
+import MainRecommendationPage from "../pages/Recommendation/MainRecommendationPage";
+import MyRecommendations from "../pages/Recommendation/MyRecommendations";
 
 export default function RouteManager() {
   return (
@@ -33,6 +36,11 @@ export default function RouteManager() {
             <Route element={<BusinessRoute />}>
               <Route element={<ProductRoute />}>
                 <Route path="business" element={<MainBusinessPage />}>
+                  <Route path="recommendation" element={<MainRecommendationPage />}>
+                    <Route path="sales" element={<InputProductSales />} />
+                    <Route path="my-recommendations" element={<MyRecommendations />} />
+                  </Route>
+                  <Route path="addProduct" element={<AddProduct />} />
                   <Route path="" element={<DisplayBusinessParticular />} />
                   <Route path="add" element={<AddBusiness />} />
                   <Route
@@ -48,7 +56,6 @@ export default function RouteManager() {
                         <Route path="" element={<Products />} />
                       </Route>
                     </Route>
-                    <Route path="addProduct" element={<AddProduct />} />
                   </Route>
                 </Route>
               </Route>
