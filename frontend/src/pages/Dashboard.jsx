@@ -75,7 +75,7 @@ export default function Dashboard() {
                   of information, be it sales or traffic, will give hints on how
                   your business is doing.{" "}
                 </p>
-                <button className="btn btn-outline-secondary" type="button">
+                <button className="btn btn-outline-secondary" type="button" onClick={() => nav("/business/finance/")} >
                   Learn more
                 </button>
               </div>
