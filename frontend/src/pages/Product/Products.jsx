@@ -47,11 +47,11 @@ export default function Products() {
 
             return (
               <div className="col-md-6" key={key}>
-                <div className="h-100 p-5 bg-light border rounded-3" key={key}>
+                <div className="h-100 p-3 bg-light border rounded-3" key={key}>
                   <h3>{product.product_name}</h3>
                   <p> Description: {product.product_description}</p>
                   <p> Cost: {product.product_cost}</p>
-                  <p> Price: {product.product_price}</p>
+                  <p className = "mb-2"> Price: {product.product_price}</p>
                   <PopupMessageButton
                     action={() => deleteAction(key)}
                     message="Are you sure to delete this product?"
