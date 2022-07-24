@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   /* Activate additional checks and warnings for components */
   <React.StrictMode>
-    <ChakraProvider>
+    <ChakraProvider resetCSS={false}>
       {/* Keep UI in sync with the URL */}
       <BrowserRouter>
         <RouteManager />

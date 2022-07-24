@@ -3,8 +3,8 @@ import axios from "axios";
 const API_LINK =
   process.env.NODE_ENV === "production"
     ? "/api/platform/"
-    : //: "http://localhost:5000/api/platform/";
-      "https://orbital-digital-it.herokuapp.com/api/platform/";
+    : "http://localhost:5000/api/platform/";
+// "https://orbital-digital-it.herokuapp.com/api/platform/";
 
 export const getPlatform = async () => {
   const token = JSON.parse(localStorage.getItem("user")).token;
@@ -26,5 +26,5 @@ export const getPlatform = async () => {
     }
   } catch (e) {
     console.log(e);
-  }
-};
+  } 
+}
