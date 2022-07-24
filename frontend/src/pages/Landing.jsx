@@ -16,10 +16,10 @@ export default function Landing() {
           />
         </div>
         <div className="col-lg-6">
-          <h1 className="display-5 fw-bold lh-1 mb-3">
+          <h1 className="display-5 fw-bold lh-1 mb-3 text-start">
             Upgrade your business, level-up your strategy!
           </h1>
-          <p className="lead">
+          <p className="mb-3 lead text-start">
             See what works best for your business, track your growth journey and
             let's empower together.
           </p>
@@ -34,7 +34,7 @@ export default function Landing() {
             </a>
           </div>
         </div>
-        <footer className="pt-3 mt-4 text-muted border-top">
+        <footer className="pt-3 mt-4 mb-4 text-muted border-top">
           &copy; DigitalIT 2022
         </footer>
       </div>
