@@ -1,6 +1,13 @@
 const { getDate } = require("../auxiliaries/helperFunctions");
 const asyncHandler = require("express-async-handler");
 const pool = require("../config/db");
+const {
+  deltaProductSales,
+  deltaProductSalesMessage,
+  productProfitScore,
+  productRelativeSalesScore,
+  productRelativePerformanceMessage,
+} = require("../auxiliaries/productRecommendationFunctions");
 
 // @desc    Add a new local product
 // @route   POST /api/product/
@@ -312,15 +319,55 @@ const addProductSalesInput = asyncHandler(async (req, res) => {
   let { product_id, store_id, product_cost, product_price } = product.rows[0];
   product_cost = parseFloat(product_cost);
   product_price = parseFloat(product_price);
-  
-  const store = await pool.query(
-    `SELECT * FROM store WHERE store_id = $1`,
-    [store_id]
-  );
+
+  const store = await pool.query(`SELECT * FROM store WHERE store_id = $1`, [
+    store_id,
+  ]);
 
   if (store?.rows[0].store_manager_id !== req.user.user_id) {
     res.status(401);
     throw new Error("You do not own this product.");
+  }
+
+  // date_range: 0 = daily, 1 = weekly, 2 = monthly, 3 = yearly
+  // Check if the date_range overlaps with another period in last input date
+  const existingData = await pool.query(
+    `SELECT * FROM product_sales WHERE product_id = $1 AND date_range = $2 AND store_id = $3`,
+    [product_id, date_range, store_id]
+  );
+
+  // Receives a date_range and then return the time in miliseconds
+  const dateRangeParser = (date_range) => {
+    switch (date_range) {
+      case 0:
+        return 86400000;
+      case 1:
+        return 604800000;
+      case 2:
+        return 2592000000;
+      case 3:
+        return 31536000000;
+      default:
+        return 86400000;
+    }
+  };
+
+  const dateMinusDateRange = new Date(
+    new Date(getDate()) - dateRangeParser(date_range)
+  );
+
+  if (existingData.rows.length > 0) {
+    // Select from existingdata.rows where the input_date is maximum
+    const maxInputDate = existingData.rows.reduce((prev, curr) => {
+      return new Date(prev.input_date) > new Date(curr.input_date)
+        ? prev
+        : curr;
+    })?.input_date;
+
+    if (maxInputDate && new Date(maxInputDate) > dateMinusDateRange) {
+      res.status(400);
+      throw new Error("You have already inputted this data in this period.");
+    }
   }
 
   const addInput = await pool.query(
@@ -336,12 +383,101 @@ const addProductSalesInput = asyncHandler(async (req, res) => {
       number_of_sales,
       product_cost,
       product_price,
-      product_price-product_cost,
-      (product_price-product_cost)*number_of_sales,
+      product_price - product_cost,
+      (product_price - product_cost) * number_of_sales,
     ]
   );
 
   res.status(addInput.rows[0] ? 201 : 401).json(addInput.rows[0] || {});
+});
+
+/**
+ * @desc Compare the product sales input with the product_sales table.
+ * @route POST /api/product/sales/compareglobal
+ * @access private
+ */
+const productRelativePerformance = asyncHandler(async (req, res) => {
+  const { product_local_id, date_range } = req.body;
+
+  const product = await pool.query(
+    `SELECT * FROM product_secondary WHERE product_local_id = $1`,
+    [product_local_id]
+  );
+
+  let { product_id, store_id, product_cost, product_price } = product.rows[0];
+  product_cost = parseFloat(product_cost);
+  product_price = parseFloat(product_price);
+
+  const store = await pool.query(`SELECT * FROM store WHERE store_id = $1`, [
+    store_id,
+  ]);
+
+  if (store?.rows[0].store_manager_id !== req.user.user_id) {
+    res.status(401);
+    throw new Error("You do not own this product.");
+  }
+
+  // date_range: 0 = daily, 1 = weekly, 2 = monthly, 3 = yearly
+  const dateRangeParser = (date_range) => {
+    switch (date_range) {
+      case 0:
+        return 86400000;
+      case 1:
+        return 604800000;
+      case 2:
+        return 2592000000;
+      case 3:
+        return 31536000000;
+      default:
+        return 86400000;
+    }
+  };
+
+  const dateMinusDateRange = new Date(
+    new Date(getDate()) - dateRangeParser(date_range)
+  );
+
+  const productSales = await pool.query(
+    `SELECT * FROM product_sales WHERE product_id = $1 AND date_range = $2`,
+    [product_id, date_range]
+  );
+
+  // Filter product sales that is before the dateMinusDateRange
+  const filteredProductSales = productSales.rows.filter(
+    (productSales) => new Date(productSales.input_date) > dateMinusDateRange
+  );
+
+  const thisProductSales = await pool.query(
+    `SELECT * FROM product_sales WHERE product_local_id = $1 AND date_range = $2`,
+    [product_local_id, date_range]
+  );
+
+  const quantitySoldArray = filteredProductSales.map((productSales) => {
+    return productSales.quantity;
+  });
+
+  // If there is only one or less data, response 401 with error message
+  if (quantitySoldArray.length <= 1) {
+    res.status(401).json({filteredProductSales});
+    throw new Error("There is not enough data to calculate the performance.");
+  }
+
+  const relativeScore = productRelativeSalesScore(
+    quantitySoldArray,
+    thisProductSales.rows[0].quantity
+  );
+  const { zScore, quantileRank } = relativeScore;
+  const message = productRelativePerformanceMessage(
+    zScore,
+    quantileRank,
+    quantitySoldArray.length
+  );
+
+  res.status(200).json({
+    zScore,
+    quantileRank,
+    message,
+  });
 });
 
 module.exports = {
@@ -354,4 +490,5 @@ module.exports = {
   deleteLocalProductData,
   deleteAllStoreProducts,
   addProductSalesInput,
+  productRelativePerformance,
 };
