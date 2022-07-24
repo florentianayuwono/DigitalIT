@@ -62,7 +62,7 @@ export default function Dashboard() {
             <div className="col-md-6">
               <div className="h-100 p-5 text-white bg-darkpurple rounded-3">
                 <h2 className="text-white mb-1">Level up your game</h2>
-                <p className = "mb-3">
+                <p className="mb-3">
                   At DigitalIT, we are committed to be your personal business
                   consultant and accompany your rocky journey. Find out the next
                   big steps to grow your company here.
@@ -78,8 +78,8 @@ export default function Dashboard() {
             </div>
             <div className="col-md-6">
               <div className="h-100 p-5 bg-lightgreen border rounded-3">
-                <h2 className = "mb-1">Track your performance</h2>
-                <p className= "mb-3">
+                <h2 className="mb-1">Track your performance</h2>
+                <p className="mb-3">
                   Your business data is now more powerful than ever. Every piece
                   of information, be it sales or traffic, will give hints on how
                   your business is doing.{" "}
