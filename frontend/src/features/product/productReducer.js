@@ -51,7 +51,6 @@ export const productReducer = (state, action) => {
         ...state,
         isLoading: false,
         isError: false,
-        isSuccess: true,
         message: "",
         products: newProducts,
       };
@@ -61,7 +60,6 @@ export const productReducer = (state, action) => {
         ...state,
         isLoading: false,
         isError: false,
-        isSuccess: true,
         message: "",
         products: {
           ...state.products,

@@ -263,13 +263,7 @@ export const productSalesInputHandler = async (
   };
 
   try {
-    dispatch({
-      type: "REQUEST_INPUT_PRODUCT_SALES",
-      payload: productSalesPayload,
-    });
-
     const responseData = {};
-
     // Since the payload is a list of objects, we need to loop through it and send each object individually.
     // Filter objects that isChecked is false
     Object.keys(productSalesPayload)
@@ -283,19 +277,30 @@ export const productSalesInputHandler = async (
           number_of_sales: productSalesPayload[key].product_sales,
         };
 
-        const response = await axios.post(
-          API_LINK + "sales/",
-          inputData,
-          config
-        );
-        const data = response.data;
-        const status = response.status;
+        dispatch({
+          type: "REQUEST_INPUT_PRODUCT_SALES",
+          payload: productSalesPayload,
+        });
 
-        if (status !== 201) {
-          dispatch({ type: "INPUT_PRODUCT_SALES_ERROR", error: data.message });
-          throw new Error(data.message);
-        } else {
-          responseData[key] = data;
+        try {
+          const response = await axios.post(
+            API_LINK + "sales/",
+            inputData,
+            config
+          );
+          const data = response.data;
+          const status = response.status;
+  
+          if (status !== 201) {
+            dispatch({ type: "INPUT_PRODUCT_SALES_ERROR", error: data.message });
+            return;
+          } else {
+            dispatch({ type: "INPUT_PRODUCT_SALES_SUCCESS", payload: responseData });
+            responseData[key] = data;
+          }
+        } catch (e) {
+          dispatch({ type: "INPUT_PRODUCT_SALES_ERROR", error: e.response.data.message });
+          console.log(e.response.data.message);
         }
       });
 
