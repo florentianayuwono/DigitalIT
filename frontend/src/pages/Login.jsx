@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { FaSignInAlt } from "react-icons/fa";
 import { useAuthContext } from "../features/auth/authContext";
 import { loginUser } from "../features/auth/authServices";
+import { Center, Container, Stack } from "@chakra-ui/react";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 export default function Login(props) {
   // Set initial state to empty string
@@ -64,15 +66,18 @@ export default function Login(props) {
   }, [user.message]);
 
   return (
-    <>
+    <Stack direction="column" align="center" >
       {/* Login page display */}
-      <section className="heading landing">
-        <h1>
-          <FaSignInAlt /> Login
-        </h1>
+      <Center position="relative">
+        <Stack>
+          <Stack direction="row" align="center">
+            <ArrowForwardIcon w={12} h={12} />
+            <h1>Login</h1>
+          </Stack>
 
-        {message === "" ? <p>Start digitalizing</p> : message}
-      </section>
+          {message === "" ? <h4>Start digitalizing</h4> : <h4>{message}</h4>}
+        </Stack>
+      </Center>
 
       <section className="form">
         <form onSubmit={onSubmit}>
@@ -109,6 +114,6 @@ export default function Login(props) {
       <footer className="pt-3 mt-4 text-muted border-top landing">
         &copy; DigitalIT 2022
       </footer>
-    </>
+    </Stack>
   );
 }
