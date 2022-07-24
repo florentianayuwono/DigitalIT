@@ -12,7 +12,7 @@ const initialLiabilities = [
   {liability_name: "other"},
 ];
 
-export default function InputTrialBalanceForm({ period }) {
+export default function InputTrialBalanceForm() {
   const [assetType, setAssetType] = useState(initialAssets);
   const [liabilityType, setLiabilityType] = useState(initialLiabilities);
 

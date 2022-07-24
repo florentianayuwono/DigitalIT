@@ -12,23 +12,16 @@ import { Outlet, useNavigate } from "react-router-dom";
 
 export default function FinanceTrackingInput() {
   const navigate = useNavigate();
-  const [radioValue, setRadioValue] = useState("expense");
+  const [radioValue, setRadioValue] = useState("");
 
   useEffect(() => {
-    navigate(radioValue);
+    if (radioValue !== "") {
+      navigate(radioValue);
+    }
   }, [navigate, radioValue]);
 
   return (
     <>
-      <FormControl>
-        <FormLabel htmlFor="period">Period</FormLabel>
-        <Select>
-          <option value="Daily Report">Daily Report</option>
-          <option value="Weekly Report">Weekly Report</option>
-          <option value="Monthly Report">Monthly Report</option>
-          <option value="Yearly Report">Yearly Report</option>
-        </Select>
-      </FormControl>
       <FormControl>
         <FormLabel htmlFor="inputType">Input Type</FormLabel>
         <RadioGroup onChange={setRadioValue} value={radioValue}>
@@ -36,7 +29,7 @@ export default function FinanceTrackingInput() {
             <Radio id="inputType" value="expense">
               Expense
             </Radio>
-            <Radio id="inputType" value="trialbalance" onSelect={() => navigate("trialbalance")}>
+            <Radio id="inputType" value="trialbalance">
               Trial Balance
             </Radio>
           </Stack>

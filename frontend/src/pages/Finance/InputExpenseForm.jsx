@@ -1,4 +1,10 @@
-import { Button, FormControl, FormLabel, Input, Select } from "@chakra-ui/react";
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Select,
+} from "@chakra-ui/react";
 import { useState } from "react";
 
 const initialExpenseTypes = [
@@ -12,6 +18,15 @@ export default function InputExpenseForm({ period }) {
 
   return (
     <form>
+      <FormControl>
+        <FormLabel htmlFor="period">Period</FormLabel>
+        <Select>
+          <option value="Daily Report">Daily Report</option>
+          <option value="Weekly Report">Weekly Report</option>
+          <option value="Monthly Report">Monthly Report</option>
+          <option value="Yearly Report">Yearly Report</option>
+        </Select>
+      </FormControl>
       <FormControl>
         <FormLabel htmlFor="expenseType">Expense Type</FormLabel>
         <Select>
@@ -28,5 +43,5 @@ export default function InputExpenseForm({ period }) {
       </FormControl>
       <Button type="submit">Submit</Button>
     </form>
-  )
+  );
 }

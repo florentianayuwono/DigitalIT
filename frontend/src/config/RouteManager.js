@@ -24,6 +24,9 @@ import MyRecommendations from "../pages/Recommendation/MyRecommendations";
 import FinanceTrackingInput from "../pages/Finance/FinanceTrackingInput";
 import InputTrialBalanceForm from "../pages/Finance/InputTrialBalanceForm";
 import InputExpenseForm from "../pages/Finance/InputExpenseForm";
+import MainFinancePage from "../pages/Finance/MainFinancePage";
+import MyFinance from "../pages/Finance/MyFinance";
+import FinanceRecommendations from "../pages/Finance/FinanceRecommendations";
 
 export default function RouteManager() {
   return (
@@ -39,13 +42,27 @@ export default function RouteManager() {
             <Route element={<BusinessRoute />}>
               <Route element={<ProductRoute />}>
                 <Route path="business" element={<MainBusinessPage />}>
-                  <Route path="recommendation" element={<MainRecommendationPage />}>
+                  <Route
+                    path="recommendation"
+                    element={<MainRecommendationPage />}
+                  >
                     <Route path="sales" element={<InputProductSales />} />
-                    <Route path="my-recommendations" element={<MyRecommendations />} />
+                    <Route
+                      path="my-recommendations"
+                      element={<MyRecommendations />}
+                    />
                   </Route>
-                  <Route path="finance" element={<FinanceTrackingInput />}>
-                    <Route path="trialbalance" element={<InputTrialBalanceForm />} />
-                    <Route path="expense" element={<InputExpenseForm />} />
+                  <Route path="finance" element={<MainFinancePage />}>
+                    <Route path="my-finance" element={<MyFinance />} />
+                    <Route path="sales" element={<InputProductSales />} />
+                    <Route path="recommendation" element={<FinanceRecommendations />} />
+                    <Route path="input" element={<FinanceTrackingInput />}>
+                      <Route
+                        path="trialbalance"
+                        element={<InputTrialBalanceForm />}
+                      />
+                      <Route path="expense" element={<InputExpenseForm />} />
+                    </Route>
                   </Route>
                   <Route path="addProduct" element={<AddProduct />} />
                   <Route path="" element={<DisplayBusinessParticular />} />
