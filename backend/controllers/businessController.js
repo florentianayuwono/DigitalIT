@@ -5,6 +5,9 @@ const {
   mostProfitableProduct,
   mostSoldProduct,
 } = require("../auxiliaries/productRecommendationFunctions");
+const {
+  bestPlatform,
+} = require("../auxiliaries/recommendationFunctions/businessRecommendationFunctions");
 
 // @desc    Register new business
 // @route   POST /api/business/
@@ -239,10 +242,35 @@ const businessSummary = asyncHandler(async (req, res) => {
   });
 });
 
+/**
+ * @desc    Given a category, find the platform with the highest profit
+ * @route   GET /api/business/bestplatform
+ * @access  Public
+ */
+const bestCategoricalPlatform = asyncHandler(async (req, res) => {
+  const { category } = req.headers;
+
+  // Get the sales data for the given category, join with platform table and product_main table
+  const sales = await pool.query(
+    `SELECT p.product_category, ps.quantity, ps.total_profit,
+    pl.platform_name
+    FROM
+    (product_sales AS ps LEFT JOIN store AS s ON s.store_id = ps.store_id LEFT JOIN product_main AS p ON p.product_id = ps.product_id)
+    LEFT JOIN platform AS pl ON pl.platform_id = s.store_platform_id
+    WHERE p.product_category = $1`,
+    [category]
+  );
+
+  const best = bestPlatform(sales.rows);
+
+  res.status(200).json(best);
+});
+
 module.exports = {
   addBusinessData,
   getBusinessData,
   updateBusinessData,
   deleteBusinessData,
   businessSummary,
+  bestCategoricalPlatform,
 };
