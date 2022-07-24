@@ -177,7 +177,7 @@ export default function InputBusinessParticular() {
                     </div>
                   </div>
 
-                  <h4 className="mb-3">Store</h4>
+                  <h4 className="mt-4 mb-3">Store</h4>
                   <div className="row g-3">
                     <div className="col-12">
                       <label for="storeLocation" className="form-label">
