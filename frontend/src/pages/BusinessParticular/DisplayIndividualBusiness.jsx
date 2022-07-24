@@ -68,41 +68,23 @@ export const DisplayIndividualBusiness = () => {
         <div class="col-lg-6 mx-auto">
           <p class="lead mb-4">{business.business_category}</p>
           <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            {/* <button
+            <button
               type="button"
-              class="btn btn-lg btn-danger"
+              class={
+                business.has_digitalized ? "btn btn-success" : "btn btn-danger"
+              }
               data-bs-toggle="popover"
-              data-bs-title="Popover title"
-              data-bs-content="And here's some amazing content. It's very engaging. Right?"
+              data-bs-title="Digitalization status"
+              data-bs-content={
+                business.has_digitalized ? "Congrats! You are digitalized!" : "First next big step: digitalize your business!"
+              }
             >
-              Click to toggle popover
-            </button> */}
-        
+              {business.has_digitalized ? "Digitalized" : "Not Digitalized"}
+            </button>
           </div>
         </div>
       </div>
-      <div className="heading border-bottom">
-        <div className="row">
-          <div className="col-md-12">
-            <h1
-              style={
-                business.has_digitalized ? {} : { color: "rgb(119,119,119)" }
-              }
-            >
-              {business.business_name}
-            </h1>
-          </div>
-          <div className="col-md-12">
-            <h3
-              style={
-                business.has_digitalized ? {} : { color: "rgb(119,119,119)" }
-              }
-            >
-              {business.business_category}
-            </h3>
-          </div>
-        </div>
-      </div>
+      
       <div className="col-md-12">
         <Outlet />
       </div>
