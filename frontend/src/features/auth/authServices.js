@@ -4,8 +4,8 @@ const axios = require("axios").default;
 const API_LINK =
   process.env.NODE_ENV === "production"
     ? "/api/users/"
-    : "http://localhost:5000/api/users/";
-    // : "https://orbital-digital-it.herokuapp.com/api/users/";
+    : //: "http://localhost:5000/api/users/";
+      "https://orbital-digital-it.herokuapp.com/api/users/";
 
 export const loginUser = async (dispatch, loginPayload) => {
   /* 
