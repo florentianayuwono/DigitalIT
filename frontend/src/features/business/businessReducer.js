@@ -3,9 +3,10 @@
 export const initialBusinessState = {
   businesses: [],
   isError: false,
-  isSucess: false,
+  isSuccess: false,
   isLoading: false,
   message: "",
+  businessSummary: {},
 };
 
 // function that takes an array of objects and an id and outputs the same array without the object with the id
@@ -130,6 +131,37 @@ export const businessReducer = (state, action) => {
       };
 
       return newState;
+    case "REQUEST_BUSINESS_SUMMARY": {
+      return {
+        ...state,
+        isLoading: true,
+        message: "loading ...",
+        businessSummary: {},
+      };
+    }
+    case "GET_BUSINESS_SUMMARY_SUCCESS": {
+      newState = {
+        ...state,
+        isLoading: false,
+        isSuccess: true,
+        message: "",
+        businessSummary: action.payload,
+      };
+
+      return newState;
+    }
+    case "GET_BUSINESS_SUMMARY_ERROR": {
+      newState = {
+        ...state,
+        isLoading: false,
+        isError: true,
+        isSuccess: false,
+        message: action.error,
+        businessSummary: {},
+      };
+
+      return newState;
+    }
     case "RESET":
       return initialBusinessState;
     default:

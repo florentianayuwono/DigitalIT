@@ -12,6 +12,8 @@ export default function MainRecommendationPage() {
       navigate("my-recommendations");
     } else if (tabIndex === 1) {
       navigate("sales");
+    } else if (tabIndex === 2) {
+      navigate("summary");
     }
   }, [tabIndex, navigate]);
 
@@ -21,8 +23,12 @@ export default function MainRecommendationPage() {
         <TabList>
           <Tab >Recommendation</Tab>
           <Tab >Input Data</Tab>
+          <Tab >Summary</Tab>
         </TabList>
         <TabPanels>
+          <TabPanel>
+            <Outlet />
+          </TabPanel>
           <TabPanel>
             <Outlet />
           </TabPanel>

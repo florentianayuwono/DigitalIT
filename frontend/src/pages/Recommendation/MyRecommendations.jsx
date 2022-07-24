@@ -27,7 +27,6 @@ export default function MyRecommendations() {
   // Fetch the businesses
   useEffect(() => {
     getBusinesses(businessDispatch);
-    console.log(businesses.businesses);
   }, []);
 
   return (
