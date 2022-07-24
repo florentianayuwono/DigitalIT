@@ -21,6 +21,9 @@ import DisplayIndividualStore from "../pages/Store/DisplayIndividualStore";
 import InputProductSales from "../pages/Recommendation/InputProductSales";
 import MainRecommendationPage from "../pages/Recommendation/MainRecommendationPage";
 import MyRecommendations from "../pages/Recommendation/MyRecommendations";
+import FinanceTrackingInput from "../pages/Finance/FinanceTrackingInput";
+import InputTrialBalanceForm from "../pages/Finance/InputTrialBalanceForm";
+import InputExpenseForm from "../pages/Finance/InputExpenseForm";
 
 export default function RouteManager() {
   return (
@@ -39,6 +42,10 @@ export default function RouteManager() {
                   <Route path="recommendation" element={<MainRecommendationPage />}>
                     <Route path="sales" element={<InputProductSales />} />
                     <Route path="my-recommendations" element={<MyRecommendations />} />
+                  </Route>
+                  <Route path="finance" element={<FinanceTrackingInput />}>
+                    <Route path="trialbalance" element={<InputTrialBalanceForm />} />
+                    <Route path="expense" element={<InputExpenseForm />} />
                   </Route>
                   <Route path="addProduct" element={<AddProduct />} />
                   <Route path="" element={<DisplayBusinessParticular />} />
