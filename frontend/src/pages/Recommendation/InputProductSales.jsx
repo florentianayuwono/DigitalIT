@@ -19,13 +19,19 @@ import {
   InputLeftAddon,
   InputRightAddon,
   Select,
+  Spinner,
+  Stack,
+  useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState, useRef } from "react";
 import { getStore } from "../../features/store/storeServices";
 import { useBusinessContext } from "../../features/business/businessContext";
 import { useProductContext } from "../../features/product/productContext";
 import { getBusinesses } from "../../features/business/businessServices";
-import { getProducts, productSalesInputHandler } from "../../features/product/productServices";
+import {
+  getProducts,
+  productSalesInputHandler,
+} from "../../features/product/productServices";
 
 function IndividualProductDisplayOption({ id, product, storage }) {
   const [productSales, setProductSales] = useState(0);
@@ -56,7 +62,10 @@ function IndividualProductDisplayOption({ id, product, storage }) {
 
   return (
     <div>
-      <FormControl isInvalid={!isValid && isChecked} isRequired={isChecked && isValid}>
+      <FormControl
+        isInvalid={!isValid && isChecked}
+        isRequired={isChecked && isValid}
+      >
         <FormErrorMessage>Please enter a valid number</FormErrorMessage>
         <InputGroup>
           <InputLeftAddon
@@ -106,6 +115,8 @@ export default function InputProductSales() {
 
   const { businesses, dispatch: businessDispatch } = useBusinessContext();
   const { products, dispatch: productDispatch } = useProductContext();
+  const toast = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const selectBusiness = (e) => {
     e.preventDefault();
@@ -167,8 +178,33 @@ export default function InputProductSales() {
     };
 
     const response = await productSalesInputHandler(productDispatch, data);
-    console.log(response);
   };
+
+  useEffect(() => {
+    if(products.isSuccess) {
+      toast({
+        title: "Success",
+        description: "Product sales were successfully inputted",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+    } else if(products.isError) {
+      toast({
+        title: "Error",
+        description: products.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+
+    if (products.isLoading) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [products.isError, products.isLoading, products.isSuccess, products.message, toast]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -232,9 +268,20 @@ export default function InputProductSales() {
           />
         );
       })}
+      <Stack direction="row" align="center" >
       <Button type="submit" colorScheme="teal">
         Submit Form
       </Button>
+      {isLoading ? (
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+        />
+      ) : (<></>)}
+      </Stack>
     </form>
   );
 }
