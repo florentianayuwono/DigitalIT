@@ -123,7 +123,7 @@ const deleteBusinessData = asyncHandler(async (req, res) => {
  * @access Private
  */
 const businessSummary = asyncHandler(async (req, res) => {
-  const { business_id, date_range } = req.body;
+  const { business_id, date_range } = req.headers;
 
   const business = await pool.query(
     "SELECT * FROM business WHERE business_id = $1",

@@ -27,6 +27,7 @@ import InputExpenseForm from "../pages/Finance/InputExpenseForm";
 import MainFinancePage from "../pages/Finance/MainFinancePage";
 import MyFinance from "../pages/Finance/MyFinance";
 import FinanceRecommendations from "../pages/Finance/FinanceRecommendations";
+import BusinessSummary from "../components/BusinessSummary";
 
 export default function RouteManager() {
   return (
@@ -51,11 +52,20 @@ export default function RouteManager() {
                       path="my-recommendations"
                       element={<MyRecommendations />}
                     />
+                    <Route
+                      path="summary"
+                      element={
+                        <BusinessSummary business_id="5" date_range="0" />
+                      }
+                    />
                   </Route>
                   <Route path="finance" element={<MainFinancePage />}>
                     <Route path="my-finance" element={<MyFinance />} />
                     <Route path="sales" element={<InputProductSales />} />
-                    <Route path="recommendation" element={<FinanceRecommendations />} />
+                    <Route
+                      path="recommendation"
+                      element={<FinanceRecommendations />}
+                    />
                     <Route path="input" element={<FinanceTrackingInput />}>
                       <Route
                         path="trialbalance"

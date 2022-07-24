@@ -3,8 +3,8 @@ import axios from "axios";
 const API_LINK =
   process.env.NODE_ENV === "production"
     ? "/api/business/"
-    : // : "http://localhost:5000/api/business/";
-      "https://orbital-digital-it.herokuapp.com/api/business/";
+    : "http://localhost:5000/api/business/";
+    // : "https://orbital-digital-it.herokuapp.com/api/business/";
 
 export const getIndividualBusiness = async (id) => {
   const token = JSON.parse(localStorage.getItem("user")).token;
@@ -144,6 +144,42 @@ export const deleteBusiness = async (dispatch, businessId) => {
     }
   } catch (e) {
     dispatch({ type: "DELETE_BUSINESS_ERROR", error: e.response.data.message });
+    console.log(e.response.data.message);
+  }
+};
+
+export const getBusinessSummary = async (dispatch, payload) => {
+  const token = JSON.parse(localStorage.getItem("user")).token;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      business_id: payload.business_id,
+      date_range: payload.date_range,
+    },
+  };
+
+  try {
+    dispatch({ type: "REQUEST_BUSINESS_SUMMARY" });
+
+    const response = await axios.get(API_LINK + "summary/", config);
+    const data = await response.data;
+    const status = await response.status;
+
+    if (status === 200) {
+      dispatch({ type: "GET_BUSINESS_SUMMARY_SUCCESS", payload: data });
+
+      return data;
+    } else {
+      dispatch({ type: "GET_BUSINESS_SUMMARY_ERROR", error: data.message });
+
+      return;
+    }
+  } catch (e) {
+    dispatch({
+      type: "GET_BUSINESS_SUMMARY_ERROR",
+      error: e.response.data.message,
+    });
     console.log(e.response.data.message);
   }
 };
