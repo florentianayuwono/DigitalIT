@@ -3,8 +3,8 @@ import axios from "axios";
 const API_LINK =
   process.env.NODE_ENV === "production"
     ? "/api/store/"
-    : "http://localhost:5000/api/store/";
-// "https://orbital-digital-it.herokuapp.com/api/store/";
+    : //  : "http://localhost:5000/api/store/";
+      "https://orbital-digital-it.herokuapp.com/api/store/";
 
 export const getStore = async ({ store_id, business_id }) => {
   const token = JSON.parse(localStorage.getItem("user")).token;
