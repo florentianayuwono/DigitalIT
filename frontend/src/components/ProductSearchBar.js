@@ -33,7 +33,7 @@ export default function ProductSearchBar({ store_id, onAdd }) {
     <>
       <form onSubmit={handleSearch}>
         <FormControl>
-          <FormLabel htmlFor="search">
+          <FormLabel htmlFor="search" className="mt-3">
             Add a new product to this store
           </FormLabel>
           <Input
@@ -41,9 +41,9 @@ export default function ProductSearchBar({ store_id, onAdd }) {
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
           />
-          <FormHelperText>Search for a product name.</FormHelperText>
+          <FormHelperText className="mb-3">Search for a product name.</FormHelperText>
           <FormErrorMessage>Please enter a product name.</FormErrorMessage>
-          <Button type="submit">Search</Button>
+          <Button type="submit" className="mb-3">Search</Button>
         </FormControl>
       </form>
       <div>
@@ -61,7 +61,7 @@ export default function ProductSearchBar({ store_id, onAdd }) {
           <PopupMessageButton
             action={() => nav("/business/addProduct")}
             message="Do you wish to input a new product?"
-            title="No results found, do you wish to add a new product?"
+            title="No result found, do you wish to add a new product?"
             executeTitle={"Yes"}
             colorScheme="blue"
           />
