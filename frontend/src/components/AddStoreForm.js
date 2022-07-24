@@ -56,7 +56,7 @@ export default function AddStoreForm({ business_id, refresh }) {
 
               <AlertDialogBody>
                 <div>
-                  <label>Platform</label>
+                  <label className= "me-2">Platform</label>
                   <select
                     value={platform_id}
                     onChange={(e) => setPlatformId(e.target.value)}
