@@ -134,8 +134,54 @@ function salesRecommendation(
   }
 }
 
+/**
+ * @param {String} category
+ * @param {Object[]} salesData
+ * @returns The platform that has the highest profit for the given category
+ */
+function bestPlatform(salesData) {
+  // Sales data summed by platform
+  const groupedData = salesData.reduce((acc, curr) => {
+    if (acc[curr.platform_name] == null) {
+      acc[curr.platform_name] = parseFloat(curr.total_profit);
+    } else {
+      acc[curr.platform_name] += parseFloat(curr.total_profit);
+    }
+    return acc;
+  }, {});
+
+  // Find the platform with the highest profit
+  const bestPlatform = Object.keys(groupedData).reduce((a, b) => {
+    return groupedData[a] > groupedData[b] ? a : b;
+  }).toString();
+
+  // Return the platform with the highest profit
+  return bestPlatform;
+}
+
+/**
+ * Checks whether the platform specified is the best platform for the given category.
+ * 
+ * @param {String} platform - The platform that we want to check. 
+ * @param {Object[]} salesData - The sales data of all the platforms, (already filtered by the category)
+ * @returns Boolean - Whether the platform is the best one or not.
+ */
+function isBestPlatform(platform, salesData) {
+  // Find the platform with the highest profit
+  const bestPlatform = bestPlatform(salesData);
+
+  // Check if the platform is the best platform
+  if (bestPlatform == platform) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 module.exports = {
   createBusinessRecommendation,
   digitalizeBusinessRecommendation,
   salesRecommendation,
+  bestPlatform,
+  isBestPlatform,
 };

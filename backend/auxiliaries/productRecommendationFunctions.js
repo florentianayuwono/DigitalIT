@@ -122,7 +122,7 @@ function productRelativePerformanceMessage(
  */
 function mostProfitableProduct(productSales) {
   const mostProfitableProduct = productSales.reduce((a, b) => {
-    return a.total_profit > b.total_profit ? a : b;
+    return parseFloat(a.total_profit) > parseFloat(b.total_profit) ? a : b;
   });
 
   return mostProfitableProduct;
