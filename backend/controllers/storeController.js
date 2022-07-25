@@ -35,6 +35,12 @@ const addStoreData = asyncHandler(async (req, res) => {
     ]
   );
 
+  // Set the has_digitalized field to true for the business
+  await pool.query(
+    "UPDATE business SET has_digitalized = true WHERE business_id = $1",
+    [business_id]
+  );
+
   res
     .status(newStore.rows[0] ? 201 : 400)
     .json(
@@ -108,6 +114,19 @@ const deleteStoreData = asyncHandler(async (req, res) => {
     `DELETE FROM store WHERE store_id = $1 RETURNING *`,
     [store_id]
   );
+
+  // If there is no longer a store in the business, set the has_digitalized field to false
+  const stores = await pool.query(
+    `SELECT * FROM store WHERE business_id = $1`,
+    [store.rows[0].business_id]
+  );
+
+  if (stores.rows.length === 0) {
+    await pool.query(
+      "UPDATE business SET has_digitalized = false WHERE business_id = $1",
+      [store.rows[0].business_id]
+    );
+  }
 
   res
     .status(deleteStore.rows[0] ? 200 : 400)

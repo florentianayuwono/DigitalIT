@@ -24,6 +24,10 @@ export default function DisplayStores() {
     };
   }, [refresh, business_id]);
 
+  useEffect(() => {
+    setStores([]);
+  }, [refresh]);
+
   return (
     <div class="container px-4 py-2" id="featured-3">
       <h2 class="pb-2 border-bottom">Stores</h2>
@@ -47,6 +51,7 @@ export default function DisplayStores() {
                     action={() => {
                       deleteStore({ store_id: store.store_id });
                       setRefresh((prev) => !prev);
+                      nav("");
                     }}
                     message="Are you sure to delete this store? This action cannot be undone."
                     title="Delete"

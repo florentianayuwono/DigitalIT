@@ -9,6 +9,7 @@ import {
   useDisclosure,
   Button,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const { addStore } = require("../features/store/storeServices");
 const { getPlatform } = require("../features/platform/platformServices");
@@ -16,10 +17,12 @@ const { getPlatform } = require("../features/platform/platformServices");
 export default function AddStoreForm({ business_id, refresh }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
+  const navigate = useNavigate();
   const execute = () => {
     handleSubmit();
     refresh((prev) => !prev);
     onClose();
+    navigate("");
   };
   const [platforms, setPlatforms] = useState([]);
   const [platform_id, setPlatformId] = useState("");
