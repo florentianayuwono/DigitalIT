@@ -6,13 +6,14 @@ const {
   updateBusinessData,
   deleteBusinessData,
   businessSummary,
-  bestCategoricalPlatform
+  bestCategoricalPlatform,
+  bestPlatformForBusinessCategory,
 } = require("../controllers/businessController");
 const { protect } = require("../middlewares/authMiddleware");
 
 router.route("/").get(protect, getBusinessData).post(protect, addBusinessData);
 router.get("/summary", protect, businessSummary);
-router.get("/bestplatform", bestCategoricalPlatform);
+router.get("/bestplatform", bestPlatformForBusinessCategory);
 
 router
   .route("/:id")

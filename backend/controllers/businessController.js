@@ -267,6 +267,26 @@ const bestCategoricalPlatform = asyncHandler(async (req, res) => {
   res.status(200).json(best);
 });
 
+const bestPlatformForBusinessCategory = asyncHandler(async (req, res) => {
+  const { category } = req.headers;
+
+  // Get the sales data for the given category, join with store table to get business_id and then join with platform and business table.
+  const sales = await pool.query(
+    `SELECT p.product_category, ps.quantity, ps.total_profit,
+    pl.platform_name, b.business_name, b.business_category
+    FROM
+    (product_sales AS ps LEFT JOIN store AS s ON s.store_id = ps.store_id LEFT JOIN product_main AS p ON p.product_id = ps.product_id)
+    LEFT JOIN platform AS pl ON pl.platform_id = s.store_platform_id
+    LEFT JOIN business AS b ON b.business_id = s.business_id
+    WHERE b.business_category = $1`,
+    [category]
+  );
+  const best = bestPlatform(sales.rows);
+  
+  res.status(200).json(best);
+});
+
+
 module.exports = {
   addBusinessData,
   getBusinessData,
@@ -274,4 +294,5 @@ module.exports = {
   deleteBusinessData,
   businessSummary,
   bestCategoricalPlatform,
+  bestPlatformForBusinessCategory,
 };
