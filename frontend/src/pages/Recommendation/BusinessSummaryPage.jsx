@@ -22,7 +22,6 @@ export default function BusinessSummaryPage() {
 
   useEffect(() => {
     getBusinesses(dispatchBusiness);
-    console.log(businesses.businesses);
   }, []);
 
   useEffect(() => {

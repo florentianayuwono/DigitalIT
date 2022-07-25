@@ -24,12 +24,10 @@ export default function MyRecommendations() {
   const [selectedBusiness, setSelectedBusiness] = useState();
   const [submit, setSubmit] = useState(false);
   const { isLoading } = businesses;
-  console.log(selectedBusiness);
 
   const selectedBusinessObject = businesses.businesses.find(
     (business) => business.business_id === parseInt(selectedBusiness)
   );
-  console.log(selectedBusinessObject)
 
   // Fetch the businesses
   useEffect(() => {
