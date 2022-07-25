@@ -19,10 +19,12 @@ import { getBusinessSummary } from "../features/business/businessServices";
 
 // A function that capitalizes the first letter of each word in a string
 const capitalize = (str) => {
-  return str.replace(/\w\S*/g, (txt) => {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-  }).replace(/\s/g, "");
-}
+  return str
+    .replace(/\w\S*/g, (txt) => {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    })
+    .replace(/\s/g, "");
+};
 
 export default function BusinessSummary({ business_id, date_range }) {
   const { businesses, dispatch: businessDispatch } = useBusinessContext();
@@ -58,12 +60,20 @@ export default function BusinessSummary({ business_id, date_range }) {
           </AccordionButton>
         </h2>
         <AccordionPanel pb={4}>
-          <h3>
-            Total number of products sold :{" "}
-            {businesses.businessSummary?.totalNumberOfProductsSold}
-          </h3>
-          <h3>Total revenue : {businesses.businessSummary?.totalRevenue}</h3>
-          <h3>Total profit: {businesses.businessSummary?.totalProfit} </h3>
+          {businesses.isError ? (
+            <>No data</>
+          ) : (
+            <>
+              <h3>
+                Total number of products sold :{" "}
+                {businesses.businessSummary?.totalNumberOfProductsSold}
+              </h3>
+              <h3>
+                Total revenue : {businesses.businessSummary?.totalRevenue}
+              </h3>
+              <h3>Total profit: {businesses.businessSummary?.totalProfit} </h3>
+            </>
+          )}
         </AccordionPanel>
       </AccordionItem>
       {businesses.businessSummary?.totalRevenue ? (
@@ -192,7 +202,10 @@ export default function BusinessSummary({ business_id, date_range }) {
                       <h5>Product Category</h5>
                     </Td>
                     <Td>
-                      {businesses.businessSummary?.highestProfit.product_category}
+                      {
+                        businesses.businessSummary?.highestProfit
+                          .product_category
+                      }
                     </Td>
                   </Tr>
                   <Tr>
@@ -263,9 +276,7 @@ export default function BusinessSummary({ business_id, date_range }) {
                     <Td>
                       <h5>Quantity Sold</h5>
                     </Td>
-                    <Td>
-                      {businesses.businessSummary?.highestSales.quantity}
-                    </Td>
+                    <Td>{businesses.businessSummary?.highestSales.quantity}</Td>
                   </Tr>
                 </Tbody>
               </Table>

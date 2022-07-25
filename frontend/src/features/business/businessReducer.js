@@ -32,6 +32,7 @@ export const businessReducer = (state, action) => {
     case "REQUEST_ADD_BUSINESS":
       return {
         ...state,
+        isError: false,
         isLoading: true,
         message: "loading ...",
       };
@@ -40,6 +41,7 @@ export const businessReducer = (state, action) => {
         ...state,
         isLoading: false,
         isSuccess: true,
+        isError: false,
         message: "",
       };
 
@@ -58,6 +60,7 @@ export const businessReducer = (state, action) => {
       return {
         ...state,
         isLoading: true,
+        isError: false,
         message: "loading ...",
       };
     case "GET_BUSINESSES_SUCCESS":
@@ -65,6 +68,7 @@ export const businessReducer = (state, action) => {
         ...state,
         isLoading: false,
         isSuccess: true,
+        isError: false,
         message: "",
         businesses: action.payload,
       };
@@ -84,6 +88,7 @@ export const businessReducer = (state, action) => {
       return {
         ...state,
         isLoading: true,
+        isError: false,
         message: "loading ...",
       };
     case "UPDATE_BUSINESS_SUCCESS":
@@ -109,6 +114,7 @@ export const businessReducer = (state, action) => {
       return {
         ...state,
         isLoading: true,
+        isError: false,
         message: "loading ...",
       };
     case "DELETE_BUSINESS_SUCCESS":
@@ -135,6 +141,7 @@ export const businessReducer = (state, action) => {
       return {
         ...state,
         isLoading: true,
+        isError: false,
         message: "loading ...",
         businessSummary: {},
       };

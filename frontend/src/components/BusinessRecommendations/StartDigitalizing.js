@@ -23,7 +23,6 @@ export default function StartDigitalizing({ business }) {
   const [platforms, setPlatforms] = useState({});
   const { business_id, business_category } = business;
   const [isLoading, setIsLoading] = useState(false);
-  console.log(platforms);
   // const [selectedCategory, setSelectedCategory] = useState("");
 
   // const handleSelect = (e) => {

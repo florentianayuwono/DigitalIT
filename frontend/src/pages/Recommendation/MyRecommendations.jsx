@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useEffect } from "react";
+import ExploitPopularity from "../../components/BusinessRecommendations/ExploitPopularity";
 import StartDigitalizing from "../../components/BusinessRecommendations/StartDigitalizing";
 import SuitablePlatform from "../../components/BusinessRecommendations/SuitablePlatform";
 import { useBusinessContext } from "../../features/business/businessContext";
@@ -22,11 +23,13 @@ export default function MyRecommendations() {
   const { businesses, dispatch: businessDispatch } = useBusinessContext();
   const [selectedBusiness, setSelectedBusiness] = useState();
   const [submit, setSubmit] = useState(false);
-  const { isLoading, error } = businesses;
+  const { isLoading } = businesses;
+  console.log(selectedBusiness);
 
   const selectedBusinessObject = businesses.businesses.find(
     (business) => business.business_id === parseInt(selectedBusiness)
   );
+  console.log(selectedBusinessObject)
 
   // Fetch the businesses
   useEffect(() => {
@@ -111,6 +114,8 @@ export default function MyRecommendations() {
                       <SuitablePlatform business={selectedBusinessObject} />
                     </AccordionPanel>
                   </AccordionItem>
+
+                  <ExploitPopularity business={selectedBusinessObject} />
 
                   <AccordionItem>
                     <h2>
@@ -218,24 +223,6 @@ export default function MyRecommendations() {
                       look at! Invest in better image quality. Don't worry, here
                       are some cheap but good photographers that we have found
                       for you.
-                    </AccordionPanel>
-                  </AccordionItem>
-
-                  <AccordionItem>
-                    <h2>
-                      <AccordionButton
-                        _expanded={{ bg: "purple", color: "white" }}
-                      >
-                        <container flex="1" textAlign="left">
-                          Exploit your popularity
-                        </container>
-                        <AccordionIcon />
-                      </AccordionButton>
-                    </h2>
-                    <AccordionPanel pb={4}>
-                      You are quite successful in selling this product. Might
-                      want to try selling its siblings? You can start by selling
-                      this, that and there.
                     </AccordionPanel>
                   </AccordionItem>
 
