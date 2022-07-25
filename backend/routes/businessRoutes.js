@@ -13,7 +13,7 @@ const { protect } = require("../middlewares/authMiddleware");
 
 router.route("/").get(protect, getBusinessData).post(protect, addBusinessData);
 router.get("/summary", protect, businessSummary);
-router.get("/bestplatform", bestPlatformForBusinessCategory);
+router.get("/bestplatform", protect, bestPlatformForBusinessCategory);
 
 router
   .route("/:id")

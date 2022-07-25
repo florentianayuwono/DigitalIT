@@ -268,7 +268,20 @@ const bestCategoricalPlatform = asyncHandler(async (req, res) => {
 });
 
 const bestPlatformForBusinessCategory = asyncHandler(async (req, res) => {
-  const { category } = req.headers;
+  const { category, business_id } = req.headers;
+  let business;
+
+  // If a business_id is specified, check if the user is the manager of the business
+  if (business_id) {
+    business = await pool.query(
+      "SELECT * FROM business WHERE business_id = $1",
+      [business_id]
+    );
+
+    if (business.rows[0]?.manager_id !== req.user.user_id) {
+      return res.status(401).json("You do not have access to this business.");
+    }
+  }
 
   // Get the sales data for the given category, join with store table to get business_id and then join with platform and business table.
   const sales = await pool.query(
@@ -282,10 +295,39 @@ const bestPlatformForBusinessCategory = asyncHandler(async (req, res) => {
     [category]
   );
   const best = bestPlatform(sales.rows);
-  
-  res.status(200).json(best);
-});
 
+  // If there's a business specified, get all the unique platform names of the stores in the busines
+  if (business_id) {
+    const uniquePlatforms = await pool.query(
+      `SELECT DISTINCT pl.platform_name
+      FROM
+      (store AS s LEFT JOIN platform AS pl ON pl.platform_id = s.store_platform_id)
+      WHERE s.business_id = $1`,
+      [business_id]
+    );
+
+    // Check if best platform is in the list of unique platforms
+    const bestPlatformInBusiness = uniquePlatforms.rows.find(
+      (platform) => platform.platform_name === best
+    );
+
+    if (!bestPlatformInBusiness) {
+      return res.status(200).json({
+        isBest: false,
+        bestPlatform: best,
+        thisBusinessPlatforms: uniquePlatforms.rows,
+      });
+    } else {
+      return res.status(200).json({
+        isBest: true,
+        bestPlatform: best,
+        thisBusinessPlatforms: uniquePlatforms.rows,
+      });
+    }
+  } else {
+    res.status(200).json(best);
+  }
+});
 
 module.exports = {
   addBusinessData,

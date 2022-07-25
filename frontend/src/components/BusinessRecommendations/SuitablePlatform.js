@@ -7,6 +7,6 @@ function NoPlatform() {
   );
 }
 
-export default function SuitablePlatform({ business_id }) {
+export default function SuitablePlatform({ business }) {
   return (<NoPlatform />);
 }

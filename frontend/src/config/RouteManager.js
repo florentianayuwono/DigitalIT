@@ -54,7 +54,7 @@ export default function RouteManager() {
                       element={<MyRecommendations />}
                     />
                     <Route path="summary" element={<BusinessSummaryPage />} >
-                     <Route element={<BusinessSummary business_id="5" date_range="0" />} />
+                     <Route element={<BusinessSummary />} />
                     </Route>
                   </Route>
                   <Route path="finance" element={<MainFinancePage />}>
