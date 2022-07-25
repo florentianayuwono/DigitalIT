@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useEffect } from "react";
+import StartDigitalizing from "../../components/BusinessRecommendations/StartDigitalizing";
 import SuitablePlatform from "../../components/BusinessRecommendations/SuitablePlatform";
 import { useBusinessContext } from "../../features/business/businessContext";
 import { getBusinesses } from "../../features/business/businessServices";
@@ -90,9 +91,7 @@ export default function MyRecommendations() {
                     </AccordionButton>
                   </h2>
                   <AccordionPanel pb={4}>
-                    Start digitalizing your business by opening a seller
-                    account! Based on our analysis, your business will thrive on
-                    this platform.
+                    <StartDigitalizing business={selectedBusinessObject} />
                   </AccordionPanel>
                 </AccordionItem>
               ) : (
