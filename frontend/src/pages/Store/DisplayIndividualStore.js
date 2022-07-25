@@ -18,7 +18,8 @@ export default function DisplayIndividualStore() {
 
   return (
     <>
-      <h1>{store.store_name}</h1>
+      <h2 class="pb-2 border-bottom">{store.store_name}</h2>
+      <div class="row g-4 py-4 row-cols-1 row-cols-lg-3"></div>
       <Outlet />
     </>
   );

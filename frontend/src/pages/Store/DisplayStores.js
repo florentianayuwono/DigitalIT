@@ -25,18 +25,24 @@ export default function DisplayStores() {
   }, [refresh, business_id]);
 
   return (
-    <div className="row align-items-md-stretch">
-      <h1>Stores</h1>
-      {stores.map((store) => {
-        return (
-          <div className="col-md-6" key={store.store_id}>
-            <div
-              className="h-100 p-5 bg-light border rounded-3"
-              key={store.store_id}
-            >
-              <Stack>
-                <h3>{store.store_name}</h3>
-                <Stack direction="row" spacing={2}>
+    <div class="container px-4 py-2" id="featured-3">
+      <h2 class="pb-2 border-bottom">Stores</h2>
+      <div class="row g-4 py-4 row-cols-1 row-cols-lg-3"></div>
+      <div className="row">
+        {stores.map((store) => {
+          return (
+            <div className="col-sm-4 mb-4" key={store.store_id}>
+              <div className="card">
+                <div className="card-body">
+                  <h5 className="card-title">{store.store_name}</h5>
+
+                  <Button
+                    className="me-2"
+                    colorScheme={"purple"}
+                    onClick={() => nav(`${store.store_id}`)}
+                  >
+                    View details
+                  </Button>
                   <PopupMessageButton
                     action={() => {
                       deleteStore({ store_id: store.store_id });
@@ -46,18 +52,12 @@ export default function DisplayStores() {
                     title="Delete"
                     executeTitle="Delete"
                   />
-                  <Button
-                    colorScheme={"purple"}
-                    onClick={() => nav(`${store.store_id}`)}
-                  >
-                    View details
-                  </Button>
-                </Stack>
-              </Stack>
+                </div>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
       <AddStoreForm business_id={business_id} refresh={setRefresh} />
     </div>
   );

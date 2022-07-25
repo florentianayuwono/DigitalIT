@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FaStore } from "react-icons/fa";
 import { Outlet, useParams } from "react-router-dom";
 import { useBusinessContext } from "../../features/business/businessContext";
 import { getIndividualBusiness } from "../../features/business/businessServices";
@@ -39,14 +40,12 @@ const selectBusiness = (business_id, businesses) => {
 export const DisplayIndividualBusiness = () => {
   const { businesses } = useBusinessContext();
   const { business_id } = useParams();
-  const [business, setBusiness] = useState(
-    {
-      business_name: "",
-      business_category: "",
-      has_digitalized: "",
-    }
-  );
-  
+  const [business, setBusiness] = useState({
+    business_name: "",
+    business_category: "",
+    has_digitalized: "",
+  });
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -56,27 +55,36 @@ export const DisplayIndividualBusiness = () => {
         console.error(err.message);
         return;
       }
-    }
+    };
 
     getData();
   }, [business_id, businesses]);
 
   return (
     <>
-      <div className="heading border-bottom">
-        <div className="row">
-          <div className="col-md-12">
-            <h1 style={business.has_digitalized ? {} : { color: "rgb(119,119,119)" }}>
-              {business.business_name}
-            </h1>
-          </div>
-          <div className="col-md-12">
-            <h3 style={business.has_digitalized ? {} : { color: "rgb(119,119,119)" }}>
-              {business.business_category}
-            </h3>
+      <div class="px-4 py-3 my-5 text-center">
+        {/* <FaStore /> Still has not figured out how to make this icon centered*/}
+        <h1 class="display-5 fw-bold">{business.business_name}</h1>
+        <div class="col-lg-6 mx-auto">
+          <p class="lead mb-4">{business.business_category}</p>
+          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <button
+              type="button"
+              class={
+                business.has_digitalized ? "btn btn-success" : "btn btn-danger"
+              }
+              data-bs-toggle="popover"
+              data-bs-title="Digitalization status"
+              data-bs-content={
+                business.has_digitalized ? "Congrats! You are digitalized!" : "First next big step: digitalize your business!"
+              }
+            >
+              {business.has_digitalized ? "Digitalized" : "Not Digitalized"}
+            </button>
           </div>
         </div>
       </div>
+      
       <div className="col-md-12">
         <Outlet />
       </div>

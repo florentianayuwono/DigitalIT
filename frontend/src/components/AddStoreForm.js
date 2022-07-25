@@ -38,11 +38,8 @@ export default function AddStoreForm({ business_id, refresh }) {
   };
 
   return (
-    <div className="col-md-6">
-      <div
-        className="btn h-100 p-5 border-solid rounded-3"
-        onClick={onOpen}
-      >
+    <div className="row d-flex justify-content-center align-content-center">
+      <button className="btn btn-primary btn-lg" onClick={onOpen}>
         <AlertDialog
           isOpen={isOpen}
           leastDestructiveRef={cancelRef}
@@ -51,12 +48,12 @@ export default function AddStoreForm({ business_id, refresh }) {
           <AlertDialogOverlay>
             <AlertDialogContent>
               <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                Add a New Store
+                Add a new store
               </AlertDialogHeader>
 
               <AlertDialogBody>
                 <div>
-                  <label>Platform</label>
+                  <label className="me-2">Platform</label>
                   <select
                     value={platform_id}
                     onChange={(e) => setPlatformId(e.target.value)}
@@ -87,8 +84,8 @@ export default function AddStoreForm({ business_id, refresh }) {
             </AlertDialogContent>
           </AlertDialogOverlay>
         </AlertDialog>
-        <h3>Add New Store</h3>
-      </div>
+        Add new store
+      </button>
     </div>
   );
 }
