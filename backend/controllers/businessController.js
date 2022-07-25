@@ -222,12 +222,13 @@ const businessSummary = asyncHandler(async (req, res) => {
   const highestSales = mostSoldProduct(filteredSales);
   const highestProfitStore = filteredSales.reduce((acc, curr) => {
     if (acc[curr.store]) {
-      acc[curr.store] += curr.total_profit;
+      acc[curr.store] += parseFloat(curr.total_profit);
     } else {
-      acc[curr.store] = curr.total_profit;
+      acc[curr.store] = parseFloat(curr.total_profit);
     }
     return acc;
   }, {});
+  console.log(filteredSales);
 
   res.status(200).json({
     totalNumberOfProductsSold,
