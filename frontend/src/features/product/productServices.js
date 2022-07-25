@@ -4,7 +4,7 @@ const API_LINK =
   process.env.NODE_ENV === "production"
     ? "/api/product/"
     : "http://localhost:5000/api/product/";
-    // : "https://orbital-digital-it.herokuapp.com/api/product/";
+// : "https://orbital-digital-it.herokuapp.com/api/product/";
 
 // id is not a required field
 export const getProducts = async (dispatch, getProductPayload) => {
@@ -290,16 +290,25 @@ export const productSalesInputHandler = async (
           );
           const data = response.data;
           const status = response.status;
-  
+
           if (status !== 201) {
-            dispatch({ type: "INPUT_PRODUCT_SALES_ERROR", error: data.message });
+            dispatch({
+              type: "INPUT_PRODUCT_SALES_ERROR",
+              error: data.message,
+            });
             return;
           } else {
-            dispatch({ type: "INPUT_PRODUCT_SALES_SUCCESS", payload: responseData });
+            dispatch({
+              type: "INPUT_PRODUCT_SALES_SUCCESS",
+              payload: responseData,
+            });
             responseData[key] = data;
           }
         } catch (e) {
-          dispatch({ type: "INPUT_PRODUCT_SALES_ERROR", error: e.response.data.message });
+          dispatch({
+            type: "INPUT_PRODUCT_SALES_ERROR",
+            error: e.response.data.message,
+          });
           console.log(e.response.data.message);
         }
       });
@@ -311,5 +320,32 @@ export const productSalesInputHandler = async (
       error: e.response.data.message,
     });
     console.log(e.response.data.message);
+  }
+};
+
+export const compareGlobalSales = async (compareGlobalSalesPayload) => {
+  const token = JSON.parse(localStorage.getItem("user")).token;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      product_local_id: compareGlobalSalesPayload.product_local_id,
+      date_range: compareGlobalSalesPayload.date_range,
+    },
+  };
+
+  try {
+    const response = await axios(API_LINK + "sales/compareglobal", config);
+    const data = await response.data;
+    const status = await response.status;
+
+    if (status === 200) {
+      return data;
+    } else {
+      return data;
+    }
+  } catch (e) {
+    console.log(e.response.data.message);
+    return e.response.data;
   }
 };
