@@ -451,6 +451,11 @@ const productRelativePerformance = asyncHandler(async (req, res) => {
     [product_local_id, date_range]
   );
 
+  if (thisProductSalesQuery.rows.length === 0) {
+    res.status(406).json({message: "Not sufficient sales data to perform this function."});
+    return;
+  }
+
   // Select the latest input_date of thisProductSalesQuery
   const thisProductSales = thisProductSalesQuery.rows.reduce((prev, curr) => {
     return new Date(prev.input_date) > new Date(curr.input_date)

@@ -168,11 +168,11 @@ const businessSummary = asyncHandler(async (req, res) => {
   );
 
   const filteredSales = sales.rows.filter((sale) => {
-    return new Date(sale.input_date) < dateMinusDateRange;
+    return new Date(sale.input_date) > dateMinusDateRange;
   });
 
   if (filteredSales.length === 0) {
-    return res.status(404).json("No sales found.");
+    return res.status(406).json("No sales found.");
   }
 
   const totalNumberOfProductsSold = filteredSales.reduce(
