@@ -3,8 +3,8 @@ import axios from "axios";
 const API_LINK =
   process.env.NODE_ENV === "production"
     ? "/api/product/"
-    : "http://localhost:5000/api/product/";
-    // : "https://orbital-digital-it.herokuapp.com/api/product/";
+    : //: "http://localhost:5000/api/product/";
+      "https://orbital-digital-it.herokuapp.com/api/product/";
 
 // id is not a required field
 export const getProducts = async (dispatch, getProductPayload) => {
@@ -290,16 +290,25 @@ export const productSalesInputHandler = async (
           );
           const data = response.data;
           const status = response.status;
-  
+
           if (status !== 201) {
-            dispatch({ type: "INPUT_PRODUCT_SALES_ERROR", error: data.message });
+            dispatch({
+              type: "INPUT_PRODUCT_SALES_ERROR",
+              error: data.message,
+            });
             return;
           } else {
-            dispatch({ type: "INPUT_PRODUCT_SALES_SUCCESS", payload: responseData });
+            dispatch({
+              type: "INPUT_PRODUCT_SALES_SUCCESS",
+              payload: responseData,
+            });
             responseData[key] = data;
           }
         } catch (e) {
-          dispatch({ type: "INPUT_PRODUCT_SALES_ERROR", error: e.response.data.message });
+          dispatch({
+            type: "INPUT_PRODUCT_SALES_ERROR",
+            error: e.response.data.message,
+          });
           console.log(e.response.data.message);
         }
       });
