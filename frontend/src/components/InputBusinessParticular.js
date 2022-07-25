@@ -5,19 +5,19 @@ import { addBusiness } from "../features/business/businessServices";
 import { useNavigate } from "react-router-dom";
 
 const listOfCategories = [
-  {category: "Food and Groceries"},
-  {category: "Fashion and Clothings"},
-  {category: "Electronics"},
-  {category: "Health and Beauty"},
-  {category: "Home and Garden"},
-  {category: "Automotive"},
-  {category: "Travel and Leisure"},
-  {category: "Pet Supplies"},
-  {category: "Sports and Outdoors"},
-  {category: "Toys and Games"},
-  {category: "Baby and Children"},
-  {category: "Art and Collectibles"},
-]
+  { category: "Food and Groceries" },
+  { category: "Fashion and Clothings" },
+  { category: "Electronics" },
+  { category: "Health and Beauty" },
+  { category: "Home and Garden" },
+  { category: "Automotive" },
+  { category: "Travel and Leisure" },
+  { category: "Pet Supplies" },
+  { category: "Sports and Outdoors" },
+  { category: "Toys and Games" },
+  { category: "Baby and Children" },
+  { category: "Art and Collectibles" },
+];
 
 export default function InputBusinessParticular() {
   const [formData, setFormData] = useState({
@@ -39,12 +39,8 @@ export default function InputBusinessParticular() {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
 
-  const {
-    businessName,
-    business_category,
-    hasDigitalized,
-    platform,
-  } = formData;
+  const { businessName, business_category, hasDigitalized, platform } =
+    formData;
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -65,7 +61,7 @@ export default function InputBusinessParticular() {
     try {
       const response = await addBusiness(dispatch, businessData);
       if (!response || !response.business_id) return;
-      
+
       setStatus((prev) => "Successfully added business!");
     } catch (error) {
       console.log(error);

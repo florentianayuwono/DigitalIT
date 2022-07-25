@@ -294,6 +294,11 @@ const bestPlatformForBusinessCategory = asyncHandler(async (req, res) => {
     WHERE b.business_category = $1`,
     [category]
   );
+
+  if (sales.rows.length === 0) {
+    return res.status(404).json("Not enough data to determine.");
+  }
+
   const best = bestPlatform(sales.rows);
 
   // If there's a business specified, get all the unique platform names of the stores in the busines

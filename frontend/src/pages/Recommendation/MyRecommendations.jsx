@@ -17,22 +17,15 @@ import SuitablePlatform from "../../components/BusinessRecommendations/SuitableP
 import { useBusinessContext } from "../../features/business/businessContext";
 import { getBusinesses } from "../../features/business/businessServices";
 
-// This function checks if all the businesses are not digitalized
-// If they are not, it returns true, otherwise it returns false
-const checkIfAllBusinessesAreNotDigitalized = (businesses) => {
-  for (let i = 0; i < businesses.length; i++) {
-    if (businesses[i].has_digitalized) {
-      return false;
-    }
-  }
-  return true;
-};
-
 export default function MyRecommendations() {
   const { businesses, dispatch: businessDispatch } = useBusinessContext();
   const [selectedBusiness, setSelectedBusiness] = useState();
   const [submit, setSubmit] = useState(false);
   const { isLoading, error } = businesses;
+
+  const selectedBusinessObject = businesses.businesses.find(
+    (business) => business.business_id === parseInt(selectedBusiness)
+  );
 
   // Fetch the businesses
   useEffect(() => {
@@ -84,10 +77,7 @@ export default function MyRecommendations() {
           ) : submit ? (
             <>
               {/* Find the business selected, and then check if the business has been digitalized */}
-              {!businesses.businesses.find(
-                (business) =>
-                  business.business_id === parseInt(selectedBusiness)
-              )?.has_digitalized ? (
+              {!selectedBusinessObject?.has_digitalized ? (
                 <AccordionItem>
                   <h2>
                     <AccordionButton
@@ -119,7 +109,7 @@ export default function MyRecommendations() {
                       </AccordionButton>
                     </h2>
                     <AccordionPanel pb={4}>
-                      <SuitablePlatform /> 
+                      <SuitablePlatform business={selectedBusinessObject} />
                     </AccordionPanel>
                   </AccordionItem>
 

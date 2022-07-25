@@ -4,7 +4,7 @@ const API_LINK =
   process.env.NODE_ENV === "production"
     ? "/api/business/"
     : "http://localhost:5000/api/business/";
-    // : "https://orbital-digital-it.herokuapp.com/api/business/";
+// : "https://orbital-digital-it.herokuapp.com/api/business/";
 
 export const getIndividualBusiness = async (id) => {
   const token = JSON.parse(localStorage.getItem("user")).token;
@@ -180,6 +180,39 @@ export const getBusinessSummary = async (dispatch, payload) => {
       type: "GET_BUSINESS_SUMMARY_ERROR",
       error: e.response.data.message,
     });
+    console.log(e.response.data.message);
+  }
+};
+
+/**
+ *
+ * @param {import("react").DispatchWithoutAction} dispatch
+ * @param {Object} payload
+ * @param {string} payload.business_id - id of the business
+ * @param {string} payload.category - category of the business
+ */
+export const getBestBusinessPlatform = async (payload) => {
+  const token = JSON.parse(localStorage.getItem("user")).token;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      business_id: payload.business_id,
+      category: payload.business_category,
+    },
+  };
+
+  try {
+    const response = await axios.get(API_LINK + "bestplatform/", config);
+    const data = await response.data;
+    const status = await response.status;
+
+    if (status === 200) {
+      return data;
+    } else {
+      return;
+    }
+  } catch (e) {
     console.log(e.response.data.message);
   }
 };

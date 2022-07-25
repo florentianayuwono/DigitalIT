@@ -13,17 +13,20 @@ import {
 } from "@chakra-ui/react";
 
 const productCategories = [
-  "food",
-  "clothing",
-  "toys",
-  "accessories",
-  "electronics",
-  "hardware",
-  "automotive",
-  "home appliances",
-  "health and beauty",
-  "sports and outdoors",
-  "other",
+  "Food and Groceries",
+  "Fashion and Clothings",
+  "Electronics",
+  "Hardware",
+  "Health and Beauty",
+  "Home and Garden",
+  "Automotive",
+  "Travel and Leisure",
+  "Pet Supplies",
+  "Sports and Outdoors",
+  "Toys and Games",
+  "Baby and Children",
+  "Art and Collectibles",
+  "Other",
 ];
 
 export default function AddProduct() {
