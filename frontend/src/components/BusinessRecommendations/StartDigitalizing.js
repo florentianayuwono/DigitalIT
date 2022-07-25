@@ -1,22 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { CircularProgress, Stack, Text } from "@chakra-ui/react";
+import { CircularProgress, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { getBestBusinessPlatform } from "../../features/business/businessServices";
 
-const listOfCategories = [
-  { category: "Food and Groceries" },
-  { category: "Fashion and Clothings" },
-  { category: "Electronics" },
-  { category: "Health and Beauty" },
-  { category: "Home and Garden" },
-  { category: "Automotive" },
-  { category: "Travel and Leisure" },
-  { category: "Pet Supplies" },
-  { category: "Sports and Outdoors" },
-  { category: "Toys and Games" },
-  { category: "Baby and Children" },
-  { category: "Art and Collectibles" },
-];
 
 export default function StartDigitalizing({ business }) {
   // const [categories, setCategories] = useState(listOfCategories);
@@ -51,17 +37,15 @@ export default function StartDigitalizing({ business }) {
   }, [platforms]);
 
   return (
-    <Stack>
+    <>
       {isLoading ? (
         <CircularProgress isIndeterminate />
       ) : (
         <>
           Start digitalizing your business by opening a seller account! Based on
-          our analysis, your business will thrive on the platform {
-            <Text as="mark">{platforms.bestPlatform}</Text>
-          }.
+          our analysis, your business will thrive on the platform {<Text as="mark">{platforms.bestPlatform}</Text>}.
         </>
       )}
-    </Stack>
+    </>
   );
 }
