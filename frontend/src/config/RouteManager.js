@@ -29,6 +29,7 @@ import MyFinance from "../pages/Finance/MyFinance";
 import FinanceRecommendations from "../pages/Finance/FinanceRecommendations";
 import BusinessSummary from "../components/BusinessSummary";
 import BusinessSummaryPage from "../pages/Recommendation/BusinessSummaryPage";
+import ProductRecommendationsPage from "../pages/Recommendation/ProductRecommendationsPage";
 
 export default function RouteManager() {
   return (
@@ -56,6 +57,7 @@ export default function RouteManager() {
                     <Route path="summary" element={<BusinessSummaryPage />} >
                      <Route element={<BusinessSummary />} />
                     </Route>
+                    <Route path="product-recommendations" element={<ProductRecommendationsPage />} />
                   </Route>
                   <Route path="finance" element={<MainFinancePage />}>
                     <Route path="my-finance" element={<MyFinance />} />

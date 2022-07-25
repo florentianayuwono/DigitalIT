@@ -5,6 +5,7 @@ import { useBusinessContext } from "../../features/business/businessContext";
 import { BusinessItem } from "../../components/BusinessItem";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
+import { Stack } from "@chakra-ui/react";
 
 export default function DisplayBusinessParticular() {
   const { businesses, dispatch } = useBusinessContext();
@@ -51,10 +52,15 @@ export default function DisplayBusinessParticular() {
               }}
             >
               <section className="heading">
-                <h1>
-                  <FaBuilding /> Your{" "}
-                  {businessesState.length > 1 ? "Businesses" : "Business"}
-                </h1>
+                <Stack direction="row" align="center">
+                  <h1>
+                    <FaBuilding />
+                  </h1>
+                  <h1>
+                    Your{" "}
+                    {businessesState.length > 1 ? "Businesses" : "Business"}
+                  </h1>
+                </Stack>
               </section>
             </div>
             <div className="row">

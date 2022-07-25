@@ -3,6 +3,7 @@ import { registerUser } from "../features/auth/authServices";
 import { FaUser } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Stack } from "@chakra-ui/react";
 
 export default function Register() {
   // Set initial state to empty string
@@ -68,11 +69,16 @@ export default function Register() {
     <>
       {/* Registration page display */}
       <section className="heading landing">
-        <h1>
-          <FaUser /> Register
-        </h1>
+        <Stack align="center">
+          <Stack direction="row" align="center">
+            <h1>
+              <FaUser />
+            </h1>
+            <h1>Register</h1>
+          </Stack>
 
-        {message === "" ? <p>Create an account</p> : message}
+          {message === "" ? <p>Create an account</p> : message}
+        </Stack>
       </section>
 
       <section className="form">

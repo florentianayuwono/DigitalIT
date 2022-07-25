@@ -13,6 +13,8 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useEffect } from "react";
+import ExploitPopularity from "../../components/BusinessRecommendations/ExploitPopularity";
+import StartDigitalizing from "../../components/BusinessRecommendations/StartDigitalizing";
 import SuitablePlatform from "../../components/BusinessRecommendations/SuitablePlatform";
 import { useBusinessContext } from "../../features/business/businessContext";
 import { getBusinesses } from "../../features/business/businessServices";
@@ -21,7 +23,7 @@ export default function MyRecommendations() {
   const { businesses, dispatch: businessDispatch } = useBusinessContext();
   const [selectedBusiness, setSelectedBusiness] = useState();
   const [submit, setSubmit] = useState(false);
-  const { isLoading, error } = businesses;
+  const { isLoading } = businesses;
 
   const selectedBusinessObject = businesses.businesses.find(
     (business) => business.business_id === parseInt(selectedBusiness)
@@ -29,7 +31,10 @@ export default function MyRecommendations() {
 
   // Fetch the businesses
   useEffect(() => {
-    getBusinesses(businessDispatch);
+    const fetchBusinesses = async () => {
+      await getBusinesses(businessDispatch);
+    };
+    fetchBusinesses();
   }, []);
 
   useEffect(() => {
@@ -41,6 +46,7 @@ export default function MyRecommendations() {
       <FormControl isRequired>
         <FormLabel htmlFor="inputBusiness">Business</FormLabel>
         <Select onChange={(e) => setSelectedBusiness(e.target.value)}>
+          <option value="">Select a Business</option>
           {businesses.businesses.map((business) => (
             <option key={business.business_id} value={business.business_id}>
               {business.business_name}
@@ -90,9 +96,11 @@ export default function MyRecommendations() {
                     </AccordionButton>
                   </h2>
                   <AccordionPanel pb={4}>
-                    Start digitalizing your business by opening a seller
-                    account! Based on our analysis, your business will thrive on
-                    this platform.
+                    {selectedBusinessObject ? (
+                      <StartDigitalizing business={selectedBusinessObject} />
+                    ) : (
+                      <></>
+                    )}
                   </AccordionPanel>
                 </AccordionItem>
               ) : (
@@ -112,6 +120,8 @@ export default function MyRecommendations() {
                       <SuitablePlatform business={selectedBusinessObject} />
                     </AccordionPanel>
                   </AccordionItem>
+
+                  <ExploitPopularity business={selectedBusinessObject} />
 
                   <AccordionItem>
                     <h2>
@@ -219,24 +229,6 @@ export default function MyRecommendations() {
                       look at! Invest in better image quality. Don't worry, here
                       are some cheap but good photographers that we have found
                       for you.
-                    </AccordionPanel>
-                  </AccordionItem>
-
-                  <AccordionItem>
-                    <h2>
-                      <AccordionButton
-                        _expanded={{ bg: "purple", color: "white" }}
-                      >
-                        <container flex="1" textAlign="left">
-                          Exploit your popularity
-                        </container>
-                        <AccordionIcon />
-                      </AccordionButton>
-                    </h2>
-                    <AccordionPanel pb={4}>
-                      You are quite successful in selling this product. Might
-                      want to try selling its siblings? You can start by selling
-                      this, that and there.
                     </AccordionPanel>
                   </AccordionItem>
 

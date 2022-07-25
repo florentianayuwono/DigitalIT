@@ -21,8 +21,10 @@ export default function BusinessSummaryPage() {
   const [submit, setSubmit] = useState(false);
 
   useEffect(() => {
-    getBusinesses(dispatchBusiness);
-    console.log(businesses.businesses);
+    const fetchBusinesses = async () => {
+      await getBusinesses(dispatchBusiness);
+    };
+    fetchBusinesses();
   }, []);
 
   useEffect(() => {

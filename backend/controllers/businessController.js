@@ -228,7 +228,6 @@ const businessSummary = asyncHandler(async (req, res) => {
     }
     return acc;
   }, {});
-  console.log(filteredSales);
 
   res.status(200).json({
     totalNumberOfProductsSold,
