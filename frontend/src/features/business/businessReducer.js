@@ -64,7 +64,6 @@ export const businessReducer = (state, action) => {
         message: "loading ...",
       };
     case "GET_BUSINESSES_SUCCESS":
-      console.log(action.payload);
       newState = {
         ...state,
         isLoading: false,
