@@ -322,3 +322,30 @@ export const productSalesInputHandler = async (
     console.log(e.response.data.message);
   }
 };
+
+export const compareGlobalSales = async (compareGlobalSalesPayload) => {
+  const token = JSON.parse(localStorage.getItem("user")).token;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      product_local_id: compareGlobalSalesPayload.product_local_id,
+      date_range: compareGlobalSalesPayload.date_range,
+    },
+  };
+
+  try {
+    const response = await axios(API_LINK + "sales/compareglobal", config);
+    const data = await response.data;
+    const status = await response.status;
+
+    if (status === 200) {
+      return data;
+    } else {
+      return data;
+    }
+  } catch (e) {
+    console.log(e.response.data.message);
+    return e.response.data;
+  }
+};

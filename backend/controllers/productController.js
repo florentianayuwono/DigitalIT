@@ -393,11 +393,11 @@ const addProductSalesInput = asyncHandler(async (req, res) => {
 
 /**
  * @desc Compare the product sales input with the product_sales table.
- * @route POST /api/product/sales/compareglobal
+ * @route GET /api/product/sales/compareglobal
  * @access private
  */
 const productRelativePerformance = asyncHandler(async (req, res) => {
-  const { product_local_id, date_range } = req.body;
+  const { product_local_id, date_range } = req.headers;
 
   const product = await pool.query(
     `SELECT * FROM product_secondary WHERE product_local_id = $1`,
@@ -413,8 +413,7 @@ const productRelativePerformance = asyncHandler(async (req, res) => {
   ]);
 
   if (store?.rows[0].store_manager_id !== req.user.user_id) {
-    res.status(401);
-    throw new Error("You do not own this product.");
+    res.status(401).json("You do not own this product.");
   }
 
   // date_range: 0 = daily, 1 = weekly, 2 = monthly, 3 = yearly
@@ -447,10 +446,17 @@ const productRelativePerformance = asyncHandler(async (req, res) => {
     (productSales) => new Date(productSales.input_date) > dateMinusDateRange
   );
 
-  const thisProductSales = await pool.query(
+  const thisProductSalesQuery = await pool.query(
     `SELECT * FROM product_sales WHERE product_local_id = $1 AND date_range = $2`,
     [product_local_id, date_range]
   );
+
+  // Select the latest input_date of thisProductSalesQuery
+  const thisProductSales = thisProductSalesQuery.rows.reduce((prev, curr) => {
+    return new Date(prev.input_date) > new Date(curr.input_date)
+      ? prev
+      : curr;
+  });
 
   const quantitySoldArray = filteredProductSales.map((productSales) => {
     return productSales.quantity;
@@ -458,13 +464,13 @@ const productRelativePerformance = asyncHandler(async (req, res) => {
 
   // If there is only one or less data, response 401 with error message
   if (quantitySoldArray.length <= 1) {
-    res.status(401).json({filteredProductSales});
-    throw new Error("There is not enough data to calculate the performance.");
+    res.status(406).json({message: "There is not enough data to calculate the performance."});
+    return;
   }
 
   const relativeScore = productRelativeSalesScore(
     quantitySoldArray,
-    thisProductSales.rows[0].quantity
+    thisProductSales.quantity
   );
   const { zScore, quantileRank } = relativeScore;
   const message = productRelativePerformanceMessage(
