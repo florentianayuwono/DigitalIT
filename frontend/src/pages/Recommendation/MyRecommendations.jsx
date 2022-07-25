@@ -31,7 +31,10 @@ export default function MyRecommendations() {
 
   // Fetch the businesses
   useEffect(() => {
-    getBusinesses(businessDispatch);
+    const fetchBusinesses = async () => {
+      await getBusinesses(businessDispatch);
+    };
+    fetchBusinesses();
   }, []);
 
   useEffect(() => {
@@ -43,6 +46,7 @@ export default function MyRecommendations() {
       <FormControl isRequired>
         <FormLabel htmlFor="inputBusiness">Business</FormLabel>
         <Select onChange={(e) => setSelectedBusiness(e.target.value)}>
+          <option value="">Select a Business</option>
           {businesses.businesses.map((business) => (
             <option key={business.business_id} value={business.business_id}>
               {business.business_name}
@@ -92,7 +96,11 @@ export default function MyRecommendations() {
                     </AccordionButton>
                   </h2>
                   <AccordionPanel pb={4}>
-                    <StartDigitalizing business={selectedBusinessObject} />
+                    {selectedBusinessObject ? (
+                      <StartDigitalizing business={selectedBusinessObject} />
+                    ) : (
+                      <></>
+                    )}
                   </AccordionPanel>
                 </AccordionItem>
               ) : (
