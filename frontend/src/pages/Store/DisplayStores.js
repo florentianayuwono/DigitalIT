@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button, Stack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AddStoreForm from "../../components/AddStoreForm";
@@ -21,38 +21,43 @@ export default function DisplayStores() {
 
     return () => {
       setStores([]);
-    }
+    };
   }, [refresh, business_id]);
 
   return (
     <div className="row align-items-md-stretch">
       <h1>Stores</h1>
-      <ul>
-        {stores.map((store) => {
-          return (
-            <div className="col-md-6" key={store.store_id}>
-              <div
-                className="h-100 p-5 bg-light border rounded-3"
-                key={store.store_id}
-              >
+      {stores.map((store) => {
+        return (
+          <div className="col-md-6" key={store.store_id}>
+            <div
+              className="h-100 p-5 bg-light border rounded-3"
+              key={store.store_id}
+            >
+              <Stack>
                 <h3>{store.store_name}</h3>
-                <PopupMessageButton
-                  action={() => {
-                    deleteStore({ store_id: store.store_id });
-                    setRefresh((prev) => !prev);
-                  }}
-                  message="Are you sure to delete this store? This action cannot be undone."
-                  title="Delete"
-                  executeTitle="Delete"
-                />
-                <Button colorScheme={"purple"} onClick={() => nav(`${store.store_id}`)}>
-                  View details
-                </Button>
-              </div>
+                <Stack direction="row" spacing={2}>
+                  <PopupMessageButton
+                    action={() => {
+                      deleteStore({ store_id: store.store_id });
+                      setRefresh((prev) => !prev);
+                    }}
+                    message="Are you sure to delete this store? This action cannot be undone."
+                    title="Delete"
+                    executeTitle="Delete"
+                  />
+                  <Button
+                    colorScheme={"purple"}
+                    onClick={() => nav(`${store.store_id}`)}
+                  >
+                    View details
+                  </Button>
+                </Stack>
+              </Stack>
             </div>
-          );
-        })}
-      </ul>
+          </div>
+        );
+      })}
       <AddStoreForm business_id={business_id} refresh={setRefresh} />
     </div>
   );
