@@ -23,10 +23,10 @@ export default function MainRecommendationPage() {
     <>
       <Tabs align="center" isManual onChange={(index) => setTabIndex(index)}>
         <TabList>
-          <Tab >Recommendation</Tab>
-          <Tab >Input Data</Tab>
-          <Tab >Summary</Tab>
-          <Tab >Product Recommendation</Tab>
+          <Tab>Recommendation</Tab>
+          <Tab>Input Data</Tab>
+          <Tab>Summary</Tab>
+          <Tab>Product Recommendation</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>

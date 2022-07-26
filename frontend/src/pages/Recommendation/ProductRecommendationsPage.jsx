@@ -104,7 +104,11 @@ export default function ProductRecommendationsPage() {
       setProductMessage("Uh oh! " + compare.message);
     } else {
       setProductMessage(
-        `${compare.message}: The quantity sold of this product in this store is ${parseFloat(compare.quantileRank)*100}% more than the global sales of the same product.`
+        `${
+          compare.message
+        }: The quantity sold of this product in this store is ${
+          parseFloat(compare.quantileRank) * 100
+        }% more than the global sales of the same product.`
       );
     }
   };

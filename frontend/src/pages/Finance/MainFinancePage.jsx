@@ -9,7 +9,7 @@ export default function MainFinancePage() {
 
   useEffect(() => {
     if (tabIndex === 0) {
-      navigate("my-finance"); 
+      navigate("my-finance");
     } else if (tabIndex === 1) {
       navigate("input");
     } else if (tabIndex === 2) {
@@ -21,9 +21,6 @@ export default function MainFinancePage() {
 
   return (
     <>
-      <div>
-        <h1>Finance Page</h1>
-      </div>
       <Tabs align="center" onChange={(index) => setTabIndex(index)}>
         <TabList>
           <Tab tabIndex="tracking">Finance Tracking</Tab>

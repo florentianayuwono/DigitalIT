@@ -46,7 +46,7 @@ export default function Products() {
             const product = products.products[key];
 
             return (
-              <div className="col-md-6" key={key}>
+              <div className="col-md-6 mb-4" key={key}>
                 <div className="h-100 p-3 bg-light border rounded-3" key={key}>
                   <h3>{product.product_name}</h3>
                   <p> Description: {product.product_description}</p>

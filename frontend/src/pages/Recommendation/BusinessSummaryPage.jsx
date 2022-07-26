@@ -57,7 +57,7 @@ export default function BusinessSummaryPage() {
         </RadioGroup>
       </FormControl>
       <FormControl isRequired>
-        <FormLabel htmlFor="inputBusiness">Business</FormLabel>
+        <FormLabel htmlFor="inputBusiness" className="mt-3">Business</FormLabel>
         <Select onChange={handleChange}>
           {businesses.businesses.map((business) => (
             <option key={business.business_id} value={business.business_id}>
@@ -72,6 +72,7 @@ export default function BusinessSummaryPage() {
         onClick={() => setSubmit(true)}
         loadingText="Generating report"
         isLoading={businesses.isLoading}
+        className="mt-4 mb-4"
       >
         Generate Report
       </Button>

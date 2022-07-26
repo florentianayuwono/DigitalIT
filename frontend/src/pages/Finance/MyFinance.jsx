@@ -1,7 +1,7 @@
 export default function MyFinance() {
   return (
     <div>
-      <h1>My Finance</h1>
+      <h5>Tracking in progress! Make sure to fill in your data.</h5>
     </div>
   );
 }
