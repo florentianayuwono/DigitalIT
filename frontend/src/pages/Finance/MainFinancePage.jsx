@@ -21,9 +21,6 @@ export default function MainFinancePage() {
 
   return (
     <>
-      <div>
-        <h1>Finance Page</h1>
-      </div>
       <Tabs align="center" onChange={(index) => setTabIndex(index)}>
         <TabList>
           <Tab tabIndex="tracking">Finance Tracking</Tab>
