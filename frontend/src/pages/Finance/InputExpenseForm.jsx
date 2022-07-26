@@ -19,7 +19,9 @@ export default function InputExpenseForm({ period }) {
   return (
     <form>
       <FormControl>
-        <FormLabel htmlFor="period">Period</FormLabel>
+        <FormLabel htmlFor="period" className="mt-3">
+          Period
+        </FormLabel>
         <Select>
           <option value="Daily Report">Daily Report</option>
           <option value="Weekly Report">Weekly Report</option>
@@ -28,7 +30,9 @@ export default function InputExpenseForm({ period }) {
         </Select>
       </FormControl>
       <FormControl>
-        <FormLabel htmlFor="expenseType">Expense Type</FormLabel>
+        <FormLabel htmlFor="expenseType" className="mt-3">
+          Expense Type
+        </FormLabel>
         <Select>
           {expenseTypes?.map((expenseType) => (
             <option value={expenseType.expense_type}>
@@ -38,10 +42,14 @@ export default function InputExpenseForm({ period }) {
         </Select>
       </FormControl>
       <FormControl>
-        <FormLabel htmlFor="expenseValue">Expense Value</FormLabel>
+        <FormLabel htmlFor="expenseValue" className="mt-3">
+          Expense Value
+        </FormLabel>
         <Input type="number" placeholder="Expense Value" />
       </FormControl>
-      <Button type="submit">Submit</Button>
+      <Button type="submit" className="mt-3">
+        Submit
+      </Button>
     </form>
   );
 }
