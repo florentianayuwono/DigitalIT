@@ -1,27 +1,13 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import BusinessSummaryPage from "./BusinessSummaryPage";
+import MyRecommendations from "./MyRecommendations";
+import ProductRecommendationsPage from "./ProductRecommendationsPage";
+import InputProductSales from "./InputProductSales";
 
 export default function MainRecommendationPage() {
-  const navigate = useNavigate();
-  const [tabIndex, setTabIndex] = useState(0);
-
-  useEffect(() => {
-    if (tabIndex === 0) {
-      navigate("my-recommendations");
-    } else if (tabIndex === 1) {
-      navigate("sales");
-    } else if (tabIndex === 2) {
-      navigate("summary");
-    } else if (tabIndex === 3) {
-      navigate("product-recommendations");
-    }
-  }, [tabIndex, navigate]);
-
   return (
     <>
-      <Tabs align="center" isManual onChange={(index) => setTabIndex(index)}>
+      <Tabs align="center" isLazy>
         <TabList>
           <Tab>Recommendation</Tab>
           <Tab>Input Data</Tab>
@@ -30,16 +16,16 @@ export default function MainRecommendationPage() {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Outlet />
+            <MyRecommendations />
           </TabPanel>
           <TabPanel>
-            <Outlet />
+            <InputProductSales />
           </TabPanel>
           <TabPanel>
-            <Outlet />
+            <BusinessSummaryPage />
           </TabPanel>
           <TabPanel>
-            <Outlet />
+            <ProductRecommendationsPage />
           </TabPanel>
         </TabPanels>
       </Tabs>
