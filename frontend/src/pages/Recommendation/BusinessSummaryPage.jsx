@@ -16,9 +16,10 @@ import { getBusinesses } from "../../features/business/businessServices";
 
 export default function BusinessSummaryPage() {
   const [date_range, setDateRange] = useState(0);
-  const [selectedBusiness, setSelectedBusiness] = useState();
+  const [selectedBusiness, setSelectedBusiness] = useState("");
   const { businesses, dispatch: dispatchBusiness } = useBusinessContext();
   const [submit, setSubmit] = useState(false);
+  console.log(selectedBusiness);
 
   useEffect(() => {
     const fetchBusinesses = async () => {
@@ -58,7 +59,8 @@ export default function BusinessSummaryPage() {
       </FormControl>
       <FormControl isRequired>
         <FormLabel htmlFor="inputBusiness" className="mt-3">Business</FormLabel>
-        <Select onChange={handleChange}>
+        <Select onChange={handleChange} defaultValue="">
+          <option value="">Select Business</option>
           {businesses.businesses.map((business) => (
             <option key={business.business_id} value={business.business_id}>
               {business.business_name}
@@ -69,7 +71,7 @@ export default function BusinessSummaryPage() {
       <Button
         type="generate"
         colorScheme="teal"
-        onClick={() => setSubmit(true)}
+        onClick={() => setSubmit(selectedBusiness !== "")}
         loadingText="Generating report"
         isLoading={businesses.isLoading}
         className="mt-4 mb-4"
