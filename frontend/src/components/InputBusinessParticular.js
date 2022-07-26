@@ -40,7 +40,7 @@ export default function InputBusinessParticular() {
 
   // Message to be shown (if there's error or something)
   const [status, setStatus] = useState("");
-  const { message, isSuccess } = businesses;
+  const { message, isSuccess, isError } = businesses;
 
   const { businessName, business_category, hasDigitalized, platform } =
     formData;
@@ -63,6 +63,15 @@ export default function InputBusinessParticular() {
 
     try {
       const response = await addBusiness(dispatch, businessData);
+      if(isError) {
+        toast({
+          title: "Error",
+          description: message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
       if (!response || !response.business_id) return;
 
       setNewBusiness(response.business_id);
