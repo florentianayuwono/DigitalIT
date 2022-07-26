@@ -84,10 +84,10 @@ export default function FinanceRecommendations() {
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
-            Awesome alternatives to traditional banking are here to serve you. Try out Bank Jago right now! 
+            Awesome alternatives to traditional banking are here to serve you.
+            Try out Bank Jago right now!
           </AccordionPanel>
         </AccordionItem>
-
       </Accordion>
     </div>
   );

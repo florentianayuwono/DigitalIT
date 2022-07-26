@@ -181,7 +181,7 @@ export default function InputProductSales() {
   };
 
   useEffect(() => {
-    if(products.isSuccess) {
+    if (products.isSuccess) {
       toast({
         title: "Success",
         description: "Product sales were successfully inputted",
@@ -189,7 +189,7 @@ export default function InputProductSales() {
         duration: 9000,
         isClosable: true,
       });
-    } else if(products.isError) {
+    } else if (products.isError) {
       toast({
         title: "Error",
         description: products.message,
@@ -204,7 +204,13 @@ export default function InputProductSales() {
     } else {
       setIsLoading(false);
     }
-  }, [products.isError, products.isLoading, products.isSuccess, products.message, toast]);
+  }, [
+    products.isError,
+    products.isLoading,
+    products.isSuccess,
+    products.message,
+    toast,
+  ]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -223,7 +229,9 @@ export default function InputProductSales() {
         </Select>
       </FormControl>
       <FormControl isRequired>
-        <FormLabel htmlFor="business" className="mt-3">Choose Business</FormLabel>
+        <FormLabel htmlFor="business" className="mt-3">
+          Choose Business
+        </FormLabel>
         <Select
           id="business"
           value={inputHandlerState.business}
@@ -238,7 +246,9 @@ export default function InputProductSales() {
         </Select>
       </FormControl>
       <FormControl isRequired isDisabled={inputHandlerState.business === ""}>
-        <FormLabel htmlFor="store" className="mt-3">Choose Store</FormLabel>
+        <FormLabel htmlFor="store" className="mt-3">
+          Choose Store
+        </FormLabel>
         <Select
           id="store"
           value={store}
@@ -252,7 +262,9 @@ export default function InputProductSales() {
           ))}
         </Select>
       </FormControl>
-      <FormLabel htmlFor="products" className="mt-3">Products</FormLabel>
+      <FormLabel htmlFor="products" className="mt-3">
+        Products
+      </FormLabel>
       {Object.keys(products.products).map((productId) => {
         storedInputData.current[productId] = {
           product_sales: 0,
@@ -268,19 +280,21 @@ export default function InputProductSales() {
           />
         );
       })}
-      <Stack direction="row" align="center" >
-      <Button type="submit" colorScheme="teal" className="mt-4">
-        Submit Form
-      </Button>
-      {isLoading ? (
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="blue.500"
-          size="xl"
-        />
-      ) : (<></>)}
+      <Stack direction="row" align="center">
+        <Button type="submit" colorScheme="teal" className="mt-4">
+          Submit Form
+        </Button>
+        {isLoading ? (
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        ) : (
+          <></>
+        )}
       </Stack>
     </form>
   );
