@@ -34,7 +34,7 @@ export default function FinanceRecommendations() {
           <h2>
             <AccordionButton _expanded={{ bg: "purple", color: "white" }}>
               <container flex="1" textAlign="left">
-                Paradox of thrift in action
+                Paradox of thrift
               </container>
               <AccordionIcon />
             </AccordionButton>
@@ -49,16 +49,45 @@ export default function FinanceRecommendations() {
           <h2>
             <AccordionButton _expanded={{ bg: "purple", color: "white" }}>
               <container flex="1" textAlign="left">
-                Digitalize your bookkeeping
+                Bookkeeping made easier
               </container>
               <AccordionIcon />
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
             Tired of filling sales data manually on pen and paper? Why not try
-            these awesome bookkeeping platforms.
+            BukuKas?
           </AccordionPanel>
         </AccordionItem>
+
+        <AccordionItem>
+          <h2>
+            <AccordionButton _expanded={{ bg: "purple", color: "white" }}>
+              <container flex="1" textAlign="left">
+                Eliminate transaction cost
+              </container>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+            Say no to interbank transfer cost by using Flip.
+          </AccordionPanel>
+        </AccordionItem>
+
+        <AccordionItem>
+          <h2>
+            <AccordionButton _expanded={{ bg: "purple", color: "white" }}>
+              <container flex="1" textAlign="left">
+                Digital banking
+              </container>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+            Awesome alternatives to traditional banking are here to serve you. Try out Bank Jago right now! 
+          </AccordionPanel>
+        </AccordionItem>
+
       </Accordion>
     </div>
   );
