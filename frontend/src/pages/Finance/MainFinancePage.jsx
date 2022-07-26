@@ -1,6 +1,7 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import InputProductSales from "../Recommendation/InputProductSales";
 import FinanceRecommendations from "./FinanceRecommendations";
+import FinanceTrackingInput from "./FinanceTrackingInput";
 import InputExpenseForm from "./InputExpenseForm";
 import MyFinance from "./MyFinance";
 
@@ -19,7 +20,7 @@ export default function MainFinancePage() {
             <MyFinance />
           </TabPanel>
           <TabPanel>
-            <InputExpenseForm />
+            <FinanceTrackingInput />
           </TabPanel>
           <TabPanel>
             <InputProductSales />
