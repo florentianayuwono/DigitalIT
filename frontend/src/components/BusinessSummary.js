@@ -53,7 +53,7 @@ export default function BusinessSummary({ business_id, date_range }) {
       <AccordionItem>
         <h2>
           <AccordionButton _expanded={{ bg: "purple", color: "white" }}>
-            <container flex="1" textAlign="left">
+            <container flex="1" className="align-left">
               Main Summary
             </container>
             <AccordionIcon />
@@ -64,14 +64,24 @@ export default function BusinessSummary({ business_id, date_range }) {
             <>No data</>
           ) : (
             <>
-              <h3>
-                Total number of products sold :{" "}
-                {businesses.businessSummary?.totalNumberOfProductsSold}
-              </h3>
-              <h3>
-                Total revenue : {businesses.businessSummary?.totalRevenue}
-              </h3>
-              <h3>Total profit: {businesses.businessSummary?.totalProfit} </h3>
+            <TableContainer className="mb-3">
+              <Table variant="simple">
+                <Tbody>
+                  <Tr>
+                    <Td><h5>Products sold</h5></Td>
+                    <Td>{businesses.businessSummary?.totalNumberOfProductsSold}</Td>
+                  </Tr>
+                  <Tr>
+                  <Td><h5>Revenue</h5></Td>
+                    <Td>{businesses.businessSummary?.totalRevenue}</Td>
+                  </Tr>
+                  <Tr>
+                  <Td><h4>Profit</h4></Td>
+                    <Td><h4>{businesses.businessSummary?.totalProfit}</h4></Td>
+                  </Tr>
+                </Tbody>
+              </Table>
+            </TableContainer>
             </>
           )}
         </AccordionPanel>
@@ -87,8 +97,8 @@ export default function BusinessSummary({ business_id, date_range }) {
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
-            <h3>Total number of products sold per category :</h3>
-            <TableContainer>
+            {/* <h3>Total number of products sold per category :</h3> */}
+            <TableContainer className="mb-3">
               <Table variant="simple">
                 <Thead>
                   <Tr>
@@ -114,8 +124,8 @@ export default function BusinessSummary({ business_id, date_range }) {
                 </Tbody>
               </Table>
             </TableContainer>
-            <h3>Total revenue per category :</h3>
-            <TableContainer>
+            {/* <h3>Total revenue per category :</h3> */}
+            <TableContainer className="mb-3">
               <Table variant="simple">
                 <Thead>
                   <Tr>
@@ -141,8 +151,8 @@ export default function BusinessSummary({ business_id, date_range }) {
                 </Tbody>
               </Table>
             </TableContainer>
-            <h3>Total profit per category :</h3>
-            <TableContainer>
+            {/* <h3>Total profit per category :</h3> */}
+            <TableContainer className="mb-3">
               <Table variant="simple">
                 <Thead>
                   <Tr>
@@ -184,7 +194,7 @@ export default function BusinessSummary({ business_id, date_range }) {
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
-            <h3>Product with highest profit :</h3>
+            <h3>Most profitable product</h3>
             <TableContainer>
               <Table variant="simple">
                 <Tbody>
@@ -251,7 +261,7 @@ export default function BusinessSummary({ business_id, date_range }) {
                 </Tbody>
               </Table>
             </TableContainer>
-            <h3>Product with highest sales :</h3>
+            <h3 className="mt-3">Best seller</h3>
             {/* Show product_name, store_name, and quantity_sold of the product */}
             <TableContainer>
               <Table variant="simple">
