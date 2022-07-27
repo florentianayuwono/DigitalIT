@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const pool = require("../config/db");
-const { getDate } = require("../auxiliaries/helperFunctions");
+const { getDate, dateRangeParser } = require("../auxiliaries/helperFunctions");
 const {
   mostProfitableProduct,
   mostSoldProduct,
@@ -136,21 +136,6 @@ const businessSummary = asyncHandler(async (req, res) => {
   if (business.rows[0]?.manager_id !== req.user.user_id) {
     return res.status(401).json("You do not have access to this business.");
   }
-
-  const dateRangeParser = (date_range) => {
-    switch (date_range) {
-      case 0:
-        return 86400000;
-      case 1:
-        return 604800000;
-      case 2:
-        return 2592000000;
-      case 3:
-        return 31536000000;
-      default:
-        return 86400000;
-    }
-  };
 
   const dateMinusDateRange = new Date(
     new Date(getDate()) - dateRangeParser(date_range)
