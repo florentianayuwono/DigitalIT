@@ -225,7 +225,7 @@ export default function MyRecommendations() {
                       </AccordionButton>
                     </h2>
                     <AccordionPanel pb={4}>
-                      Your product cataloge is the first thing the customers
+                      Your product catalogue is the first thing the customers
                       look at! Invest in better image quality. Don't worry, here
                       are some cheap but good photographers that we have found
                       for you.
