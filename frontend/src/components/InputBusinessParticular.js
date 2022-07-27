@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useBusinessContext } from "../features/business/businessContext";
 import { addBusiness } from "../features/business/businessServices";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
 
 const listOfCategories = [
   { category: "Food and Groceries" },
@@ -33,11 +34,13 @@ export default function InputBusinessParticular() {
   const { businesses, dispatch } = useBusinessContext();
   const [categories, setCategories] = useState(listOfCategories);
   const [isSubmitted, refresh] = useState(false);
+  const [ newBusiness, setNewBusiness ] = useState();
+  const toast = useToast();
   const nav = useNavigate();
 
   // Message to be shown (if there's error or something)
-  const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
+  const { message, isSuccess, isError } = businesses;
 
   const { businessName, business_category, hasDigitalized, platform } =
     formData;
@@ -60,28 +63,37 @@ export default function InputBusinessParticular() {
 
     try {
       const response = await addBusiness(dispatch, businessData);
+      if(isError) {
+        toast({
+          title: "Error",
+          description: message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
       if (!response || !response.business_id) return;
 
+      setNewBusiness(response.business_id);
+      if (isSuccess) {
+        toast({
+          title: "Business added successfully",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
       setStatus((prev) => "Successfully added business!");
     } catch (error) {
       console.log(error);
     }
-    refresh((prevState) => true);
   };
 
   useEffect(() => {
-    setMessage(businesses.message);
-
-    // return () => setMessage("");
-  }, [businesses.message]);
-
-  useEffect(() => {
-    if (isSubmitted) {
-      nav("/business");
-    }
-
-    return () => refresh(false);
-  }, [isSubmitted]);
+    if (newBusiness && Number.isInteger(newBusiness)) {
+      nav("/business/" + newBusiness);
+    } 
+  }, [newBusiness, nav]);
 
   return (
     <>

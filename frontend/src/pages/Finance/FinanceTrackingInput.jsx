@@ -9,16 +9,12 @@ import {
 import { useEffect } from "react";
 import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import InputExpenseForm from "./InputExpenseForm";
+import InputTrialBalanceForm from "./InputTrialBalanceForm";
 
 export default function FinanceTrackingInput() {
   const navigate = useNavigate();
   const [radioValue, setRadioValue] = useState("");
-
-  useEffect(() => {
-    if (radioValue !== "") {
-      navigate(radioValue);
-    }
-  }, [navigate, radioValue]);
 
   return (
     <>
@@ -35,7 +31,11 @@ export default function FinanceTrackingInput() {
           </Stack>
         </RadioGroup>
       </FormControl>
-      <Outlet />
+      {radioValue === "expense" ? (
+        <InputExpenseForm />
+      ) : radioValue === "trialbalance" ? (
+        <InputTrialBalanceForm />
+      ) : null}
     </>
   );
 }

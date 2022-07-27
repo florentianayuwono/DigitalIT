@@ -1,27 +1,14 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import InputProductSales from "../Recommendation/InputProductSales";
+import FinanceRecommendations from "./FinanceRecommendations";
+import FinanceTrackingInput from "./FinanceTrackingInput";
+import InputExpenseForm from "./InputExpenseForm";
+import MyFinance from "./MyFinance";
 
 export default function MainFinancePage() {
-  const [tabIndex, setTabIndex] = useState(0);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (tabIndex === 0) {
-      navigate("my-finance");
-    } else if (tabIndex === 1) {
-      navigate("input");
-    } else if (tabIndex === 2) {
-      navigate("sales");
-    } else if (tabIndex === 3) {
-      navigate("recommendation");
-    }
-  }, [tabIndex]);
-
   return (
     <>
-      <Tabs align="center" onChange={(index) => setTabIndex(index)}>
+      <Tabs align="center" isLazy>
         <TabList>
           <Tab tabIndex="tracking">Finance Tracking</Tab>
           <Tab tabIndex="input">Input Finance Data</Tab>
@@ -30,16 +17,16 @@ export default function MainFinancePage() {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Outlet />
+            <MyFinance />
           </TabPanel>
           <TabPanel>
-            <Outlet />
+            <FinanceTrackingInput />
           </TabPanel>
           <TabPanel>
-            <Outlet />
+            <InputProductSales />
           </TabPanel>
           <TabPanel>
-            <Outlet />
+            <FinanceRecommendations />
           </TabPanel>
         </TabPanels>
       </Tabs>

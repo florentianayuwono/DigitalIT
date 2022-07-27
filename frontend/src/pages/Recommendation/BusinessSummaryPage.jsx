@@ -19,7 +19,6 @@ export default function BusinessSummaryPage() {
   const [selectedBusiness, setSelectedBusiness] = useState("");
   const { businesses, dispatch: dispatchBusiness } = useBusinessContext();
   const [submit, setSubmit] = useState(false);
-  console.log(selectedBusiness);
 
   useEffect(() => {
     const fetchBusinesses = async () => {

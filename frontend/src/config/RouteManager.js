@@ -48,32 +48,8 @@ export default function RouteManager() {
                   <Route
                     path="recommendation"
                     element={<MainRecommendationPage />}
-                  >
-                    <Route path="sales" element={<InputProductSales />} />
-                    <Route
-                      path="my-recommendations"
-                      element={<MyRecommendations />}
-                    />
-                    <Route path="summary" element={<BusinessSummaryPage />} >
-                     <Route element={<BusinessSummary />} />
-                    </Route>
-                    <Route path="product-recommendations" element={<ProductRecommendationsPage />} />
-                  </Route>
-                  <Route path="finance" element={<MainFinancePage />}>
-                    <Route path="my-finance" element={<MyFinance />} />
-                    <Route path="sales" element={<InputProductSales />} />
-                    <Route
-                      path="recommendation"
-                      element={<FinanceRecommendations />}
-                    />
-                    <Route path="input" element={<FinanceTrackingInput />}>
-                      <Route
-                        path="trialbalance"
-                        element={<InputTrialBalanceForm />}
-                      />
-                      <Route path="expense" element={<InputExpenseForm />} />
-                    </Route>
-                  </Route>
+                  />
+                  <Route path="finance" element={<MainFinancePage />} />
                   <Route path="addProduct" element={<AddProduct />} />
                   <Route path="" element={<DisplayBusinessParticular />} />
                   <Route path="add" element={<AddBusiness />} />
