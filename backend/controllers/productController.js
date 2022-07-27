@@ -1,4 +1,4 @@
-const { getDate } = require("../auxiliaries/helperFunctions");
+const { getDate, dateRangeParser } = require("../auxiliaries/helperFunctions");
 const asyncHandler = require("express-async-handler");
 const pool = require("../config/db");
 const {
@@ -336,22 +336,6 @@ const addProductSalesInput = asyncHandler(async (req, res) => {
     [product_id, date_range, store_id]
   );
 
-  // Receives a date_range and then return the time in miliseconds
-  const dateRangeParser = (date_range) => {
-    switch (date_range) {
-      case 0:
-        return 86400000;
-      case 1:
-        return 604800000;
-      case 2:
-        return 2592000000;
-      case 3:
-        return 31536000000;
-      default:
-        return 86400000;
-    }
-  };
-
   const dateMinusDateRange = new Date(
     new Date(getDate()) - dateRangeParser(date_range)
   );
@@ -416,22 +400,6 @@ const productRelativePerformance = asyncHandler(async (req, res) => {
     res.status(401).json("You do not own this product.");
   }
 
-  // date_range: 0 = daily, 1 = weekly, 2 = monthly, 3 = yearly
-  const dateRangeParser = (date_range) => {
-    switch (date_range) {
-      case 0:
-        return 86400000;
-      case 1:
-        return 604800000;
-      case 2:
-        return 2592000000;
-      case 3:
-        return 31536000000;
-      default:
-        return 86400000;
-    }
-  };
-
   const dateMinusDateRange = new Date(
     new Date(getDate()) - dateRangeParser(date_range)
   );
@@ -452,7 +420,7 @@ const productRelativePerformance = asyncHandler(async (req, res) => {
   );
 
   if (thisProductSalesQuery.rows.length === 0) {
-    res.status(406).json({message: "Not sufficient sales data to perform this function."});
+    res.status(406).json({message: "Not sufficient sales data to perform this function. Please input your sales data first."});
     return;
   }
 
