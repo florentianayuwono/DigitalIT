@@ -71,12 +71,16 @@ export const DisplayIndividualBusiness = () => {
             <button
               type="button"
               class={
-                business.has_digitalized ? "btn btn-success" : "btn btn-danger"
+                business.has_digitalized
+                  ? "btn btn-success"
+                  : "btn btn-danger"
               }
               data-bs-toggle="popover"
               data-bs-title="Digitalization status"
               data-bs-content={
-                business.has_digitalized ? "Congrats! You are digitalized!" : "First next big step: digitalize your business!"
+                business.has_digitalized
+                  ? "Congrats! You are digitalized!"
+                  : "First next big step: digitalize your business!"
               }
             >
               {business.has_digitalized ? "Digitalized" : "Not Digitalized"}
@@ -84,7 +88,7 @@ export const DisplayIndividualBusiness = () => {
           </div>
         </div>
       </div>
-      
+
       <div className="col-md-12">
         <Outlet />
       </div>
