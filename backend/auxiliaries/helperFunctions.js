@@ -18,4 +18,20 @@ const generateToken = (id) => {
   });
 };
 
-module.exports = { getDate, generateToken };
+// parse date range to miliseconds
+const dateRangeParser = (date_range) => {
+    switch (parseInt(date_range)) {
+      case 0:
+        return 86400000;
+      case 1:
+        return 604800000;
+      case 2:
+        return 2592000000;
+      case 3:
+        return 31536000000;
+      default:
+        return 86400000;
+    }
+  };
+
+module.exports = { getDate, generateToken, dateRangeParser };
