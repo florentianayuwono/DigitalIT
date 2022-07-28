@@ -39,6 +39,13 @@ export const getStore = async ({ store_id, business_id }) => {
   }
 };
 
+/**
+ * 
+ * @param {Object} param0 an object with the following properties:
+ * @param {String} param0.business_id the business id
+ * @param {String} param0.platform_id the platform id
+ * @returns {Promise<Object>}
+ */
 export const addStore = async ({ business_id, platform_id }) => {
   const token = JSON.parse(localStorage.getItem("user")).token;
   const config = {
@@ -56,7 +63,7 @@ export const addStore = async ({ business_id, platform_id }) => {
     const data = await response.data;
     const status = await response.status;
 
-    if (status === 200) {
+    if (status === 201) {
       return data;
     } else {
       return;

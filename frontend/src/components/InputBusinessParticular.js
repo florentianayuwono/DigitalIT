@@ -3,7 +3,20 @@ import { useState, useEffect } from "react";
 import { useBusinessContext } from "../features/business/businessContext";
 import { addBusiness } from "../features/business/businessServices";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "@chakra-ui/react";
+import { getPlatform } from "../features/platform/platformServices";
+import { addStore } from "../features/store/storeServices";
+
+import {
+  Button,
+  Checkbox,
+  CheckboxGroup,
+  FormControl,
+  FormLabel,
+  Input,
+  Select,
+  Stack,
+  useToast,
+} from "@chakra-ui/react";
 
 const listOfCategories = [
   { category: "Food and Groceries" },
@@ -25,35 +38,83 @@ export default function InputBusinessParticular() {
     businessName: "",
     business_category: "",
     hasDigitalized: "",
-    productName: "",
-    productDescription: "",
-    price: "",
-    cost: "",
-    platform: "",
+    selectedPlatforms: [],
   });
   const { businesses, dispatch } = useBusinessContext();
   const [categories, setCategories] = useState(listOfCategories);
-  const [isSubmitted, refresh] = useState(false);
-  const [ newBusiness, setNewBusiness ] = useState();
+  const [newBusiness, setNewBusiness] = useState();
+  const [platforms, setPlatforms] = useState([]);
   const toast = useToast();
   const nav = useNavigate();
+  console.log(formData);
 
   // Message to be shown (if there's error or something)
   const [status, setStatus] = useState("");
   const { message, isSuccess, isError } = businesses;
 
-  const { businessName, business_category, hasDigitalized, platform } =
+  useEffect(() => {
+    const fetchPlatforms = async () => {
+      const platforms = await getPlatform();
+      setPlatforms(platforms);
+    };
+
+    fetchPlatforms();
+  }, []);
+
+  const { businessName, business_category, hasDigitalized, selectedPlatforms } =
     formData;
 
   const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+    if (e.target.name === "platform") {
+      if (e.target.id === "offline") {
+        setFormData((prev) =>
+          e.target.checked
+            ? {
+                ...formData,
+                hasDigitalized: false,
+                selectedPlatforms: ["offline"],
+              }
+            : { ...formData, selectedPlatforms: [] }
+        );
+      } else {
+        // If a new platform is selected, add it to the array of platforms
+        // if the platform is already in the array, remove it
+        if (selectedPlatforms.includes(e.target.id)) {
+          setFormData({
+            ...formData,
+            hasDigitalized: formData.selectedPlatforms.length - 1 > 0,
+            selectedPlatforms: selectedPlatforms.filter(
+              (platform) => platform !== e.target.id
+            ),
+          });
+        } else {
+          setFormData({
+            ...formData,
+            hasDigitalized: true,
+            selectedPlatforms: [...selectedPlatforms, e.target.id],
+          });
+        }
+      }
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [e.target.name]: e.target.value,
+      }));
+    }
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    if (selectedPlatforms.length === 0) {
+      toast({
+        title: "Please select at least one platform",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+      return;
+    }
 
     const businessData = {
       businessName,
@@ -63,7 +124,7 @@ export default function InputBusinessParticular() {
 
     try {
       const response = await addBusiness(dispatch, businessData);
-      if(isError) {
+      if (isError) {
         toast({
           title: "Error",
           description: message,
@@ -77,12 +138,43 @@ export default function InputBusinessParticular() {
       setNewBusiness(response.business_id);
       if (isSuccess) {
         toast({
-          title: "Business added successfully",
+          title: `Business added successfully! ${
+            selectedPlatforms.length > 1 ? "Adding stores..." : ""
+          }`,
           status: "success",
           duration: 3000,
           isClosable: true,
         });
+
+        // Add stores
+        const business_id = response.business_id;
+        if (!selectedPlatforms.includes("offline")) {
+          selectedPlatforms.forEach(async (platform_id) => {
+            const storeData = {
+              business_id,
+              platform_id,
+            };
+            const storeResponse = await addStore(storeData);
+            if (!storeResponse) {
+              toast({
+                title: "Error",
+                description: storeResponse.message,
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+              });
+            } else {
+              toast({
+                title: `Store ${storeResponse.store_name} added successfully`,
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+              });
+            }
+          });
+        }
       }
+
       setStatus((prev) => "Successfully added business!");
     } catch (error) {
       console.log(error);
@@ -92,7 +184,7 @@ export default function InputBusinessParticular() {
   useEffect(() => {
     if (newBusiness && Number.isInteger(newBusiness)) {
       nav("/business/" + newBusiness);
-    } 
+    }
   }, [newBusiness, nav]);
 
   return (
@@ -126,113 +218,69 @@ export default function InputBusinessParticular() {
             <div className="row g-5">
               <div>
                 <h4 className="mb-3">General Information</h4>
-                <form
-                  className="needs-validation"
-                  noValidate
-                  onSubmit={onSubmit}
-                >
-                  <div className="row g-3">
-                    <div className="col-12">
-                      <label for="businessName" className="form-label">
+                <form onSubmit={onSubmit}>
+                  <Stack>
+                    <FormControl isRequired>
+                      <FormLabel htmlFor="businessName">
                         Business Name
-                      </label>
-                      <input
+                      </FormLabel>
+                      <Input
                         type="text"
-                        className="form-control"
-                        id="businessName"
                         name="businessName"
-                        placeholder="My Batik Shop"
+                        onChange={onChange}
                         value={businessName}
-                        onChange={onChange}
                       />
-                      <div className="invalid-feedback">
-                        Please enter a valid business name for future reference.
-                      </div>
-                    </div>
-
-                    <div className="col-12">
-                      <label for="business_category" className="form-label">
-                        Category
-                      </label>
-                      <select
-                        className="form-select"
-                        value={formData.business_category}
-                        id="business_category"
-                        name="business_category"
-                        onChange={onChange}
-                        required
-                      >
-                        <option value="">Select below</option>
-                        {categories.map((category, index) => (
-                          <option key={index} value={category.category}>
+                    </FormControl>
+                    <FormControl isRequired>
+                      <FormLabel htmlFor="business_category">
+                        Business Category
+                      </FormLabel>
+                      <Select name="business_category" onChange={onChange}>
+                        <option value="">Select a category</option>
+                        {categories.map((category) => (
+                          <option
+                            key={category.category}
+                            value={category.category}
+                          >
                             {category.category}
                           </option>
                         ))}
-                      </select>
-                      <div className="invalid-feedback">
-                        Please select a valid category.
-                      </div>
-                    </div>
-
-                    <div className="col-12">
-                      <label for="hasDigitalized" className="form-label">
-                        Digitalization Progress
-                      </label>
-                      <select
-                        className="form-select"
-                        id="hasDigitalized"
-                        name="hasDigitalized"
-                        onChange={onChange}
-                        required
-                      >
-                        <option value={null}>
-                          Have you digitalized your business?
-                        </option>
-                        <option value={true}>Yes</option>
-                        <option value={false}>No</option>
-                      </select>
-                      <div className="invalid-feedback">
-                        Please provide a valid answer.
-                      </div>
-                    </div>
-                  </div>
-
-                  <h4 className="mt-4 mb-3">Store</h4>
-                  <div className="row g-3">
-                    <div className="col-12">
-                      <label for="storeLocation" className="form-label">
-                        Store Location
-                      </label>
-                      <select
-                        className="form-select"
-                        id="storeLocation"
-                        name="storeLocation"
-                        onChange={onChange}
-                        multiple
-                        required
-                      >
-                        <option value="">
-                          Where do you sell your product?
-                        </option>
-                        <option value="Offline Store">Offline store</option>
-                        <option value="Bukalapak">Bukalapak</option>
-                        <option value="Tokopedia">Tokopedia</option>
-                        <option value="Shopee">Shopee</option>
-                      </select>
-                      <div className="invalid-feedback">
-                        Please select a valid location.
-                      </div>
-                    </div>
-                  </div>
-                  <hr className="my-4" />
-
-                  <button
-                    className="w-100 btn btn-primary btn-lg"
-                    type="submit"
-                  >
-                    Save Information
-                  </button>
-                  {status === "" ? message : status}
+                      </Select>
+                    </FormControl>
+                    <FormControl>
+                      <FormLabel htmlFor="storePlatform">
+                        Store Platform
+                      </FormLabel>
+                      <CheckboxGroup name="platform" defaultValue={"offline"}>
+                        <Stack>
+                          {[
+                            {
+                              platform_id: "offline",
+                              platform_name: "Offline",
+                            },
+                          ]
+                            .concat(platforms)
+                            .map((platform) => (
+                              <Checkbox
+                                key={platform.platform_id}
+                                name="platform"
+                                id={platform.platform_id}
+                                isDisabled={
+                                  platform.platform_id !== "offline" &&
+                                  formData.selectedPlatforms.includes("offline")
+                                }
+                                onChange={onChange}
+                              >
+                                {platform.platform_name}
+                              </Checkbox>
+                            ))}
+                        </Stack>
+                      </CheckboxGroup>
+                    </FormControl>
+                    <Button type="submit" variantColor="teal">
+                      Add Business
+                    </Button>
+                  </Stack>
                 </form>
               </div>
             </div>
