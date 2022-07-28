@@ -3,8 +3,8 @@ import axios from "axios";
 const API_LINK =
   process.env.NODE_ENV === "production"
     ? "/api/product/"
-    : "http://localhost:5000/api/product/";
-      //: "https://orbital-digital-it.herokuapp.com/api/product/";
+    // : "http://localhost:5000/api/product/";
+      : "https://orbital-digital-it.herokuapp.com/api/product/";
 
 // id is not a required field
 export const getProducts = async (dispatch, getProductPayload) => {
