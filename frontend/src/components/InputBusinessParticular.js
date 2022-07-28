@@ -46,7 +46,6 @@ export default function InputBusinessParticular() {
   const [platforms, setPlatforms] = useState([]);
   const toast = useToast();
   const nav = useNavigate();
-  console.log(formData);
 
   // Message to be shown (if there's error or something)
   const [status, setStatus] = useState("");
