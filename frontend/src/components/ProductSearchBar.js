@@ -5,6 +5,7 @@ import {
   FormErrorMessage,
   FormHelperText,
   Button,
+  Stack,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -41,9 +42,18 @@ export default function ProductSearchBar({ store_id, onAdd }) {
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
           />
-          <FormHelperText className="mb-3">Search for a product name.</FormHelperText>
+          <FormHelperText className="mb-3">
+            Search for a product name here to see if we already have the same
+            product in the database.
+          </FormHelperText>
+          <FormHelperText>
+            This will help us to avoid duplicates and to better provide
+            recommendations based on your sales later.
+          </FormHelperText>
           <FormErrorMessage>Please enter a product name.</FormErrorMessage>
-          <Button type="submit" className="mb-3">Search</Button>
+          <Button type="submit" className="mb-3">
+            Search
+          </Button>
         </FormControl>
       </form>
       <div>
@@ -58,13 +68,19 @@ export default function ProductSearchBar({ store_id, onAdd }) {
             />
           ))
         ) : (
-          <PopupMessageButton
-            action={() => nav("/business/addProduct")}
-            message="Do you wish to input a new product?"
-            title="No result found, do you wish to add a new product?"
-            executeTitle={"Yes"}
-            colorScheme="blue"
-          />
+          <Stack>
+            <h4>
+              No results found for "{keyword}". You can try another keyword or
+              add your product to our database by clicking the button below.
+            </h4>
+            <PopupMessageButton
+              action={() => nav("/business/addProduct")}
+              message="Do you wish to input a new product?"
+              title="Do you wish to add a new product?"
+              executeTitle={"Yes"}
+              colorScheme="blue"
+            />
+          </Stack>
         )}
       </div>
     </>

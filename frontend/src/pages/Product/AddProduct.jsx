@@ -9,6 +9,7 @@ import {
   FormLabel,
   Input,
   Select,
+  Stack,
   Textarea,
 } from "@chakra-ui/react";
 
@@ -61,74 +62,76 @@ export default function AddProduct() {
     <Container>
       <h1>Add a New Product</h1>
       <form onSubmit={onSubmitForm}>
-        <FormControl isRequired>
-          <FormLabel htmlFor="product_name">Product Name</FormLabel>
-          <Input
-            id="product_name"
-            value={productForm.product_name}
-            onChange={onChange}
-            placeholder="Cat Food"
-          />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel htmlFor="product_description">
-            Product Description
-          </FormLabel>
-          <Textarea
-            id="product_description"
-            onChange={onChange}
-            value={productForm.product_description}
-            placeholder="Cat Food ABC With Tuna, 200 gr"
-          />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel htmlFor="product_category">Product Category</FormLabel>
-          {/* Options: hardware, automotive, home appliances */}
-          <Select
-            placeholder="Please select a category"
-            id="product_category"
-            onChange={onChange}
-          >
-            {productCategories.map((category) => (
-              <option key={category} value={category}>
-                {category
-                  .split(" ")
-                  .map((word) =>
-                    word === "and"
-                      ? word
-                      : word[0].toUpperCase() + word.substring(1)
-                  )
-                  .join(" ")}
-              </option>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel htmlFor="age_target">Age Target</FormLabel>
-          <Select
-            placeholder="Who will buy this product?"
-            id="age_target"
-            onChange={onChange}
-          >
-            <option value="0">All Age</option>
-            <option value="1">Kids</option>
-            <option value="2">Teenagers</option>
-            <option value="3">Adults</option>
-          </Select>
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel htmlFor="gender_target">Gender Target</FormLabel>
-          <Select
-            placeholder="Please select an option"
-            id="gender_target"
-            onChange={onChange}
-          >
-            <option value="0">All Genders</option>
-            <option value="1">Male</option>
-            <option value="2">Female</option>
-          </Select>
-        </FormControl>
-        <Button type="submit">Add This Product</Button>
+        <Stack>
+          <FormControl isRequired>
+            <FormLabel htmlFor="product_name">Product Name</FormLabel>
+            <Input
+              id="product_name"
+              value={productForm.product_name}
+              onChange={onChange}
+              placeholder="Cat Food"
+            />
+          </FormControl>
+          <FormControl isRequired>
+            <FormLabel htmlFor="product_description">
+              Product Description
+            </FormLabel>
+            <Textarea
+              id="product_description"
+              onChange={onChange}
+              value={productForm.product_description}
+              placeholder="Cat Food ABC With Tuna, 200 gr"
+            />
+          </FormControl>
+          <FormControl isRequired>
+            <FormLabel htmlFor="product_category">Product Category</FormLabel>
+            {/* Options: hardware, automotive, home appliances */}
+            <Select
+              placeholder="Please select a category"
+              id="product_category"
+              onChange={onChange}
+            >
+              {productCategories.map((category) => (
+                <option key={category} value={category}>
+                  {category
+                    .split(" ")
+                    .map((word) =>
+                      word === "and"
+                        ? word
+                        : word[0].toUpperCase() + word.substring(1)
+                    )
+                    .join(" ")}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl isRequired>
+            <FormLabel htmlFor="age_target">Age Target</FormLabel>
+            <Select
+              placeholder="Who will buy this product?"
+              id="age_target"
+              onChange={onChange}
+            >
+              <option value="0">All Age</option>
+              <option value="1">Kids</option>
+              <option value="2">Teenagers</option>
+              <option value="3">Adults</option>
+            </Select>
+          </FormControl>
+          <FormControl isRequired>
+            <FormLabel htmlFor="gender_target">Gender Target</FormLabel>
+            <Select
+              placeholder="Please select an option"
+              id="gender_target"
+              onChange={onChange}
+            >
+              <option value="0">All Genders</option>
+              <option value="1">Male</option>
+              <option value="2">Female</option>
+            </Select>
+          </FormControl>
+          <Button type="submit">Add This Product</Button>
+        </Stack>
       </form>
     </Container>
   );
