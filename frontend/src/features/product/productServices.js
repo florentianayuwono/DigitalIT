@@ -167,6 +167,10 @@ export const deleteProduct = async (dispatch, deleteProductPayload) => {
 
 // Search for a product by keyword
 export const searchProduct = async (keyword) => {
+  if (keyword === "") {
+    return;
+  }
+  
   try {
     const response = await axios.get(API_LINK + "main/all&" + keyword);
     const data = await response.data;

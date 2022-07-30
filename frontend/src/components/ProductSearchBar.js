@@ -23,6 +23,7 @@ export default function ProductSearchBar({ store_id, onAdd }) {
     e.preventDefault();
     const result = await searchProduct(keyword);
     if (result?.length === 0) {
+      setSearch([]);
       setIsEmpty(true);
     } else {
       setIsEmpty(false);
@@ -33,7 +34,7 @@ export default function ProductSearchBar({ store_id, onAdd }) {
   return (
     <>
       <form onSubmit={handleSearch}>
-        <FormControl>
+        <FormControl isRequired>
           <FormLabel htmlFor="search" className="mt-3">
             Add a new product to this store
           </FormLabel>
@@ -41,6 +42,7 @@ export default function ProductSearchBar({ store_id, onAdd }) {
             id="search"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
+            placeholder="Try search for any product name (e.g. 'Cat Food')"
           />
           <FormHelperText className="mb-3">
             Search for a product name here to see if we already have the same
@@ -59,7 +61,7 @@ export default function ProductSearchBar({ store_id, onAdd }) {
       <div>
         {/* FOR IMPROVEMENTS: Show only products that are not on the store yet */}
         {!isEmpty ? (
-          search.map((product) => (
+          search?.map((product) => (
             <ProductSearchResultItem
               key={product.product_id}
               product={product}
