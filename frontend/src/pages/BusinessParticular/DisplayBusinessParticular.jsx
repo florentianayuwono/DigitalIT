@@ -80,9 +80,6 @@ export default function DisplayBusinessParticular() {
           </div>
         </div>
       </div>
-      <footer className="pt-3 mt-4 mb-4 text-muted border-top text-center">
-        &copy; DigitalIT 2022
-      </footer>
     </>
   );
 }

@@ -110,10 +110,6 @@ export default function Login(props) {
           </div>
         </form>
       </section>
-
-      <footer className="pt-3 mt-4 text-muted border-top landing">
-        &copy; DigitalIT 2022
-      </footer>
     </Stack>
   );
 }
