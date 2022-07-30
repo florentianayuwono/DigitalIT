@@ -1,4 +1,8 @@
-const { getDate, dateRangeParser } = require("../auxiliaries/helperFunctions");
+const {
+  getDate,
+  dateRangeParser,
+  dateToString,
+} = require("../auxiliaries/helperFunctions");
 const asyncHandler = require("express-async-handler");
 const pool = require("../config/db");
 const {
@@ -420,15 +424,16 @@ const productRelativePerformance = asyncHandler(async (req, res) => {
   );
 
   if (thisProductSalesQuery.rows.length === 0) {
-    res.status(406).json({message: "Not sufficient sales data to perform this function. Please input your sales data first."});
+    res.status(406).json({
+      message:
+        "Not sufficient sales data to perform this function. Please input your sales data first.",
+    });
     return;
   }
 
   // Select the latest input_date of thisProductSalesQuery
   const thisProductSales = thisProductSalesQuery.rows.reduce((prev, curr) => {
-    return new Date(prev.input_date) > new Date(curr.input_date)
-      ? prev
-      : curr;
+    return new Date(prev.input_date) > new Date(curr.input_date) ? prev : curr;
   });
 
   const quantitySoldArray = filteredProductSales.map((productSales) => {
@@ -437,7 +442,9 @@ const productRelativePerformance = asyncHandler(async (req, res) => {
 
   // If there is only one or less data, response 401 with error message
   if (quantitySoldArray.length <= 1) {
-    res.status(406).json({message: "There is not enough data to calculate the performance."});
+    res.status(406).json({
+      message: "There is not enough data to calculate the performance.",
+    });
     return;
   }
 
@@ -459,6 +466,94 @@ const productRelativePerformance = asyncHandler(async (req, res) => {
   });
 });
 
+/**
+ * From the list of secondary products, for each product, return insights:
+ * 1. The product's relative price.
+ * 2. The product's number of sales
+ * 3. The product's profit generated
+ * 4. The product's revenue generated
+ * 5. The product's relative performance
+ * 6. Whether we can modify the price or not based on the relative price.
+ *
+ * @route GET /api/product/sales/insights
+ */
+const productSalesInsights = asyncHandler(async (req, res) => {
+  const { business_id, date_range } = req.headers;
+
+  const business = await pool.query(
+    `SELECT * FROM business WHERE business_id = $1`,
+    [business_id]
+  );
+
+  if (business?.rows[0].manager_id !== req.user.user_id) {
+    res.status(401).json("You do not own this business.");
+    return;
+  }
+
+  const dateMinusDateRange = new Date(
+    new Date(getDate()) - dateRangeParser(date_range)
+  );
+
+  const businessProductSales = await pool.query(
+    `
+    WITH stores AS (
+      SELECT * FROM store WHERE business_id = $1
+    )
+
+    SELECT * FROM product_sales
+    WHERE date_range = $2 AND store_id IN (SELECT store_id FROM stores)
+    `,
+    [business_id, date_range]
+  );
+
+  const productSalesArray = businessProductSales.rows;
+
+  // Check if empty
+  if (productSalesArray.length === 0) {
+    res.status(406).json({
+      message: "Please input your sales data first.",
+    });
+    return;
+  }
+
+  // Filter by date
+  const filteredBusinessProductSales = productSalesArray.filter(
+    (productSales) => new Date(productSales.input_date) > dateMinusDateRange
+  );
+
+  // Check if empty
+  if (filteredBusinessProductSales.length === 0) {
+    res.status(406).json({
+      message: "No sales data found in this period.",
+    });
+    return;
+  }
+
+  // Get the product_id and then remove duplicate product_id
+  const productIdArray = filteredBusinessProductSales
+    .map((productSales) => {
+      return productSales.product_id;
+    })
+    .filter((productId, index, self) => {
+      return self.indexOf(productId) === index;
+    });
+
+  /**
+   * I am not sure if this is the best way to do this. The problem with this is that we took all the sales data for all products
+   * and then compare it to the products inside this business; this could potentially be a problem as the number of products in
+   * the database grows since that would mean we are handling huge amount of data whereas the data we are comparing might be small.
+   *
+   * However, if we query each product sales by each product_id individually, this might be expensive if the business has a lot of products.
+   */
+  // Get all the sales in this period.
+  const allProductSales = await pool.query(
+    `SELECT * FROM product_sales WHERE date_range = $1 AND input_date > $2`,
+    [date_range, dateToString(dateMinusDateRange)]
+  );
+
+  res.json(productIdArray);
+});
+
 module.exports = {
   addProductData,
   getProductData,
@@ -470,4 +565,5 @@ module.exports = {
   deleteAllStoreProducts,
   addProductSalesInput,
   productRelativePerformance,
+  productSalesInsights,
 };

@@ -20,18 +20,27 @@ const generateToken = (id) => {
 
 // parse date range to miliseconds
 const dateRangeParser = (date_range) => {
-    switch (parseInt(date_range)) {
-      case 0:
-        return 86400000;
-      case 1:
-        return 604800000;
-      case 2:
-        return 2592000000;
-      case 3:
-        return 31536000000;
-      default:
-        return 86400000;
-    }
-  };
+  switch (parseInt(date_range)) {
+    case 0:
+      return 86400000;
+    case 1:
+      return 604800000;
+    case 2:
+      return 2592000000;
+    case 3:
+      return 31536000000;
+    default:
+      return 86400000;
+  }
+};
 
-module.exports = { getDate, generateToken, dateRangeParser };
+// Convert a date object to a string with format yyyy-mm-dd
+const dateToString = (date) => {
+  let year = date.getFullYear();
+  let month = ("0" + (date.getMonth() + 1)).slice(-2);
+  let day = ("0" + date.getDate()).slice(-2);
+
+  return year + "-" + month + "-" + day;
+};
+
+module.exports = { dateToString, getDate, generateToken, dateRangeParser };

@@ -10,6 +10,7 @@ const {
   updateProductData,
   addProductSalesInput,
   productRelativePerformance,
+  productSalesInsights,
 } = require("../controllers/productController");
 const { protect } = require("../middlewares/authMiddleware");
 
@@ -18,6 +19,7 @@ router.get("/", protect, getLocalProductData);
 
 router.post("/sales", protect, addProductSalesInput);
 router.get("/sales/compareglobal", protect, productRelativePerformance);
+router.get("/sales/insights", protect, productSalesInsights);
 
 router
   .route("/:id")
