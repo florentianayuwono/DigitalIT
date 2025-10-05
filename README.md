@@ -251,3 +251,7 @@ Bugs-free and achieve our goals.
 
 # Appendix
 Refer to this [document](https://docs.google.com/document/d/1xibS-kvBRR_ODVdeFJM3MOX6dzGsIJrJ/edit?usp=sharing&ouid=103654914173748571741&rtpof=true&sd=true) for more detailed README.
+
+## Usage
+## Quick Start
+## Contributing
